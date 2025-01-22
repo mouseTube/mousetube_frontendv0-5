@@ -18,7 +18,7 @@ Code under GPL v3.0 licence
             class="mx-auto"
             max-width="1000"
           >
-            <v-skeleton-loader type="article" v-if="loading"></v-skeleton-loader>
+            <v-skeleton-loader type="article" v-if="!dataLoaded"></v-skeleton-loader>
 
             <v-data-iterator v-else class="mt-5" :items="files" :items-per-page="20" :search="search">
               <template v-slot:header>
@@ -59,14 +59,14 @@ Code under GPL v3.0 licence
                                     <v-label class="mr-2">Background</v-label>{{ file.raw.subject.strain_subject.background }}<br />
                                     <v-label class="mr-2">Bibliography strain</v-label>{{ file.raw.subject.strain_subject.biblio_strain }}<br />
 
-                                    <v-list>
-                                      <v-list-item class="pb-0"><v-label class="mr-2">Name: </v-label>{{ file.raw.subject.name_subject }}</v-list-item>
-                                      <v-list-item class="pt-0"><v-label class="mr-2">Origin: </v-label>{{ file.raw.subject.origin_subject }}</v-list-item>
-                                      <v-list-item><v-label class="mr-2">Sex: </v-label>{{ file.raw.subject.sex_subject }}</v-list-item>
-                                      <v-list-item><v-label class="mr-2">Group: </v-label>{{ file.raw.subject.group_subject }}</v-list-item>
-                                      <v-list-item><v-label class="mr-2">Genotype: </v-label>{{ file.raw.subject.genotype_subject }}</v-list-item>
-                                      <v-list-item><v-label class="mr-2">Treatment: </v-label>{{ file.raw.subject.treatment }}</v-list-item>
-                                    </v-list>
+                                    <ul class="ml-3 mt-2">
+                                      <li><v-label class="mr-2">Name: </v-label>{{ file.raw.subject.name_subject }}</li>
+                                      <li><v-label class="mr-2">Origin: </v-label>{{ file.raw.subject.origin_subject }}</li>
+                                      <li><v-label class="mr-2">Sex: </v-label>{{ file.raw.subject.sex_subject }}</li>
+                                      <li><v-label class="mr-2">Group: </v-label>{{ file.raw.subject.group_subject }}</li>
+                                      <li><v-label class="mr-2">Genotype: </v-label>{{ file.raw.subject.genotype_subject }}</li>
+                                      <li><v-label class="mr-2">Treatment: </v-label>{{ file.raw.subject.treatment }}</li>
+                                    </ul>
                                   </v-card-text>
                                 </v-card-item>
                               </v-card>
@@ -81,19 +81,20 @@ Code under GPL v3.0 licence
 
                               <v-card class="mx-auto my-2 pt-2 pl-2" title="Experiment">
                                 <v-card-text>
-                                  <v-list>
-                                    <v-list-item><v-label class="mr-2">Name experiment: </v-label>{{ file.raw.experiment.name_experiment }}</v-list-item>
-                                    <v-list-item><v-label class="mr-2">Group: </v-label>{{ file.raw.experiment.group_subject }}</v-list-item>
-                                    <v-list-item><v-label class="mr-2">Date experiment: </v-label>{{ file.raw.experiment.date_experiment }}</v-list-item>
-                                    <v-list-item><v-label class="mr-2">Temperature: </v-label>{{ file.raw.experiment.temperature }}</v-list-item>
-                                    <v-list-item><v-label class="mr-2">Light cycle: </v-label>{{ file.raw.experiment.light_cycle }}</v-list-item>
-                                    <v-list-item><v-label class="mr-2">Microphone: </v-label>{{ file.raw.experiment.microphone }}</v-list-item>
-                                    <v-list-item><v-label class="mr-2">Acquisition hardware: </v-label>{{ file.raw.experiment.acquisition_hardware }}</v-list-item>
-                                    <v-list-item><v-label class="mr-2">Acquisition software: </v-label>{{ file.raw.experiment.acquisition_software }}</v-list-item>
-                                    <v-list-item><v-label class="mr-2">Sampling rate: </v-label>{{ file.raw.experiment.sampling_rate }}</v-list-item>
-                                    <v-list-item><v-label class="mr-2">Bit Depth: </v-label>{{ file.raw.experiment.bit_depth }}</v-list-item>
-                                    <v-list-item><v-label class="mr-2">Laboratory: </v-label>{{ file.raw.experiment.laboratory }}</v-list-item>
-                                  </v-list>
+                                  <ul class="ml-3 mt-2">
+                                    <li><v-label class="mr-2">Name experiment: </v-label>{{ file.raw.experiment.name_experiment }}</li>
+                                    <li><v-label class="mr-2">Group: </v-label>{{ file.raw.experiment.group_subject }}</li>
+                                    <li><v-label class="mr-2">Date experiment: </v-label>{{ file.raw.experiment.date_experiment }}</li>
+                                    <li><v-label class="mr-2">File number:</v-label> {{ file.raw.file_number }}</li>
+                                    <li><v-label class="mr-2">Temperature: </v-label>{{ file.raw.experiment.temperature }}</li>
+                                    <li><v-label class="mr-2">Light cycle: </v-label>{{ file.raw.experiment.light_cycle }}</li>
+                                    <li><v-label class="mr-2">Microphone: </v-label>{{ file.raw.experiment.microphone }}</li>
+                                    <li><v-label class="mr-2">Acquisition hardware: </v-label>{{ file.raw.experiment.acquisition_hardware }}</li>
+                                    <li><v-label class="mr-2">Acquisition software: </v-label>{{ file.raw.experiment.acquisition_software }}</li>
+                                    <li><v-label class="mr-2">Sampling rate: </v-label>{{ file.raw.experiment.sampling_rate }}</li>
+                                    <li><v-label class="mr-2">Bit Depth: </v-label>{{ file.raw.experiment.bit_depth }}</li>
+                                    <li><v-label class="mr-2">Laboratory: </v-label>{{ file.raw.experiment.laboratory }}</li>
+                                  </ul>
                                 </v-card-text>
                               </v-card>
                             </v-expansion-panel-text>
@@ -109,13 +110,10 @@ Code under GPL v3.0 licence
                       <v-btn color="red-darken-4" prepend-icon="mdi-download">
                         <a :href="file.raw.link_file" target="_blank">Download</a>
                       </v-btn>
-                      <v-chip class="ma-2" label color="red-darken-4">
-                        <strong class="mr-2">File number:</strong> {{ file.raw.file_number }}
-                      </v-chip>
-                      <v-chip class="ma-2" label color="red-darken-4">
+                      <v-chip class="ma-2" label color="red-darken-4" v-if="file.raw.doi_file">
                         <strong class="mr-2">DOI:</strong> {{ file.raw.doi_file }}
                       </v-chip>
-                      <span v-if="file.raw.notes_file">{{ file.raw.notes_file }}</span>
+                      <span v-if="file.raw.notes_file"><strong class="mr-2">Notes:</strong> {{ file.raw.notes_file }}</span>
                     </v-card-actions>
                   </v-card>
                 </v-container>
@@ -161,7 +159,7 @@ export default {
   name: "vocalizations",
   data: function() {
     return {
-      loading: true,
+      dataLoaded: false,
       search: '',
       files: []
     }
@@ -208,7 +206,7 @@ export default {
   },
   mounted() {
     this.getFiles()
-    this.loading = false
+    this.dataLoaded = true
   }
 }
 </script>
@@ -224,5 +222,9 @@ a:hover{
   text-decoration: underline;
 }
 
+li{
+  list-style: none;
+
+}
 
 </style>

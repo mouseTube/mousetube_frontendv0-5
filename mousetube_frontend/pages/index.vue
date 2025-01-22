@@ -21,9 +21,11 @@ Code under GPL v3.0 licence
             <v-card-text>
               <v-row justify="center" no-gutters>
                 <v-col
-                  class="text-h4"
-                >
+                  class="text-h4" v-if="dataLoaded">
                   {{ numberOfFiles }} vocalisation files available now!
+                </v-col>
+                <v-col v-else>
+                  <v-progress-circular color="red-darken-4" indeterminate></v-progress-circular>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -32,14 +34,20 @@ Code under GPL v3.0 licence
                 <v-card-text>
                   Rodents communicate with each other through their various sensory modalities: olfaction (scent marking, glands),
                   vision (postures), touch (contacts) and hearing (vocalizations). In the latter case, vocalizations are mainly emitted
-                  in the ultrasonic range, beyond human perception capabilities (Anderson, 1954; Brudzynski, 2005, 2021; Portfors, 2007;
-                  Schweinfurth, 2020). Ultrasonic vocalizations are emitted in various contexts: by isolated pups during the first
+                  in the ultrasonic range, beyond human perception capabilities (<nuxt-link href="https://doi.org/10.1126/science.119.3101.808" target="_blank">Anderson, 1954</nuxt-link>;
+                  Brudzynski, <nuxt-link href="https://doi.org/10.1007/s10519-004-0858-3" target="_blank">2005</nuxt-link>,
+                  <nuxt-link href="https://doi.org/10.3390/brainsci11050605" target="_blank">2021</nuxt-link>;
+                  <nuxt-link href="https://www.metris.nl/media/documents/TypesandFunctionsofUSVinLabRatsandMice.pdf" target="_blank">Portfors, 2007</nuxt-link>;
+                  <nuxt-link href="https://doi.org/10.7554/eLife.54020" target="_blank">Schweinfurth, 2020</nuxt-link>).
+                  Ultrasonic vocalizations are emitted in various contexts: by isolated pups during the first
                   two weeks of life, by juveniles and adults during same-sex social interactions, by males in the presence of females,
                   and by individuals in aversive or appetitive situations (restraint stress, anticipation of pain, social play, food
                   rewards) and exploring an unfamiliar environment. These ultrasonic vocalizations are used as markers of motivation
-                  and social communication (Fischer and Hammerschmidt, 2010; Schweinfurth, 2020), or of susceptibility to stress or anxiety,
-                  depending on the type of signal examined (Brudzynski, 2005). Ultrasonic vocalizations are therefore routinely measured
-                  in rodent models of neuropsychiatric conditions (Premoli et al., 2023).
+                  and social communication (<nuxt-link href="https://doi.org/10.1111/j.1601-183X.2010.00610.x" target="_blank">Fischer and Hammerschmidt, 2010</nuxt-link>;
+                  <nuxt-link href="https://doi.org/10.7554/eLife.54020" target="_blank">Schweinfurth, 2020</nuxt-link>), or of susceptibility to stress or anxiety,
+                  depending on the type of signal examined (<nuxt-link href="https://doi.org/10.1007/s10519-004-0858-3" target="_blank">Brudzynski, 2005</nuxt-link>).
+                  Ultrasonic vocalizations are therefore routinely measured in rodent models of neuropsychiatric conditions
+                  (<nuxt-link href="https://doi.org/10.1111/ejn.15957" target="_blank">Premoli et al., 2023</nuxt-link>).
                 </v-card-text>
                 <v-card-text>
                   The mechanisms of production, the temporal organization into sequences, the significance of the acoustic features and the
@@ -123,6 +131,7 @@ export default {
   data: function () {
     return {
       numberOfFiles: [],
+      dataLoaded: false
     }
   },
   methods: {

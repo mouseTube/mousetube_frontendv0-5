@@ -44,9 +44,9 @@ Code under GPL v3.0 licence
               <v-card class="mx-auto my-2 pt-1 pl-2" variant="tonal" title="Contact and network">
                 <v-card-text>
                   <v-list>
-                    <v-list-item prepend-icon="mdi-email">mousetube@igbmc.fr</v-list-item>
-                    <v-list-item prepend-icon="mdi-mastodon">mouseTube on Mastodon: <nuxt-link to="https://mastodon.social/@mousetube" target="_blank">@mousetube@mastodon.social</nuxt-link> </v-list-item>
-                    <v-list-item prepend-icon="mdi-github"><nuxt-link to="https://github.com/mousetube" target="_blank" >mouseTube on GitHub</nuxt-link></v-list-item>
+                    <v-list-item max-height="1em" prepend-icon="mdi-email">mousetube@igbmc.fr</v-list-item>
+                    <v-list-item max-height="1em" prepend-icon="mdi-mastodon">mouseTube on Mastodon: <nuxt-link to="https://mastodon.social/@mousetube" target="_blank">@mousetube@mastodon.social</nuxt-link> </v-list-item>
+                    <v-list-item max-height="1em" prepend-icon="mdi-github"><nuxt-link to="https://github.com/mousetube" target="_blank" >mouseTube on GitHub</nuxt-link></v-list-item>
                   </v-list>
                 </v-card-text>
               </v-card>
@@ -133,6 +133,10 @@ a{
 
 a:hover{
   text-decoration: underline;
+}
+
+.max-v-list-height {
+    max-height: 20px;
 }
 
 </style>
