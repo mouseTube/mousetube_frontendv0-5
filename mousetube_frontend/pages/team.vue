@@ -107,7 +107,7 @@ Code under GPL v3.0 licence
               </v-card-text>
               <v-card-text>
                 MouseTube is hosted by IFB (Institut Français de Bioinformatique)<br>
-                <nuxt-link to="https://www.france-bioinformatique.fr/"><img src="/logo_ifb.png" alt="FC3R" class="ifb ml-2 mr-2" /></nuxt-link>
+                <nuxt-link to="https://www.france-bioinformatique.fr/"><img src="/logo_ifb.png" alt="IFB" class="ifb ml-2 mr-2" /></nuxt-link>
               </v-card-text>
               <v-card-text>
                 We would like to thank the FC3R (French Center for 3R) and the French Ministry of Higher Education and Research for their financial support.<br>
