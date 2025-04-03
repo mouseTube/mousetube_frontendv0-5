@@ -17,6 +17,9 @@ Code under GPL v3.0 licence
         <nuxt-link to="http://www.igbmc.fr" target="_blank"><img src="/logo_igbmc.png" alt="IGBMC" /></nuxt-link>
       </v-sheet></v-col>
       <v-col><v-sheet class="pa-1 ma-1">
+        <nuxt-link to="https://www.france-bioinformatique.fr/" target="_blank"><img src="/logo_ifb.png" alt="Institut français de bioinformatique" ></nuxt-link>
+      </v-sheet></v-col>
+      <v-col><v-sheet class="pa-1 ma-1">
         <nuxt-link to="http://www.pasteur.fr/" target="_blank"><img src="/logo_pasteur.jpg" alt="Institut Pasteur" /></nuxt-link>
       </v-sheet></v-col>
       <v-col><v-sheet class="pa-1 ma-1">
@@ -49,4 +52,10 @@ export default {
 .nuxt-link:hover{
   text-decoration: underline;
 }
+
+img {
+  max-width: 200px;
+  height: auto;
+}
+ 
 </style>
