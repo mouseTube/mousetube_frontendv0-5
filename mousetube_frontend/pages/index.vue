@@ -30,6 +30,17 @@ Code under GPL v3.0 licence
               </v-row>
             </v-card-text>
             <v-card-item>
+              <v-card class="mx-auto my-2 pt-2 pl-2" variant="tonal" title="About this version (v0.5)" prepend-icon="mdi-information">
+                <v-card-text>
+                  This is a temporary version of <strong>mouseTube</strong>.<br /> This version uses the same database as the initial version but with more recent and safer technologies.
+                  The main improvement is that data are now accessible without authentication.<br />
+                  If you want to share vocalization files, please contact us. This version does not allow to share file but we can do it manually.<br />
+                  We are currently developing a new version with more functionalities.
+                </v-card-text>
+              </v-card>
+            </v-card-item>
+
+            <v-card-item>
               <v-card class="mx-auto my-2 pt-2 pl-2" variant="tonal" title="What is mouseTube">
                 <v-card-text>
                   Rodents communicate with each other through their various sensory modalities: olfaction (scent marking, glands),
@@ -92,21 +103,6 @@ Code under GPL v3.0 licence
                 <v-card-actions>
                   <nuxt-link to="https://mastodon.social/@mousetube" target="_blank" class="nuxt-link"><v-btn prepend-icon="mdi-mastodon">Follow mouseTube on Mastodon</v-btn></nuxt-link>
                 </v-card-actions>
-              </v-card>
-            </v-card-item>
-
-            <v-card-item>
-              <v-card class="mx-auto my-2 pt-2 pl-2" variant="tonal" title="About this version">
-                <v-card-text>
-                  This is a temporary version of <strong>mouseTube</strong>.<br /> This version uses the same database as the initial version but with more recent and safer technologies.
-
-                  New functionalities since the first launch in 2014 (Ferhat et al., 2016; Torquet et al., 2016):
-                  <v-list>
-                    <v-list-item class="mt-0">- Data are accessible without authentication.</v-list-item>
-                    <v-list-item class="mt-0">- The search engine will be optimised through key words.</v-list-item>
-                  </v-list>
-                  We are currently developing a new version with more functionalities.
-                </v-card-text>
               </v-card>
             </v-card-item>
           </v-card>
