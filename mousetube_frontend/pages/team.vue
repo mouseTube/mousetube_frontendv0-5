@@ -35,6 +35,10 @@ Code under GPL v3.0 licence
                       <nuxt-link to="https://www.bristol.ac.uk/phys-pharm-neuro/" target="_blank">School of Physiology, Pharmacology and Neuroscience</nuxt-link> -
                       <nuxt-link to="https://www.bristol.ac.uk" target="_blank">University of Bristol</nuxt-link>, UK)
                     </v-list-item>
+                    <v-list-item prepend-icon="mdi-account-circle"><strong>Laurent Bouri</strong> (Web developer - Research and Development pole -
+                      <nuxt-link to="http://www.ics-mci.fr/en/" target="_blank">Institut Clinique de la Souris</nuxt-link> -
+                      <nuxt-link to="https://www.igbmc.fr/" target="_blank">CNRS UMR 7104 - Institut de Génétique et de Biologie Moléculaire et Cellulaire: IGBMC</nuxt-link>, Fr)
+                    </v-list-item>
                   </v-list>
                 </v-card-text>
               </v-card>
@@ -97,11 +101,16 @@ Code under GPL v3.0 licence
                   <v-list-item prepend-icon="mdi-account-circle"><strong>Thomas Bourgeron</strong> (Institut Pasteur, Paris, France)</v-list-item>
                   <v-list-item prepend-icon="mdi-account-circle"><strong>Fabrice de Chaumont</strong> (Institut Pasteur, Paris, France)</v-list-item>
                   <v-list-item prepend-icon="mdi-account-circle"><strong>Philippe Faure</strong> (ESPCI, Paris, France)</v-list-item>
+                  <v-list-item prepend-icon="mdi-account-circle"><strong>Julien Seiler</strong> (IFB, Strasbourg, France)</v-list-item>
                   <v-list-item prepend-icon="mdi-account-circle">mouseTube logo by <strong>Ioan Lemoël</strong><br /></v-list-item>
                 </v-list>
               </v-card-text>
               <v-card-text>
-                We would like to thank the FC3R (French Center for 3R) and the French Ministry of Higher Education and Research for their financial support.<br />
+                MouseTube is hosted by IFB (Institut Français de Bioinformatique)<br>
+                <nuxt-link to="https://www.france-bioinformatique.fr/"><img src="/logo_ifb.png" alt="IFB" class="ifb ml-2 mr-2" /></nuxt-link>
+              </v-card-text>
+              <v-card-text>
+                We would like to thank the FC3R (French Center for 3R) and the French Ministry of Higher Education and Research for their financial support.<br>
                 <nuxt-link to="https://www.fc3r.com/" target="_blank"><img src="/logo-fc3r_bleu.png" alt="FC3R" class="ml-2 mr-2" /></nuxt-link>
                 <nuxt-link to="https://www.ouvrirlascience.fr" target="_blank"><img src="/macaron_recherche_data_gouv.png" alt="Recherche Data Gouv" class="mr-2" /></nuxt-link>
               </v-card-text>
@@ -137,6 +146,10 @@ a:hover{
 
 .max-v-list-height {
     max-height: 20px;
+}
+
+.ifb {
+    max-width: 100px;
 }
 
 </style>
