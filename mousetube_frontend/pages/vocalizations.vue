@@ -8,9 +8,18 @@ Code under GPL v3.0 licence
 -->
 
 <script setup>
+
+////////////////////////////////
+// IMPORT
+////////////////////////////////
+
 import { ref, onMounted, watch } from "vue";
 import axios from "axios";
 import { debounce } from "lodash";
+
+////////////////////////////////
+// DATA
+////////////////////////////////
 
 const dataLoaded = ref(false);
 const search = ref("");
@@ -21,6 +30,14 @@ const count = ref(0);
 const currentPage = ref(1);
 const perPage = ref(10);
 
+////////////////////////////////
+// METHODS
+////////////////////////////////
+
+/**
+ * Fetch files from the API
+ * @param {string} url - The URL to fetch data from
+ */
 const fetchFiles = async (url = `http://127.0.0.1:8000/api/file/?page_size=${perPage.value}`) => {
   dataLoaded.value = false;
   try {
@@ -37,6 +54,10 @@ const fetchFiles = async (url = `http://127.0.0.1:8000/api/file/?page_size=${per
   }
 };
 
+/**
+ * Debounced search function
+ * @param {string} searchTerm - The search term to filter files
+ */
 const onSearch = debounce(() => {
   fetchFiles(`http://127.0.0.1:8000/api/file/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}`);
 }, 300);
