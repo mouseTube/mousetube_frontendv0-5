@@ -134,7 +134,7 @@ export default {
     getNumberOfFiles() {
       axios.get(`http://127.0.0.1:8000/api/file`)
           .then(response => {
-            this.numberOfFiles = response.data.length
+            this.numberOfFiles = response.data.count
             console.log(this.numberOfFiles)
             this.dataLoaded = true
           })
