@@ -79,7 +79,7 @@ watch(search, async (newSearch, oldSearch) => {
 })
 
 ////////////////////////////////
-// WATCHER
+// ONMOUNTED
 ////////////////////////////////
 onMounted(() => fetchFiles());
 </script>
