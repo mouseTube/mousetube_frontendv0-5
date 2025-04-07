@@ -129,7 +129,7 @@ import axios from "axios";
 ////////////////////////////////
 // DATA
 ////////////////////////////////
-const numberOfFiles = ref([]);
+const numberOfFiles = ref(0);
 const dataLoaded = ref(false);
 
 ////////////////////////////////

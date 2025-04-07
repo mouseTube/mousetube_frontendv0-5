@@ -24,7 +24,7 @@ Code under GPL v3.0 licence
 </template>
 
 <script setup>
-// Header page
+// Footer page
 </script>
 
 <style scoped>
