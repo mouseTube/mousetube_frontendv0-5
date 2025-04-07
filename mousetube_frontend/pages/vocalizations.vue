@@ -48,7 +48,7 @@ const fetchFiles = async (url = `http://127.0.0.1:8000/api/file/?page_size=${per
     count.value = response.data.count;
     currentPage.value = new URL(url).searchParams.get("page") || 1;
   } catch (error) {
-    console.error("Erreur lors de la récupération des fichiers :", error);
+    console.error("error while loading files :", error);
   } finally {
     dataLoaded.value = true;
   }
@@ -60,62 +60,78 @@ const fetchFiles = async (url = `http://127.0.0.1:8000/api/file/?page_size=${per
  */
 const onSearch = debounce(() => {
   fetchFiles(`http://127.0.0.1:8000/api/file/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}`);
-}, 300);
+}, 600);
 
-watch(perPage, () => {
-  fetchFiles();
-});
 
+////////////////////////////////
+// WATCHER
+////////////////////////////////
+
+watch(perPage, async () => {
+  await fetchFiles()
+})
+
+watch(search, async (newSearch, oldSearch) => {
+  if (newSearch === null) {
+    search.value = ""
+    await fetchFiles()
+  }
+})
+
+////////////////////////////////
+// WATCHER
+////////////////////////////////
 onMounted(() => fetchFiles());
 </script>
 
 <template>
   <v-main>
     <v-container>
-      <h1>Vocalizations</h1>
       <v-row>
         <v-col>
           <v-card variant="flat" class="mx-auto" max-width="1000">
+            <h1>Vocalizations</h1>
+            <!-- Search bar  -->
+            <v-toolbar rounded="lg" floating class="px-2 border-sm">
+              <v-text-field
+                v-model="search"
+                @input="onSearch"
+                density="comfortable"
+                placeholder="Search"
+                prepend-inner-icon="mdi-magnify"
+                style="max-width: 300px;"
+                variant="solo"
+                clearable
+                hide-details
+                :autofocus="true"
+              />
+              <v-spacer></v-spacer>
+
+              <v-select
+                v-model="perPage"
+                :items="[10, 20, 50, 100]"
+                density="compact"
+                variant="outlined"
+                style="max-width: 100px; font-size: 12px;"
+                attach="body"
+                :menu-props="{ contentClass: 'select-dropdown-zfix' }"
+                hide-details
+              />
+            </v-toolbar>
+            <!-- Loading spinner  -->
             <v-progress-circular v-if="!dataLoaded" indeterminate color="primary" class="d-block mx-auto my-5"></v-progress-circular>
+            <!-- Data display -->
             <v-data-iterator v-else class="mt-5" :items="files" :items-per-page="perPage">
-              <template v-slot:header>
-                <v-toolbar class="px-2">
-                  <v-text-field
-                    v-model="search"
-                    @input="onSearch"
-                    density="comfortable"
-                    placeholder="Search"
-                    prepend-inner-icon="mdi-magnify"
-                    style="max-width: 300px;"
-                    variant="solo"
-                    clearable
-                    hide-details
-                  />
-                  <v-spacer></v-spacer>
-
-                  <v-select
-                    v-model="perPage"
-                    :items="[10, 20, 50, 100]"
-                    density="compact"
-                    variant="outlined"
-                    style="max-width: 100px; font-size: 12px;"
-                    attach="body"
-                    :menu-props="{ contentClass: 'select-dropdown-zfix' }"
-                    hide-details
-                  />
-                </v-toolbar>
-              </template>
-
               <template v-slot:default="{ items }">
                 <v-container class="pa-2" fluid>
-                  <v-card class="mt-5" v-for="({ raw: file }) in items" :key="file.id" variant="tonal">
+                  <v-card class="mt-5 border-sm" v-for="({ raw: file }) in items" :key="file.id" elevated>
                     <v-card-title>
                       {{ file.link_file.split('/').pop() }}
                     </v-card-title>
                     <v-card-subtitle>
                       {{ file.experiment.protocol.user.first_name_user }} {{ file.experiment.protocol.user.name_user }}
                     </v-card-subtitle>
-                    <v-card-item>
+                    <v-card-item class="bg-surface-light pt-4">
                       <v-label class="mr-2">Name subject: </v-label>{{ file.subject.name_subject }}<br />
                       <v-label class="mr-2">Strain: </v-label>{{ file.subject.strain_subject.name_strain }}<br />
                       <v-label class="mr-2">Protocol name: </v-label>{{ file.experiment.protocol.name_protocol }}<br />
@@ -123,7 +139,7 @@ onMounted(() => fetchFiles());
 
                     <!-- Expansion Panel -->
                     <v-expansion-panels>
-                      <v-expansion-panel title="More information" bg-color="grey-lighten-3">
+                      <v-expansion-panel title="More information" bg-color="grey-lighten-2">
                         <v-expansion-panel-text>
                           <v-card class="mx-auto my-2 pt-2 pl-2" title="Subject">
                             <v-card-item>
@@ -170,19 +186,39 @@ onMounted(() => fetchFiles());
                     </v-expansion-panels>
                     <v-divider class="mx-4"></v-divider>
 
-                    <!-- Actions: DOI et Download -->
-                    <v-card-actions>
-                      <v-btn color="red-darken-4" prepend-icon="mdi-download">
-                        <a :href="file.link_file" target="_blank">Download</a>
-                      </v-btn>
-                      <v-chip class="ma-2" label color="red-darken-4" v-if="file.doi_file">
-                        DOI:
-                        <a v-if="file.doi_file.includes('zenodo')" 
-                          :href="'https://zenodo.org/record/' + file.doi_file.split('zenodo.')[1]" 
-                          target="_blank"> {{ file.doi_file }}
-                        </a>
-                      </v-chip>
-                      <span v-if="file.notes_file"><strong class="mr-2">Notes:</strong> {{ file.notes_file }}</span>
+                    <!-- Actions: DOI and Download -->
+                    <v-card-actions class="d-flex align-center">
+                      <v-row class="w-100">
+                        <v-col class="d-flex align-center" cols="auto">
+                          <v-chip class="ma-2" label color="red-lighten-1" v-if="file.doi_file">
+                            DOI:
+                            <a 
+                              v-if="file.doi_file.includes('zenodo')" 
+                              :href="'https://zenodo.org/record/' + file.doi_file.split('zenodo.')[1]" 
+                              target="_blank" 
+                              class="doi">
+                              {{ file.doi_file }}
+                            </a>
+                          </v-chip>
+                          <span v-if="file.notes_file" class="ml-2">
+                            <strong class="mr-2">Notes:</strong> {{ file.notes_file }}
+                          </span>
+                        </v-col>
+
+                        <v-spacer></v-spacer>
+
+                        <v-col class="d-flex justify-end" cols="auto">
+                          <v-btn 
+                            color="red-darken-4" 
+                            prepend-icon="mdi-download" 
+                            variant="tonal" 
+                            elevation="4" 
+                            border 
+                            class="ma-2 hover-effect">
+                            <a :href="file.link_file" target="_blank">Download</a>
+                          </v-btn>
+                        </v-col>
+                      </v-row>
                     </v-card-actions>
                   </v-card>
                 </v-container>
@@ -206,18 +242,23 @@ onMounted(() => fetchFiles());
 
 
 <style scoped>
-a{
-  text-decoration: none;
-  color: #B71C1C;
+
+.hover-effect:hover {
+  transform: scale(1.05);
+  background-color:rgb(247, 226, 226);
 }
 
-a:hover{
+a{
+  text-decoration: none;
+  color:rgb(219, 98, 98);
+}
+
+.doi:hover{
   text-decoration: underline;
 }
 
 li{
   list-style: none;
-
 }
 
 </style>
