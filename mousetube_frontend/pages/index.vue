@@ -119,35 +119,38 @@ Code under GPL v3.0 licence
 
 
 
-<script>
+<script setup>
+////////////////////////////////
+// IMPORT
+////////////////////////////////
+import { ref, onMounted } from "vue";
 import axios from "axios";
 
-export default {
-  name: "index",
-  data: function () {
-    return {
-      numberOfFiles: [],
-      dataLoaded: false
-    }
-  },
-  methods: {
-    getNumberOfFiles() {
-      axios.get(`http://127.0.0.1:8000/api/file`)
-          .then(response => {
-            this.numberOfFiles = response.data.length
-            console.log(this.numberOfFiles)
-            this.dataLoaded = true
-          })
-          .catch(error => {
-            console.log(JSON.stringify(error))
-          })
-    },
+////////////////////////////////
+// DATA
+////////////////////////////////
+const numberOfFiles = ref([]);
+const dataLoaded = ref(false);
 
-  },
-  mounted() {
-    this.getNumberOfFiles()
-  }
-}
+////////////////////////////////
+// METHODS
+////////////////////////////////
+const getNumberOfFiles = () => {
+  axios
+    .get(`http://127.0.0.1:8000/api/file`)
+    .then((response) => {
+      numberOfFiles.value = response.data.length;
+      console.log(numberOfFiles.value);
+      dataLoaded.value = true;
+    })
+    .catch((error) => {
+      console.log(JSON.stringify(error));
+    });
+};
+
+onMounted(() => {
+  getNumberOfFiles();
+});
 </script>
 
 <style scoped>

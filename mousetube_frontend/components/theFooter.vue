@@ -23,12 +23,8 @@ Code under GPL v3.0 licence
   </v-footer>
 </template>
 
-<script>
-
-export default {
-  name: "TheFooter",
-
-}
+<script setup>
+// Header page
 </script>
 
 <style scoped>

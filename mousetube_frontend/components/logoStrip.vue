@@ -35,12 +35,8 @@ Code under GPL v3.0 licence
   </v-container>
 </template>
 
-<script>
-
-export default {
-  name: "logoStrip",
-
-}
+<script setup>
+// Logo page
 </script>
 
 <style scoped>

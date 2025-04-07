@@ -125,13 +125,8 @@ Code under GPL v3.0 licence
 </template>
 
 
-
-<script>
-
-export default {
-  name: "team",
-
-}
+<script setup>
+// Team page
 </script>
 
 <style scoped>
