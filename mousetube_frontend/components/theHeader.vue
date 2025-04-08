@@ -23,8 +23,8 @@ Code under GPL v3.0 licence
   </v-app-bar>
 </template>
 
-<script>
-
+<script setup>
+// Header page
 </script>
 
 <style scoped>

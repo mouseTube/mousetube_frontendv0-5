@@ -6,6 +6,42 @@ CNRS - Mouse Clinical Institute
 PHENOMIN, CNRS UMR7104, INSERM U964, Université de Strasbourg
 Code under GPL v3.0 licence
 -->
+
+<script setup>
+////////////////////////////////
+// IMPORT
+////////////////////////////////
+import { ref, onMounted } from "vue";
+import axios from "axios";
+
+////////////////////////////////
+// DATA
+////////////////////////////////
+const numberOfFiles = ref(0);
+const dataLoaded = ref(false);
+
+////////////////////////////////
+// METHODS
+////////////////////////////////
+const getNumberOfFiles = () => {
+  axios
+    .get(`http://127.0.0.1:8000/api/file`)
+    .then((response) => {
+      numberOfFiles.value = response.data.count;
+      console.log(numberOfFiles.value);
+      dataLoaded.value = true;
+    })
+    .catch((error) => {
+      console.log(JSON.stringify(error));
+    });
+};
+
+onMounted(() => {
+  getNumberOfFiles();
+});
+</script>
+
+
 <template>
   <v-main>
     <v-container>
@@ -22,7 +58,7 @@ Code under GPL v3.0 licence
               <v-row justify="center" no-gutters>
                 <v-col
                   class="text-h4" v-if="dataLoaded">
-                  {{ numberOfFiles }} vocalisation files available now!
+                  {{ numberOfFiles }} vocalization files available now!
                 </v-col>
                 <v-col v-else>
                   <v-progress-circular color="red-darken-4" indeterminate></v-progress-circular>
@@ -64,7 +100,7 @@ Code under GPL v3.0 licence
                   The mechanisms of production, the temporal organization into sequences, the significance of the acoustic features and the
                   effect on the recipient are far from elucidated. Understanding the complexity of this communication system requires
                   a vast amount of data to explore with high-performance analysis methods. For that purpose, we developed <strong>mouseTube</strong>, a database
-                  designed to facilitate sharing, archiving and analysing raw recording files of rodent ultrasonic vocalisations following the
+                  designed to facilitate sharing, archiving and analysing raw recording files of rodent ultrasonic vocalizations following the
                   FAIR (Findable, Accessible, Interoperable, Reusable) principles (<nuxt-link href="https://doi.org/10.1038/sdata.2016.18" target="_blank">Wilkinson et al., 2016</nuxt-link>).
                 </v-card-text>
               </v-card>
@@ -116,39 +152,6 @@ Code under GPL v3.0 licence
   </v-main>
 
 </template>
-
-
-
-<script>
-import axios from "axios";
-
-export default {
-  name: "index",
-  data: function () {
-    return {
-      numberOfFiles: [],
-      dataLoaded: false
-    }
-  },
-  methods: {
-    getNumberOfFiles() {
-      axios.get(`http://127.0.0.1:8000/api/file`)
-          .then(response => {
-            this.numberOfFiles = response.data.count
-            console.log(this.numberOfFiles)
-            this.dataLoaded = true
-          })
-          .catch(error => {
-            console.log(JSON.stringify(error))
-          })
-    },
-
-  },
-  mounted() {
-    this.getNumberOfFiles()
-  }
-}
-</script>
 
 <style scoped>
 a{

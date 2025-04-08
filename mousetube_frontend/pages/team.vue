@@ -6,6 +6,11 @@ CNRS - Mouse Clinical Institute
 PHENOMIN, CNRS UMR7104, INSERM U964, Université de Strasbourg
 Code under GPL v3.0 licence
 -->
+
+<script setup>
+// Team page
+</script>
+
 <template>
   <v-main>
      <v-container>
@@ -123,16 +128,6 @@ Code under GPL v3.0 licence
      </v-container>
   </v-main>
 </template>
-
-
-
-<script>
-
-export default {
-  name: "team",
-
-}
-</script>
 
 <style scoped>
 a{
