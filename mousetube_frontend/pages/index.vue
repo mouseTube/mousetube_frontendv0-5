@@ -6,6 +6,42 @@ CNRS - Mouse Clinical Institute
 PHENOMIN, CNRS UMR7104, INSERM U964, Université de Strasbourg
 Code under GPL v3.0 licence
 -->
+
+<script setup>
+////////////////////////////////
+// IMPORT
+////////////////////////////////
+import { ref, onMounted } from "vue";
+import axios from "axios";
+
+////////////////////////////////
+// DATA
+////////////////////////////////
+const numberOfFiles = ref(0);
+const dataLoaded = ref(false);
+
+////////////////////////////////
+// METHODS
+////////////////////////////////
+const getNumberOfFiles = () => {
+  axios
+    .get(`http://127.0.0.1:8000/api/file`)
+    .then((response) => {
+      numberOfFiles.value = response.data.length;
+      console.log(numberOfFiles.value);
+      dataLoaded.value = true;
+    })
+    .catch((error) => {
+      console.log(JSON.stringify(error));
+    });
+};
+
+onMounted(() => {
+  getNumberOfFiles();
+});
+</script>
+
+
 <template>
   <v-main>
     <v-container>
@@ -116,42 +152,6 @@ Code under GPL v3.0 licence
   </v-main>
 
 </template>
-
-
-
-<script setup>
-////////////////////////////////
-// IMPORT
-////////////////////////////////
-import { ref, onMounted } from "vue";
-import axios from "axios";
-
-////////////////////////////////
-// DATA
-////////////////////////////////
-const numberOfFiles = ref(0);
-const dataLoaded = ref(false);
-
-////////////////////////////////
-// METHODS
-////////////////////////////////
-const getNumberOfFiles = () => {
-  axios
-    .get(`http://127.0.0.1:8000/api/file`)
-    .then((response) => {
-      numberOfFiles.value = response.data.length;
-      console.log(numberOfFiles.value);
-      dataLoaded.value = true;
-    })
-    .catch((error) => {
-      console.log(JSON.stringify(error));
-    });
-};
-
-onMounted(() => {
-  getNumberOfFiles();
-});
-</script>
 
 <style scoped>
 a{
