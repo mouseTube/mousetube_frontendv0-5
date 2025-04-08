@@ -58,7 +58,7 @@ onMounted(() => {
               <v-row justify="center" no-gutters>
                 <v-col
                   class="text-h4" v-if="dataLoaded">
-                  {{ numberOfFiles }} vocalisation files available now!
+                  {{ numberOfFiles }} vocalization files available now!
                 </v-col>
                 <v-col v-else>
                   <v-progress-circular color="red-darken-4" indeterminate></v-progress-circular>
@@ -100,7 +100,7 @@ onMounted(() => {
                   The mechanisms of production, the temporal organization into sequences, the significance of the acoustic features and the
                   effect on the recipient are far from elucidated. Understanding the complexity of this communication system requires
                   a vast amount of data to explore with high-performance analysis methods. For that purpose, we developed <strong>mouseTube</strong>, a database
-                  designed to facilitate sharing, archiving and analysing raw recording files of rodent ultrasonic vocalisations following the
+                  designed to facilitate sharing, archiving and analysing raw recording files of rodent ultrasonic vocalizations following the
                   FAIR (Findable, Accessible, Interoperable, Reusable) principles (<nuxt-link href="https://doi.org/10.1038/sdata.2016.18" target="_blank">Wilkinson et al., 2016</nuxt-link>).
                 </v-card-text>
               </v-card>
