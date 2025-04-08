@@ -208,14 +208,21 @@ onMounted(() => fetchFiles());
                         <v-spacer></v-spacer>
 
                         <v-col class="d-flex justify-end" cols="auto">
-                          <v-btn 
-                            color="red-darken-4" 
+                          <v-btn v-if="file.is_valid_link"
+                            color="red-darken-4"
                             prepend-icon="mdi-download" 
                             variant="tonal" 
                             elevation="4" 
-                            border 
-                            class="ma-2 hover-effect">
+                            class="ma-2 hover-effect border-sm">
                             <a :href="file.link_file" target="_blank">Download</a>
+                          </v-btn>
+                          <v-btn v-else
+                            color="grey"
+                            prepend-icon="mdi-alert-circle" 
+                            variant="tonal" 
+                            elevation="4" 
+                            class="ma-2 border-sm">
+                            <a :href="file.link_file" target="_blank"> Invalid link</a>
                           </v-btn>
                         </v-col>
                       </v-row>
