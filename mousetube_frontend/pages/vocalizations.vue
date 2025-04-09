@@ -29,6 +29,8 @@ const previous = ref(null);
 const count = ref(0);
 const currentPage = ref(1);
 const perPage = ref(10);
+const showFilters = ref(false)
+const filters = ref(["is_valid_link"]);
 
 ////////////////////////////////
 // METHODS
@@ -38,7 +40,7 @@ const perPage = ref(10);
  * Fetch files from the API
  * @param {string} url - The URL to fetch data from
  */
-const fetchFiles = async (url = `http://127.0.0.1:8000/api/file/?page_size=${perPage.value}`) => {
+const fetchFiles = async (url = `http://127.0.0.1:8000/api/file/?page_size=${perPage.value}&filter=${filters.value}`) => {
   dataLoaded.value = false;
   try {
     const response = await axios.get(url);
@@ -59,9 +61,19 @@ const fetchFiles = async (url = `http://127.0.0.1:8000/api/file/?page_size=${per
  * @param {string} searchTerm - The search term to filter files
  */
 const onSearch = debounce(() => {
-  fetchFiles(`http://127.0.0.1:8000/api/file/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}`);
+  fetchFiles(`http://127.0.0.1:8000/api/file/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}&filter=${filters.value}`);
 }, 600);
 
+const onToggleIsValidLink = () => {
+  const index = filters.value.indexOf('is_valid_link')
+  console.log(index)
+  if (index > -1) {
+    filters.value.splice(index, 1)
+  } else {
+    filters.value.push('is_valid_link')
+  }
+  onSearch()
+}
 
 ////////////////////////////////
 // WATCHER
@@ -90,7 +102,15 @@ onMounted(() => fetchFiles());
       <v-row>
         <v-col>
           <v-card variant="flat" class="mx-auto" max-width="1000">
+            <div class="d-flex align-center">
             <h1>Vocalizations</h1>
+            <v-chip
+                  v-if="count>0"
+                  class="me-1 my-1 mx-2"
+                >
+                  {{ count }}
+                </v-chip>
+              </div>
             <!-- Search bar  -->
             <v-toolbar rounded="lg" floating class="px-2 border-sm">
               <v-text-field
@@ -117,7 +137,38 @@ onMounted(() => fetchFiles());
                 :menu-props="{ contentClass: 'select-dropdown-zfix' }"
                 hide-details
               />
+
+              <v-btn
+                icon="mdi-filter-variant"
+                @click="showFilters = !showFilters"
+                variant="text"
+              />
             </v-toolbar>
+            <!-- Filtres -->
+            <div class="px-10">
+            <v-expand-transition>
+              <v-sheet
+                v-if="showFilters"
+                color="grey-lighten-4"
+                class="pa-4 mt-2 mb-4 rounded-lg border elevation-1"
+                mx-auto
+              >
+              <h3 class="text-subtitle-1 mb-2">Filters</h3>
+                <v-row>
+                  <v-col cols="12" sm="4">
+                    <v-checkbox
+                      :model-value="filters.includes('is_valid_link')"
+                      @change="onToggleIsValidLink"
+                      label="Valid links only"
+                      density="compact"
+                      hide-details
+                      class="py-0"
+                    />
+                  </v-col>
+                </v-row>
+              </v-sheet>
+            </v-expand-transition>
+          </div>
             <!-- Loading spinner  -->
             <v-progress-circular v-if="!dataLoaded" indeterminate color="primary" class="d-block mx-auto my-5"></v-progress-circular>
             <!-- Data display -->
@@ -208,14 +259,21 @@ onMounted(() => fetchFiles());
                         <v-spacer></v-spacer>
 
                         <v-col class="d-flex justify-end" cols="auto">
-                          <v-btn 
-                            color="red-darken-4" 
+                          <v-btn v-if="file.is_valid_link"
+                            color="red-darken-4"
                             prepend-icon="mdi-download" 
                             variant="tonal" 
                             elevation="4" 
-                            border 
-                            class="ma-2 hover-effect">
+                            class="ma-2 hover-effect border-sm">
                             <a :href="file.link_file" target="_blank">Download</a>
+                          </v-btn>
+                          <v-btn v-else
+                            color="grey"
+                            prepend-icon="mdi-alert-circle" 
+                            variant="tonal" 
+                            elevation="4" 
+                            class="ma-2 border-sm">
+                            <a :href="file.link_file" target="_blank"> Invalid link</a>
                           </v-btn>
                         </v-col>
                       </v-row>
