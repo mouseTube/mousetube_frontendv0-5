@@ -28,7 +28,6 @@ const getNumberOfFiles = () => {
     .get(`http://127.0.0.1:8000/api/file`)
     .then((response) => {
       numberOfFiles.value = response.data.count;
-      console.log(numberOfFiles.value);
       dataLoaded.value = true;
     })
     .catch((error) => {
