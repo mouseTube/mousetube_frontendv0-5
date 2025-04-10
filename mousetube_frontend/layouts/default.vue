@@ -12,9 +12,26 @@ Code under GPL v3.0 licence
 </script>
 
 <template>
-  <div>
+  <div class="page-wrapper">
     <TheHeader />
-    <slot />
-    <TheFooter />
+    <div class="content">
+      <slot />
+    </div>
+    <TheFooter/>
   </div>
 </template>
+
+<style scoped>
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+</style>

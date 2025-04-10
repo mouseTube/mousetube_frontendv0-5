@@ -171,6 +171,15 @@ onMounted(() => fetchFiles());
           </div>
             <!-- Loading spinner  -->
             <v-progress-circular v-if="!dataLoaded" indeterminate color="primary" class="d-block mx-auto my-5"></v-progress-circular>
+            <!-- No data message -->
+            <v-alert v-else-if="count === 0 & dataLoaded" class="mt-5 border" type="info" color="grey-lighten-2">
+              <v-row>
+                <v-col class="text-center">
+                  <h3>No data available</h3>
+                  <p>Try to change the search term or remove the filters.</p>
+                </v-col>
+              </v-row>
+            </v-alert>
             <!-- Data display -->
             <v-data-iterator v-else class="mt-5" :items="files" :items-per-page="perPage">
               <template v-slot:default="{ items }">
