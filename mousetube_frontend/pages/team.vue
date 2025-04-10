@@ -21,7 +21,7 @@ Code under GPL v3.0 licence
             class="mx-auto"
             max-width="800"
           >
-            <v-img cover :width="600" src="/logo_mousetube_big.png" alt="logo mouseTube"></v-img>
+            <v-img cover :width="600" src="/logo_mousetube_big.png" alt="logo mouseTube" class="justify-center mx-10"></v-img>
             <v-card-title class="text-h2 mt-5">Team and information</v-card-title>
 
             <v-card-item>

@@ -7,19 +7,24 @@ PHENOMIN, CNRS UMR7104, INSERM U964, Université de Strasbourg
 Code under GPL v3.0 licence
 -->
 <template>
-  <v-app-bar color="black">
-    <v-app-bar-title>
-      <nuxt-link to="/" class="nuxt-link mr-8"><strong>mouseTube</strong></nuxt-link>
-      <nuxt-link to="/Vocalizations" class="nuxt-link mr-8">Vocalizations</nuxt-link>
-      <nuxt-link to="/Team" class="nuxt-link">Team</nuxt-link>
+  <v-app-bar color="#0d0d0d" height="56" class="d-flex align-center">
+    <v-app-bar-title class="fill-height d-flex justify-start align-center">
+      <nuxt-link to="/" class="nuxt-link">
+        <v-img
+          :width="70"
+          src="/logo_mousetube_carre.png"
+          alt="mouseTube"
+          class="rounded-circle"
+          style="background-color: white; padding: 5px;"
+        ></v-img>
+      </nuxt-link>
     </v-app-bar-title>
-    <v-row justify="start">
-      <v-col cols="6">
-
+    <v-row class="fill-height">
+      <v-col class="fill-height d-flex justify-start align-center">
+        <nuxt-link to="/Vocalizations" class="nuxt-link mr-10 nav-item" exact-active-class="active-link" >Vocalizations</nuxt-link>
+        <nuxt-link to="/Team" class="nuxt-link nav-item" exact-active-class="active-link">Team</nuxt-link>
       </v-col>
-
     </v-row>
-
   </v-app-bar>
 </template>
 
@@ -31,10 +36,55 @@ Code under GPL v3.0 licence
 .nuxt-link{
   color: white;
   text-decoration: None;
+  padding: 5px;
 }
 
-.nuxt-link:hover{
-  text-decoration: underline;
+.nav-item {
+  position: relative;
+  display: inline-block;
+  padding: 8px 16px;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+  text-decoration: none;
+  transition: color 0.3s;
+  z-index: 0;
+}
+
+.nav-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.363);
+  border-radius: 12px;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+  z-index: -1;
+}
+
+/* Animation de giggle en ciblant les côtés */
+@keyframes giggle {
+  0% { transform: scaleX(1) scaleY(1) rotate(0deg); }
+  25% { transform: scaleX(1.1) scaleY(1) rotate(2deg); }
+  50% { transform: scaleX(1) scaleY(1) rotate(0deg); }
+  75% { transform: scaleX(1.1) scaleY(1) rotate(-2deg); }
+  100% { transform: scaleX(1) scaleY(1) rotate(0deg); }
+}
+
+/* Appliquer l'animation "giggle" au hover et garder l'effet après clic */
+.nav-item:hover::before,
+.active-link::before {
+  opacity: 1;
+  box-shadow: 0 0 12px rgba(248, 247, 247, 0.336); /* Glow subtil */
+  animation: giggle 0.3s ease-in-out; /* Animation de secousse sur les côtés */
+}
+
+/* Assure que le texte reste visible */
+.nav-item:hover,
+.active-link {
+  color: white;
 }
 
 </style>
