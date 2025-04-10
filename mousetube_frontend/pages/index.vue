@@ -46,14 +46,16 @@ onMounted(() => {
   <v-main>
     <v-container>
       <v-row>
-        <v-col>
+        <v-col cols="12" md="6">
           <v-card
             variant="flat"
             class="mx-auto"
-            max-width="800"
+            max-width="710"
           >
-            <v-img cover :width="600" src="/logo_mousetube_big.png" alt="logo mouseTube"></v-img>
-            <v-card-title class="text-h2 mt-5">Welcome to mouseTube</v-card-title>
+          <v-row justify="center" no-gutters>
+            <v-img cover :width="450" src="/logo_mousetube_big.png" alt="logo mouseTube" class="d-flex justify-center mx-10 mb-10"></v-img>
+          </v-row>
+            <!-- <v-card-title class="text-h2 mt-5">Welcome to mouseTube</v-card-title> -->
             <v-card-text>
               <v-row justify="center" no-gutters>
                 <v-col
@@ -66,7 +68,7 @@ onMounted(() => {
               </v-row>
             </v-card-text>
             <v-card-item>
-              <v-card class="mx-auto my-2 pt-2 pl-2" variant="tonal" title="About this version (v0.5)" prepend-icon="mdi-information">
+              <v-card class="mx-auto pt-2 pl-2" variant="tonal" title="About this version (v0.5)" prepend-icon="mdi-information">
                 <v-card-text>
                   This is a temporary version of <strong>mouseTube</strong>.<br /> This version uses the same database as the initial version but with more recent and safer technologies.
                   The main improvement is that data are now accessible without authentication.<br />
@@ -77,7 +79,24 @@ onMounted(() => {
             </v-card-item>
 
             <v-card-item>
-              <v-card class="mx-auto my-2 pt-2 pl-2" variant="tonal" title="What is mouseTube">
+              <v-card class="mx-auto pt-2 pl-2" variant="tonal" title="Call for papers">
+                <v-card-text>
+                  Working on ultrasonic vocalizations? Together, Dr. Elodie Ey and Dr. Markus Wöhr are serving as guest editors for a Behavioural Brain Research special issue on Ultrasonic Communication in Rodents. They are more than happy to learn about your most recent discoveries.<br />
+                  <br />
+                  More information here: <nuxt-link href="https://www.sciencedirect.com/special-issue/317071/ultrasonic-communication-in-rodents" target="_blank">Behavioural Brain Research - Ultrasonic Communication in Rodents</nuxt-link>
+                </v-card-text>
+              </v-card>
+            </v-card-item>
+          </v-card>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-card
+            variant="flat"
+            class="mx-auto"
+            max-width="700"
+          >
+            <v-card-item>
+              <v-card class="mx-auto pt-2 pl-2" variant="tonal" title="What is mouseTube?">
                 <v-card-text>
                   Rodents communicate with each other through their various sensory modalities: olfaction (scent marking, glands),
                   vision (postures), touch (contacts) and hearing (vocalizations). In the latter case, vocalizations are mainly emitted
@@ -107,19 +126,9 @@ onMounted(() => {
             </v-card-item>
 
             <v-card-item>
-              <v-card class="mx-auto my-2 pt-2 pl-2" variant="tonal" title="Call for papers">
-                <v-card-text>
-                  Working on ultrasonic vocalizations? Together, Dr. Elodie Ey and Dr. Markus Wöhr are serving as guest editors for a Behavioural Brain Research special issue on Ultrasonic Communication in Rodents. They are more than happy to learn about your most recent discoveries.<br />
-                  <br />
-                  More information here: <nuxt-link href="https://www.sciencedirect.com/special-issue/317071/ultrasonic-communication-in-rodents" target="_blank">Behavioural Brain Research - Ultrasonic Communication in Rodents</nuxt-link>
-                </v-card-text>
-              </v-card>
-            </v-card-item>
-
-            <v-card-item>
               <v-card
                 variant="tonal"
-                class="mx-auto my-2 pt-2 pl-2"
+                class="mx-auto pt-2 pl-2"
                 title="Check out the mouseTube's publications:"
               >
                 <v-card-text>
