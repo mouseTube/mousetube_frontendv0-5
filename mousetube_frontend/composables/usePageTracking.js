@@ -6,12 +6,10 @@ import axios from 'axios'
 export function usePageTracking() {
   const route = useRoute()
 
-  // on loading page, track the visit
   onMounted(() => {
     trackPageVisit(route.path)
   })
 
-  // on page change, track the visit
   watch(
     () => route.path,
     (newPath) => {
