@@ -8,9 +8,9 @@ Code under GPL v3.0 licence
 -->
 
 <script setup>
-import { usePageTracking } from '@/composables/usePageTracking'
+import { usePageTracking } from '@/composables/usePageTracking';
 
-usePageTracking()
+usePageTracking();
 </script>
 
 <template>
