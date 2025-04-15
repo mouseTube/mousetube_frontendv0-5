@@ -1,4 +1,4 @@
-FROM node:23-slime
+FROM node:23-alpine
 
 ENV NODE_ENV=production
 
