@@ -7,9 +7,7 @@ PHENOMIN, CNRS UMR7104, INSERM U964, Université de Strasbourg
 Code under GPL v3.0 licence
 -->
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
   <div class="page-wrapper">
@@ -17,7 +15,7 @@ Code under GPL v3.0 licence
     <div class="content">
       <slot />
     </div>
-    <TheFooter/>
+    <TheFooter />
   </div>
 </template>
 
@@ -33,5 +31,4 @@ Code under GPL v3.0 licence
   justify-content: center;
   height: 100%;
 }
-
 </style>
