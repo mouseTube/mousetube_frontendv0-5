@@ -7,16 +7,28 @@ PHENOMIN, CNRS UMR7104, INSERM U964, Université de Strasbourg
 Code under GPL v3.0 licence
 -->
 
-<script setup>
-import { usePageTracking } from '@/composables/usePageTracking'
-
-usePageTracking()
-</script>
+<script setup></script>
 
 <template>
-  <div>
+  <div class="page-wrapper">
     <TheHeader />
-    <slot />
+    <div class="content">
+      <slot />
+    </div>
     <TheFooter />
   </div>
 </template>
+
+<style scoped>
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.content {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+</style>
