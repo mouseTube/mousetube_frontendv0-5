@@ -45,7 +45,6 @@ const fetchFiles = async (
 ) => {
   dataLoaded.value = false;
   try {
-    console.log(url)
     const response = await axios.get(url);
     files.value = response.data.results;
     next.value = response.data.next;
