@@ -19,13 +19,14 @@ import axios from 'axios';
 ////////////////////////////////
 const numberOfFiles = ref(0);
 const dataLoaded = ref(false);
+const apiBaseUrl = process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
 
 ////////////////////////////////
 // METHODS
 ////////////////////////////////
 const getNumberOfFiles = () => {
   axios
-    .get(`${process.env.NUXT_PUBLIC_API_BASE_URL}/file`)
+    .get(`${apiBaseUrl}/file`)
     .then((response) => {
       numberOfFiles.value = response.data.count;
       dataLoaded.value = true;
