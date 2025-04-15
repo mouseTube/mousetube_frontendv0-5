@@ -25,13 +25,13 @@ const dataLoaded = ref(false);
 ////////////////////////////////
 const getNumberOfFiles = () => {
   axios
-    .get(`http://127.0.0.1:8000/api/file`)
+    .get(`${process.env.NUXT_PUBLIC_API_BASE_URL}/file`)
     .then((response) => {
       numberOfFiles.value = response.data.count;
       dataLoaded.value = true;
     })
     .catch((error) => {
-      // eslint-disable-next-line no-console
+      //eslint-disable-next-line no-console
       console.log(JSON.stringify(error));
     });
 };
