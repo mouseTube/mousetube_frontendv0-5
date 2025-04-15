@@ -30,6 +30,7 @@ const currentPage = ref(1);
 const perPage = ref(10);
 const showFilters = ref(false);
 const filters = ref(['is_valid_link']);
+const apiBaseUrl = process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
 
 ////////////////////////////////
 // METHODS
@@ -40,7 +41,7 @@ const filters = ref(['is_valid_link']);
  * @param {string} url - The URL to fetch data from
  */
 const fetchFiles = async (
-  url = `http://127.0.0.1:8000/api/file/?page_size=${perPage.value}&filter=${filters.value}`
+  url = `${apiBaseUrl}/file/?page_size=${perPage.value}&filter=${filters.value}`
 ) => {
   dataLoaded.value = false;
   try {
@@ -64,7 +65,7 @@ const fetchFiles = async (
  */
 const onSearch = debounce(() => {
   fetchFiles(
-    `http://127.0.0.1:8000/api/file/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}&filter=${filters.value}`
+    `${apiBaseUrl}/file/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}&filter=${filters.value}`
   );
 }, 600);
 
