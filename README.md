@@ -1,6 +1,6 @@
 <h1 align="center">mouseTube_frontendv0.5</h1>
 
-![Build Passing](https://img.shields.io/github/actions/workflow/status/mouseTube/mousetube_frontendv0.5/ci.yml?branch=ci_readme)
+![Build Passing](https://img.shields.io/github/actions/workflow/status/mouseTube/mousetube_frontendv0.5/ci.yml?branch=main)
 [![Made with Nuxt](https://img.shields.io/badge/Made%20with-Nuxt-green)](https://nuxt.com/)
 [![Made with Vuetify](https://img.shields.io/badge/Made%20with-Vuetify-1976D2)](https://vuetifyjs.com/)
 

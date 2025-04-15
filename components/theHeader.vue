@@ -15,14 +15,21 @@ Code under GPL v3.0 licence
           src="/logo_mousetube_carre.png"
           alt="mouseTube"
           class="rounded-circle"
-          style="background-color: white; padding: 5px;"
+          style="background-color: white; padding: 5px"
         ></v-img>
       </nuxt-link>
     </v-app-bar-title>
     <v-row class="fill-height">
       <v-col class="fill-height d-flex justify-start align-center">
-        <nuxt-link to="/Vocalizations" class="nuxt-link mr-10 nav-item" exact-active-class="active-link" >Vocalizations</nuxt-link>
-        <nuxt-link to="/Team" class="nuxt-link nav-item" exact-active-class="active-link">Team</nuxt-link>
+        <nuxt-link
+          to="/Vocalizations"
+          class="nuxt-link mr-10 nav-item"
+          exact-active-class="active-link"
+          >Vocalizations</nuxt-link
+        >
+        <nuxt-link to="/Team" class="nuxt-link nav-item" exact-active-class="active-link"
+          >Team</nuxt-link
+        >
       </v-col>
     </v-row>
   </v-app-bar>
@@ -33,7 +40,7 @@ Code under GPL v3.0 licence
 </script>
 
 <style scoped>
-.nuxt-link{
+.nuxt-link {
   color: white;
   text-decoration: None;
   padding: 5px;
@@ -46,7 +53,7 @@ Code under GPL v3.0 licence
   color: white;
   font-weight: 600;
   font-size: 18px;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   text-align: center;
   text-decoration: none;
   transition: color 0.3s;
@@ -54,23 +61,36 @@ Code under GPL v3.0 licence
 }
 
 .nav-item::before {
-  content: "";
+  content: '';
   position: absolute;
   inset: 0;
   background: rgba(255, 255, 255, 0.363);
   border-radius: 12px;
   opacity: 0;
-  transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s,
+    box-shadow 0.3s;
   z-index: -1;
 }
 
 /* Animation de giggle en ciblant les côtés */
 @keyframes giggle {
-  0% { transform: scaleX(1) scaleY(1) rotate(0deg); }
-  25% { transform: scaleX(1.1) scaleY(1) rotate(2deg); }
-  50% { transform: scaleX(1) scaleY(1) rotate(0deg); }
-  75% { transform: scaleX(1.1) scaleY(1) rotate(-2deg); }
-  100% { transform: scaleX(1) scaleY(1) rotate(0deg); }
+  0% {
+    transform: scaleX(1) scaleY(1) rotate(0deg);
+  }
+  25% {
+    transform: scaleX(1.1) scaleY(1) rotate(2deg);
+  }
+  50% {
+    transform: scaleX(1) scaleY(1) rotate(0deg);
+  }
+  75% {
+    transform: scaleX(1.1) scaleY(1) rotate(-2deg);
+  }
+  100% {
+    transform: scaleX(1) scaleY(1) rotate(0deg);
+  }
 }
 
 /* Appliquer l'animation "giggle" au hover et garder l'effet après clic */
@@ -86,5 +106,4 @@ Code under GPL v3.0 licence
 .active-link {
   color: white;
 }
-
 </style>

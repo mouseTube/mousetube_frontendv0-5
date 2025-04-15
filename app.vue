@@ -11,7 +11,6 @@ Code under GPL v3.0 licence
   <v-app id="mousetube_frontend">
     <NuxtLayout>
       <nuxt-page />
-
     </NuxtLayout>
   </v-app>
 </template>

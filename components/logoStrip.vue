@@ -10,27 +10,48 @@ Code under GPL v3.0 licence
 <template>
   <v-container>
     <v-row align="center" justify="center">
-      <v-col><v-sheet class="pa- ma-1">
-        <nuxt-link to="http://www.cnrs.fr/" target="_blank"><img src="/logo_cnrs.png" alt="CNRS" /></nuxt-link>
-      </v-sheet></v-col>
-      <v-col><v-sheet class="pa-1 ma-1">
-        <nuxt-link to="http://www.igbmc.fr" target="_blank"><img src="/logo_igbmc.png" alt="IGBMC" /></nuxt-link>
-      </v-sheet></v-col>
-      <v-col><v-sheet class="pa-1 ma-1">
-        <nuxt-link to="https://www.france-bioinformatique.fr/" target="_blank"><img src="/logo_ifb.png" alt="Institut français de bioinformatique" ></nuxt-link>
-      </v-sheet></v-col>
-      <v-col><v-sheet class="pa-1 ma-1">
-        <nuxt-link to="http://www.pasteur.fr/" target="_blank"><img src="/logo_pasteur.jpg" alt="Institut Pasteur" /></nuxt-link>
-      </v-sheet></v-col>
-      <v-col><v-sheet class="pa-1 ma-1">
-        <nuxt-link to="http://www.inserm.fr/" target="_blank"><img src="/logo_inserm.jpg" alt="Inserm" /></nuxt-link>
-      </v-sheet></v-col>
-      <v-col><v-sheet class="pa-1 ma-1">
-        <nuxt-link to="http://www.ics-mci.fr/" target="_blank"><img src="/ics2010.png" alt="ICS" /></nuxt-link>
-      </v-sheet></v-col>
-      <v-col><v-sheet class="pa-1 ma-1">
-        <nuxt-link to="https://www.fc3r.com/" target="_blank"><img src="/logo-fc3r_bleu.png" alt="FC3R" /></nuxt-link>
-      </v-sheet></v-col>
+      <v-col
+        ><v-sheet class="pa- ma-1">
+          <nuxt-link to="http://www.cnrs.fr/" target="_blank"
+            ><img src="/logo_cnrs.png" alt="CNRS"
+          /></nuxt-link> </v-sheet
+      ></v-col>
+      <v-col
+        ><v-sheet class="pa-1 ma-1">
+          <nuxt-link to="http://www.igbmc.fr" target="_blank"
+            ><img src="/logo_igbmc.png" alt="IGBMC"
+          /></nuxt-link> </v-sheet
+      ></v-col>
+      <v-col
+        ><v-sheet class="pa-1 ma-1">
+          <nuxt-link to="https://www.france-bioinformatique.fr/" target="_blank"
+            ><img src="/logo_ifb.png" alt="Institut français de bioinformatique"
+          /></nuxt-link> </v-sheet
+      ></v-col>
+      <v-col
+        ><v-sheet class="pa-1 ma-1">
+          <nuxt-link to="http://www.pasteur.fr/" target="_blank"
+            ><img src="/logo_pasteur.jpg" alt="Institut Pasteur"
+          /></nuxt-link> </v-sheet
+      ></v-col>
+      <v-col
+        ><v-sheet class="pa-1 ma-1">
+          <nuxt-link to="http://www.inserm.fr/" target="_blank"
+            ><img src="/logo_inserm.jpg" alt="Inserm"
+          /></nuxt-link> </v-sheet
+      ></v-col>
+      <v-col
+        ><v-sheet class="pa-1 ma-1">
+          <nuxt-link to="http://www.ics-mci.fr/" target="_blank"
+            ><img src="/ics2010.png" alt="ICS"
+          /></nuxt-link> </v-sheet
+      ></v-col>
+      <v-col
+        ><v-sheet class="pa-1 ma-1">
+          <nuxt-link to="https://www.fc3r.com/" target="_blank"
+            ><img src="/logo-fc3r_bleu.png" alt="FC3R"
+          /></nuxt-link> </v-sheet
+      ></v-col>
     </v-row>
   </v-container>
 </template>
@@ -40,12 +61,12 @@ Code under GPL v3.0 licence
 </script>
 
 <style scoped>
-.nuxt-link{
+.nuxt-link {
   color: white;
   text-decoration: None;
 }
 
-.nuxt-link:hover{
+.nuxt-link:hover {
   text-decoration: underline;
 }
 
@@ -53,5 +74,4 @@ img {
   max-width: 200px;
   height: auto;
 }
- 
 </style>
