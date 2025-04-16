@@ -105,7 +105,7 @@ onMounted(() => fetchFiles());
     <v-container>
       <v-row>
         <v-col>
-          <v-card variant="flat" class="mx-auto" max-width="1000">
+          <v-card variant="flat" class="mx-auto w-100" max-width="1000">
             <div class="d-flex align-center">
               <h1>Vocalizations</h1>
               <v-chip v-if="count > 0" class="me-1 my-1 mx-2">

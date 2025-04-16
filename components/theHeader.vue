@@ -9,7 +9,10 @@ Code under GPL v3.0 licence
 <template>
   <v-app-bar color="#0d0d0d" height="56" class="d-flex align-center">
     <v-app-bar-title class="fill-height d-flex justify-start align-center">
-      <nuxt-link to="/" class="nuxt-link">
+  <v-row class="fill-height">
+    <v-col class="fill-height d-flex justify-start align-center">
+      <!-- Lien autour de l'image et du texte -->
+      <nuxt-link to="/" class="nuxt-link d-flex align-center">
         <v-img
           :width="70"
           src="/logo_mousetube_carre.png"
@@ -17,8 +20,12 @@ Code under GPL v3.0 licence
           class="rounded-circle"
           style="background-color: white; padding: 5px"
         ></v-img>
+        <span class="ml-3 nuxt-link nav-item" exact-active-class="active-link">MouseTube</span>
       </nuxt-link>
-    </v-app-bar-title>
+    </v-col>
+  </v-row>
+</v-app-bar-title>
+
     <v-row class="fill-height">
       <v-col class="fill-height d-flex justify-start align-center">
         <nuxt-link
@@ -74,7 +81,6 @@ Code under GPL v3.0 licence
   z-index: -1;
 }
 
-/* Animation de giggle en ciblant les côtés */
 @keyframes giggle {
   0% {
     transform: scaleX(1) scaleY(1) rotate(0deg);
@@ -93,15 +99,27 @@ Code under GPL v3.0 licence
   }
 }
 
-/* Appliquer l'animation "giggle" au hover et garder l'effet après clic */
+.nav-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.363);
+  border-radius: 12px;
+  opacity: 0;
+  transition:
+    opacity 0.8s ease-out, 
+    transform 0.6s ease-in-out,
+    box-shadow 0.6s ease-out;
+  z-index: -1;
+}
+
 .nav-item:hover::before,
 .active-link::before {
   opacity: 1;
-  box-shadow: 0 0 12px rgba(248, 247, 247, 0.336); /* Glow subtil */
-  animation: giggle 0.3s ease-in-out; /* Animation de secousse sur les côtés */
+  box-shadow: 0 0 12px rgba(248, 247, 247, 0.336);
+  animation: giggle 0.3s ease-in-out;
 }
 
-/* Assure que le texte reste visible */
 .nav-item:hover,
 .active-link {
   color: white;
