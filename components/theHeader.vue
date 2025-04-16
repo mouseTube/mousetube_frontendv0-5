@@ -99,20 +99,6 @@ Code under GPL v3.0 licence
   }
 }
 
-.nav-item::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(255, 255, 255, 0.363);
-  border-radius: 12px;
-  opacity: 0;
-  transition:
-    opacity 0.8s ease-out, 
-    transform 0.6s ease-in-out,
-    box-shadow 0.6s ease-out;
-  z-index: -1;
-}
-
 .nav-item:hover::before,
 .active-link::before {
   opacity: 1;
