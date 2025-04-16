@@ -30,7 +30,6 @@ const getNumberOfFiles = async () => {
     if (error.value) {
       throw new Error(`Error while fetching number of files: ${error.value}`);
     }
-    console.log(data.value);
     numberOfFiles.value = data.value?.count || 0;
   } catch (error) {
     // eslint-disable-next-line no-console
