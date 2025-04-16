@@ -7,30 +7,28 @@ PHENOMIN, CNRS UMR7104, INSERM U964, Université de Strasbourg
 Code under GPL v3.0 licence
 -->
 
-<script setup>
+<script setup lang="ts">
 ////////////////////////////////
 // IMPORT
 ////////////////////////////////
 
 import { ref, onMounted, watch } from 'vue';
-import axios from 'axios';
 import { debounce } from 'lodash';
 
 ////////////////////////////////
 // DATA
 ////////////////////////////////
 
-const dataLoaded = ref(false);
-const search = ref('');
-const files = ref([]);
-const next = ref(null);
-const previous = ref(null);
-const count = ref(0);
-const currentPage = ref(1);
-const perPage = ref(10);
-const showFilters = ref(false);
-const filters = ref(['is_valid_link']);
-const apiBaseUrl = process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
+const dataLoaded = ref<boolean>(false);
+const search = ref<string>('');
+const currentPage = ref<number>(1);
+const perPage = ref<number>(10);
+const showFilters = ref<boolean>(false);
+const filters = ref<any[]>(['is_valid_link']);
+const files = ref<any[]>([]);
+const next = ref<string | null>(null);
+const previous = ref<string | null>(null);
+const count = ref<number>(0);
 
 ////////////////////////////////
 // METHODS
@@ -40,20 +38,30 @@ const apiBaseUrl = process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:800
  * Fetch files from the API
  * @param {string} url - The URL to fetch data from
  */
-const fetchFiles = async (
-  url = `${apiBaseUrl}/file/?page_size=${perPage.value}&filter=${filters.value}`
-) => {
+ const fetchFiles = async (url: string = `/file/?page_size=${perPage.value}&filter=${filters.value}&page=1`) => {
   dataLoaded.value = false;
+
   try {
-    const response = await axios.get(url);
-    files.value = response.data.results;
-    next.value = response.data.next;
-    previous.value = response.data.previous;
-    count.value = response.data.count;
-    currentPage.value = new URL(url).searchParams.get('page') || 1;
+    const { data, error } = await useApiFetch<{
+      results: any[],
+      next: string | null,
+      previous: string | null,
+      count: number,
+    }>(url);
+
+    if (error.value) {
+      throw new Error(`Error while fetching files: ${error.value}`);
+    }
+
+    files.value = data.value?.results || [];
+    next.value = data.value?.next || null;
+    previous.value = data.value?.previous || null;
+    count.value = data.value?.count || 0;
+
+    currentPage.value = parseInt(new URL(url).searchParams.get('page') || '1', 10);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('error while loading files :', error);
+    console.error('Error while loading files:', error);
   } finally {
     dataLoaded.value = true;
   }
@@ -64,9 +72,8 @@ const fetchFiles = async (
  * @param {string} searchTerm - The search term to filter files
  */
 const onSearch = debounce(() => {
-  fetchFiles(
-    `${apiBaseUrl}/file/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}&filter=${filters.value}`
-  );
+  const url = `/file/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}&filter=${filters.value}&page=1`;
+  fetchFiles(url);
 }, 600);
 
 const onToggleIsValidLink = () => {
@@ -113,7 +120,7 @@ onMounted(() => fetchFiles());
               </v-chip>
             </div>
             <!-- Search bar  -->
-            <v-toolbar rounded="lg" floating class="px-2 border-sm">
+            <v-toolbar rounded="lg" floating class="px-2 border-sm w-100">
               <v-text-field
                 v-model="search"
                 @input="onSearch"
@@ -175,7 +182,7 @@ onMounted(() => fetchFiles());
             ></v-progress-circular>
             <!-- No data message -->
             <v-alert
-              v-else-if="(count === 0) & dataLoaded"
+              v-else-if="(count === 0) && dataLoaded"
               class="mt-5 border"
               type="info"
               color="grey-lighten-2"
@@ -368,7 +375,7 @@ onMounted(() => fetchFiles());
                 density="comfortable"
                 variant="tonal"
                 rounded
-                @click="fetchFiles(previous)"
+                @click="previous ? fetchFiles(previous) : null"
               ></v-btn>
               <div class="mx-2 text-caption">
                 Page {{ currentPage }} / {{ Math.ceil(count / perPage) }}
@@ -379,7 +386,7 @@ onMounted(() => fetchFiles());
                 density="comfortable"
                 variant="tonal"
                 rounded
-                @click="fetchFiles(next)"
+                @click="next ? fetchFiles(next) : null"
               ></v-btn>
             </div>
           </v-card>

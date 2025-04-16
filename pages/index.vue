@@ -7,34 +7,37 @@ PHENOMIN, CNRS UMR7104, INSERM U964, Université de Strasbourg
 Code under GPL v3.0 licence
 -->
 
-<script setup>
+<script setup lang="ts">
 ////////////////////////////////
 // IMPORT
 ////////////////////////////////
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
 
 ////////////////////////////////
 // DATA
 ////////////////////////////////
 const numberOfFiles = ref(0);
 const dataLoaded = ref(false);
-const apiBaseUrl = process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
 
 ////////////////////////////////
 // METHODS
 ////////////////////////////////
-const getNumberOfFiles = () => {
-  axios
-    .get(`${apiBaseUrl}/file`)
-    .then((response) => {
-      numberOfFiles.value = response.data.count;
-      dataLoaded.value = true;
-    })
-    .catch((error) => {
-      //eslint-disable-next-line no-console
-      console.log(JSON.stringify(error));
-    });
+const getNumberOfFiles = async () => {
+  dataLoaded.value = false;
+
+  try {
+    const { data, error } = await useApiFetch<{ count: number }>('/file');
+    if (error.value) {
+      throw new Error(`Error while fetching number of files: ${error.value}`);
+    }
+    console.log(data.value);
+    numberOfFiles.value = data.value?.count || 0;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error while fetching number of files:', error);
+  } finally {
+    dataLoaded.value = true;
+  }
 };
 
 onMounted(() => {
