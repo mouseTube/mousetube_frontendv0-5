@@ -106,7 +106,7 @@ onMounted(() => fetchFiles());
     <v-container>
       <v-row>
         <v-col>
-          <v-card variant="flat" class="mx-auto w-100" max-width="1000">
+          <v-card variant="flat" class="mx-auto" max-width="1000">
             <div class="d-flex align-center">
               <h1><AudioLines /> Vocalizations</h1>
               <v-chip v-if="count > 0" class="me-1 my-1 mx-2">
@@ -114,7 +114,7 @@ onMounted(() => fetchFiles());
               </v-chip>
             </div>
             <!-- Search bar  -->
-            <v-toolbar rounded="lg" floating class="px-2 border-sm">
+            <v-toolbar rounded="lg" class="px-2 border-sm">
               <v-text-field
                 v-model="search"
                 @input="onSearch"

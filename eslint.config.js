@@ -1,30 +1,23 @@
-import js from '@eslint/js';
-import vuePlugin from 'eslint-plugin-vue';
-import nuxtPlugin from 'eslint-plugin-nuxt';
-import prettierPlugin from 'eslint-plugin-prettier';
-import prettierConfig from 'eslint-config-prettier';
-import vueParser from 'vue-eslint-parser';
-import babelParser from '@babel/eslint-parser';
+import vue from 'eslint-plugin-vue';
+import nuxt from 'eslint-plugin-nuxt';
+import prettier from 'eslint-plugin-prettier';
+import parser from 'vue-eslint-parser';
 import globals from 'globals';
 
 export default [
-  // Ignorer .nuxt et node_modules
   {
-    ignores: ['.nuxt/**/*', 'node_modules/**/*'],
+    ignores: ['node_modules', '.nuxt'],
   },
-
-  js.configs.recommended,
-  prettierConfig,
-
   {
-    files: ['**/*.js', '**/*.vue'],
+    files: ['**/*.vue', '**/*.js'],
     languageOptions: {
-      parser: vueParser,
+      parser,
       parserOptions: {
         ecmaVersion: 2022,
         sourceType: 'module',
-        parser: babelParser,
-        requireConfigFile: false,
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
       globals: {
         ...globals.browser,
@@ -32,19 +25,21 @@ export default [
       },
     },
     plugins: {
-      vue: vuePlugin,
-      nuxt: nuxtPlugin,
-      prettier: prettierPlugin,
+      vue,
+      nuxt,
+      prettier,
     },
     rules: {
+      'no-console': 'warn',
       'no-undef': 'off',
-      ...vuePlugin.configs.base.rules,
-      ...vuePlugin.configs['vue3-recommended']?.rules,
+
+      'vue/no-multiple-template-root': 'off',
+      'vue/no-v-html': 'off',
+
       'nuxt/no-env-in-hooks': 'error',
       'nuxt/no-globals-in-created': 'error',
+
       'prettier/prettier': 'error',
-      'no-console': 'warn',
-      'vue/comment-directive': 'off',
     },
     settings: {
       'vue/setup-compiler-macros': true,
