@@ -19,7 +19,7 @@ import axios from 'axios';
 ////////////////////////////////
 const numberOfFiles = ref(0);
 const dataLoaded = ref(false);
-const apiBaseUrl = process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
+const apiBaseUrl = useApiBaseUrl();
 
 ////////////////////////////////
 // METHODS
@@ -45,9 +45,9 @@ onMounted(() => {
 <template>
   <v-main>
     <v-container>
-      <v-row>
-        <v-col cols="12" md="6">
-          <v-card variant="flat" class="mx-auto" max-width="710">
+      <v-row class="d-flex" align="stretch">
+        <v-col cols="12" md="6" class="d-flex flex-grow-1">
+          <v-card variant="flat" class="mx-auto flex-grow-1 mt-10" max-width="710">
             <v-row justify="center" no-gutters>
               <v-img
                 cover
@@ -55,22 +55,23 @@ onMounted(() => {
                 src="/logo_mousetube_big.png"
                 alt="logo mouseTube"
                 class="d-flex justify-center mx-10 mb-10"
+                style="min-height: 249px"
               ></v-img>
             </v-row>
             <!-- <v-card-title class="text-h2 mt-5">Welcome to mouseTube</v-card-title> -->
-            <v-card-text>
+            <v-card-text class="mt-10">
               <v-row justify="center" no-gutters>
-                <v-col class="text-h4" v-if="dataLoaded">
-                  {{ numberOfFiles }} vocalization files available now!
+                <v-col class="text-h4 font-weight-bold" v-if="dataLoaded">
+                  {{ numberOfFiles }} vocalization files available!
                 </v-col>
                 <v-col v-else>
                   <v-progress-circular color="red-darken-4" indeterminate></v-progress-circular>
                 </v-col>
               </v-row>
             </v-card-text>
-            <v-card-item>
+            <v-card-item class="d-flex flex-column">
               <v-card
-                class="mx-auto pt-2 pl-2"
+                class="mx-auto pt-2 pl-2 flex-grow-1"
                 variant="tonal"
                 title="About this version (v0.5)"
                 prepend-icon="mdi-information"
@@ -87,8 +88,8 @@ onMounted(() => {
               </v-card>
             </v-card-item>
 
-            <v-card-item>
-              <v-card class="mx-auto pt-2 pl-2" variant="tonal" title="Call for papers">
+            <v-card-item class="d-flex flex-column">
+              <v-card class="mx-auto pt-2 pl-2 flex-grow-1" variant="tonal" title="Call for papers">
                 <v-card-text>
                   Working on ultrasonic vocalizations? Together, Dr. Elodie Ey and Dr. Markus Wöhr
                   are serving as guest editors for a Behavioural Brain Research special issue on
@@ -107,9 +108,13 @@ onMounted(() => {
           </v-card>
         </v-col>
         <v-col cols="12" md="6">
-          <v-card variant="flat" class="mx-auto" max-width="700">
-            <v-card-item>
-              <v-card class="mx-auto pt-2 pl-2" variant="tonal" title="What is mouseTube?">
+          <v-card variant="flat" class="mx-auto flex-grow-1" max-width="700">
+            <v-card-item class="d-flex flex-column">
+              <v-card
+                class="mx-auto pt-2 pl-2 flex-grow-1"
+                variant="tonal"
+                title="What is mouseTube?"
+              >
                 <v-card-text>
                   Rodents communicate with each other through their various sensory modalities:
                   olfaction (scent marking, glands), vision (postures), touch (contacts) and hearing
@@ -174,10 +179,10 @@ onMounted(() => {
               </v-card>
             </v-card-item>
 
-            <v-card-item>
+            <v-card-item class="d-flex flex-column">
               <v-card
                 variant="tonal"
-                class="mx-auto pt-2 pl-2"
+                class="mx-auto pt-2 pl-2 flex-grow-1"
                 title="Check out the mouseTube's publications:"
               >
                 <v-card-text>

@@ -71,7 +71,7 @@ Code under GPL v3.0 licence
 }
 
 img {
-  max-width: 200px;
+  max-width: 150px;
   height: auto;
 }
 </style>

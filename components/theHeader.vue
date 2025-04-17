@@ -9,16 +9,23 @@ Code under GPL v3.0 licence
 <template>
   <v-app-bar color="#0d0d0d" height="56" class="d-flex align-center">
     <v-app-bar-title class="fill-height d-flex justify-start align-center">
-      <nuxt-link to="/" class="nuxt-link">
-        <v-img
-          :width="70"
-          src="/logo_mousetube_carre.png"
-          alt="mouseTube"
-          class="rounded-circle"
-          style="background-color: white; padding: 5px"
-        ></v-img>
-      </nuxt-link>
+      <v-row class="fill-height">
+        <v-col class="fill-height d-flex justify-start align-center">
+          <!-- Lien autour de l'image et du texte -->
+          <nuxt-link to="/" class="nuxt-link d-flex align-center">
+            <v-img
+              :width="70"
+              src="/logo_mousetube_carre.png"
+              alt="mouseTube"
+              class="rounded-circle"
+              style="background-color: white; padding: 5px"
+            ></v-img>
+            <span class="ml-3 site-title">MouseTube</span>
+          </nuxt-link>
+        </v-col>
+      </v-row>
     </v-app-bar-title>
+
     <v-row class="fill-height">
       <v-col class="fill-height d-flex justify-start align-center">
         <nuxt-link
@@ -40,23 +47,24 @@ Code under GPL v3.0 licence
 </script>
 
 <style scoped>
+.site-title {
+  color: white;
+}
+
 .nuxt-link {
   color: white;
-  text-decoration: None;
-  padding: 5px;
+  font-weight: 800 !important;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
 .nav-item {
-  position: relative;
   display: inline-block;
   padding: 8px 16px;
-  color: white;
-  font-weight: 600;
-  font-size: 18px;
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
-  text-decoration: none;
-  transition: color 0.3s;
+  position: relative;
   z-index: 0;
 }
 
@@ -64,46 +72,32 @@ Code under GPL v3.0 licence
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.363);
+  background: white;
   border-radius: 12px;
   opacity: 0;
-  transition:
-    opacity 0.3s,
-    transform 0.3s,
-    box-shadow 0.3s;
+  box-shadow: 0 0 8px rgba(248, 247, 247, 0.6);
   z-index: -1;
+  transition:
+    opacity 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
-/* Animation de giggle en ciblant les côtés */
-@keyframes giggle {
-  0% {
-    transform: scaleX(1) scaleY(1) rotate(0deg);
-  }
-  25% {
-    transform: scaleX(1.1) scaleY(1) rotate(2deg);
-  }
-  50% {
-    transform: scaleX(1) scaleY(1) rotate(0deg);
-  }
-  75% {
-    transform: scaleX(1.1) scaleY(1) rotate(-2deg);
-  }
-  100% {
-    transform: scaleX(1) scaleY(1) rotate(0deg);
-  }
+.nav-item:hover::before {
+  opacity: 0.2;
 }
 
-/* Appliquer l'animation "giggle" au hover et garder l'effet après clic */
-.nav-item:hover::before,
 .active-link::before {
-  opacity: 1;
-  box-shadow: 0 0 12px rgba(248, 247, 247, 0.336); /* Glow subtil */
-  animation: giggle 0.3s ease-in-out; /* Animation de secousse sur les côtés */
+  opacity: 0.2;
 }
 
-/* Assure que le texte reste visible */
 .nav-item:hover,
 .active-link {
   color: white;
+  -webkit-text-stroke: 0;
+  background-color: transparent;
+}
+
+.site-title::before {
+  content: none !important;
 }
 </style>

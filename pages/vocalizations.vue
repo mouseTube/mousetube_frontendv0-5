@@ -15,6 +15,7 @@ Code under GPL v3.0 licence
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 import { debounce } from 'lodash';
+import { AudioLines } from 'lucide-vue-next';
 
 ////////////////////////////////
 // DATA
@@ -30,7 +31,7 @@ const currentPage = ref(1);
 const perPage = ref(10);
 const showFilters = ref(false);
 const filters = ref(['is_valid_link']);
-const apiBaseUrl = process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
+const apiBaseUrl = useApiBaseUrl();
 
 ////////////////////////////////
 // METHODS
@@ -105,9 +106,9 @@ onMounted(() => fetchFiles());
     <v-container>
       <v-row>
         <v-col>
-          <v-card variant="flat" class="mx-auto" max-width="1000">
+          <v-card variant="flat" class="mx-auto w-100" max-width="1000">
             <div class="d-flex align-center">
-              <h1>Vocalizations</h1>
+              <h1><AudioLines /> Vocalizations</h1>
               <v-chip v-if="count > 0" class="me-1 my-1 mx-2">
                 {{ count }}
               </v-chip>
