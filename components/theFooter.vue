@@ -6,6 +6,11 @@ CNRS - Mouse Clinical Institute
 PHENOMIN, CNRS UMR7104, INSERM U964, Université de Strasbourg
 Code under GPL v3.0 licence
 -->
+
+<script setup>
+// Footer page
+</script>
+
 <template>
   <v-footer color="black">
     <div class="px-4 py-2 bg-black text-center w-100">
@@ -30,10 +35,6 @@ Code under GPL v3.0 licence
     </div>
   </v-footer>
 </template>
-
-<script setup>
-// Footer page
-</script>
 
 <style scoped>
 .nuxt-link {

@@ -28,7 +28,6 @@ To run Mousetube Client locally, a working Mousetube API environment is required
 Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
 ### Setup
-
 Make sure to install dependencies:
 
 ```bash
@@ -50,7 +49,13 @@ yarn dev
 ```
 
 ### Production
-Build the application for production:
+1. Add a .env file in the mousetube_frontendv0.5 folder with the following content:
+
+   ```env
+   DEBUG=false #DEBUG muste be false in production mode, not mandatory for development mode
+   NUXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000/api #if not provided, the default value will be http://127.0.0.1:8000/api
+   ```
+2. Build the application for production:
 
 ```bash
 # npm

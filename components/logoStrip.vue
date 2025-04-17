@@ -7,6 +7,10 @@ PHENOMIN, CNRS UMR7104, INSERM U964, Université de Strasbourg
 Code under GPL v3.0 licence
 -->
 
+<script setup>
+// Logo page
+</script>
+
 <template>
   <v-container>
     <v-row align="center" justify="center">
@@ -55,10 +59,6 @@ Code under GPL v3.0 licence
     </v-row>
   </v-container>
 </template>
-
-<script setup>
-// Logo page
-</script>
 
 <style scoped>
 .nuxt-link {
