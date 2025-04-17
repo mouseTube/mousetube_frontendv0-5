@@ -61,7 +61,7 @@ onMounted(() => {
             <!-- <v-card-title class="text-h2 mt-5">Welcome to mouseTube</v-card-title> -->
             <v-card-text class="mt-10">
               <v-row justify="center" no-gutters>
-                <v-col class="text-h4" v-if="dataLoaded">
+                <v-col class="text-h4 font-weight-bold" v-if="dataLoaded">
                   {{ numberOfFiles }} vocalization files available!
                 </v-col>
                 <v-col v-else>

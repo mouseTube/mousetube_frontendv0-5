@@ -20,7 +20,7 @@ Code under GPL v3.0 licence
               class="rounded-circle"
               style="background-color: white; padding: 5px"
             ></v-img>
-            <span class="ml-3 nuxt-link nav-item">MouseTube</span>
+            <span class="ml-3 site-title">MouseTube</span>
           </nuxt-link>
         </v-col>
       </v-row>
@@ -47,23 +47,24 @@ Code under GPL v3.0 licence
 </script>
 
 <style scoped>
+.site-title {
+  color: white;
+}
+
 .nuxt-link {
   color: white;
-  text-decoration: None;
-  padding: 5px;
+  font-weight: 800 !important;
+  font-size: 20px;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
 }
 
 .nav-item {
-  position: relative;
   display: inline-block;
   padding: 8px 16px;
-  color: white;
-  font-weight: 600;
-  font-size: 18px;
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
-  text-decoration: none;
-  transition: color 0.3s;
+  position: relative;
   z-index: 0;
 }
 
@@ -71,48 +72,32 @@ Code under GPL v3.0 licence
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.363);
+  background: white;
   border-radius: 12px;
   opacity: 0;
-  transition:
-    opacity 0.3s,
-    transform 0.3s,
-    box-shadow 0.3s;
+  box-shadow: 0 0 8px rgba(248, 247, 247, 0.6);
   z-index: -1;
+  transition:
+    opacity 0.4s ease,
+    box-shadow 0.4s ease;
 }
 
-span.nav-item::before {
-  content: none !important;
-  display: none !important;
+.nav-item:hover::before {
+  opacity: 0.2;
 }
 
-@keyframes giggle {
-  0% {
-    transform: scaleX(1) scaleY(1) rotate(0deg);
-  }
-  25% {
-    transform: scaleX(1.1) scaleY(1) rotate(2deg);
-  }
-  50% {
-    transform: scaleX(1) scaleY(1) rotate(0deg);
-  }
-  75% {
-    transform: scaleX(1.1) scaleY(1) rotate(-2deg);
-  }
-  100% {
-    transform: scaleX(1) scaleY(1) rotate(0deg);
-  }
-}
-
-.nav-item:hover::before,
 .active-link::before {
-  opacity: 1;
-  box-shadow: 0 0 12px rgba(248, 247, 247, 0.336);
-  animation: giggle 0.3s ease-in-out;
+  opacity: 0.2;
 }
 
 .nav-item:hover,
 .active-link {
   color: white;
+  -webkit-text-stroke: 0;
+  background-color: transparent;
+}
+
+.site-title::before {
+  content: none !important;
 }
 </style>

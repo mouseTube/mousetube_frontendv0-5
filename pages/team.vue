@@ -9,6 +9,7 @@ Code under GPL v3.0 licence
 
 <script setup>
 // Team page
+import { Users } from 'lucide-vue-next';
 </script>
 
 <template>
@@ -19,12 +20,13 @@ Code under GPL v3.0 licence
           <v-card variant="flat" class="mx-auto" max-width="800">
             <v-img
               cover
-              :width="600"
+              :width="500"
               src="/logo_mousetube_big.png"
               alt="logo mouseTube"
-              class="justify-center mx-10"
-            ></v-img>
-            <v-card-title class="text-h2 mt-5">Team and information</v-card-title>
+              class="mx-auto d-block"
+              style="min-height: 249px"
+            />
+            <h1 class="ml-5"><Users /> Team and information</h1>
 
             <v-card-item>
               <v-card class="mx-auto my-2 pt-2 pl-2" variant="tonal" title="The mouseTube Team">
