@@ -30,7 +30,7 @@ const currentPage = ref(1);
 const perPage = ref(10);
 const showFilters = ref(false);
 const filters = ref(['is_valid_link']);
-const apiBaseUrl = process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
+const apiBaseUrl = useApiBaseUrl();
 
 ////////////////////////////////
 // METHODS

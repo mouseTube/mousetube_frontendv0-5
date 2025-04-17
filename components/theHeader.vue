@@ -9,22 +9,22 @@ Code under GPL v3.0 licence
 <template>
   <v-app-bar color="#0d0d0d" height="56" class="d-flex align-center">
     <v-app-bar-title class="fill-height d-flex justify-start align-center">
-  <v-row class="fill-height">
-    <v-col class="fill-height d-flex justify-start align-center">
-      <!-- Lien autour de l'image et du texte -->
-      <nuxt-link to="/" class="nuxt-link d-flex align-center">
-        <v-img
-          :width="70"
-          src="/logo_mousetube_carre.png"
-          alt="mouseTube"
-          class="rounded-circle"
-          style="background-color: white; padding: 5px"
-        ></v-img>
-        <span class="ml-3 nuxt-link nav-item" exact-active-class="active-link">MouseTube</span>
-      </nuxt-link>
-    </v-col>
-  </v-row>
-</v-app-bar-title>
+      <v-row class="fill-height">
+        <v-col class="fill-height d-flex justify-start align-center">
+          <!-- Lien autour de l'image et du texte -->
+          <nuxt-link to="/" class="nuxt-link d-flex align-center">
+            <v-img
+              :width="70"
+              src="/logo_mousetube_carre.png"
+              alt="mouseTube"
+              class="rounded-circle"
+              style="background-color: white; padding: 5px"
+            ></v-img>
+            <span class="ml-3 nuxt-link nav-item">MouseTube</span>
+          </nuxt-link>
+        </v-col>
+      </v-row>
+    </v-app-bar-title>
 
     <v-row class="fill-height">
       <v-col class="fill-height d-flex justify-start align-center">
@@ -79,6 +79,11 @@ Code under GPL v3.0 licence
     transform 0.3s,
     box-shadow 0.3s;
   z-index: -1;
+}
+
+span.nav-item::before {
+  content: none !important;
+  display: none !important;
 }
 
 @keyframes giggle {

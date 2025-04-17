@@ -37,6 +37,7 @@ export default [
       prettier: prettierPlugin,
     },
     rules: {
+      'no-undef': 'off',
       ...vuePlugin.configs.base.rules,
       ...vuePlugin.configs['vue3-recommended']?.rules,
       'nuxt/no-env-in-hooks': 'error',
@@ -44,6 +45,9 @@ export default [
       'prettier/prettier': 'error',
       'no-console': 'warn',
       'vue/comment-directive': 'off',
+    },
+    settings: {
+      'vue/setup-compiler-macros': true,
     },
   },
 ];

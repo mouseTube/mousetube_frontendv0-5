@@ -19,7 +19,7 @@ import axios from 'axios';
 ////////////////////////////////
 const numberOfFiles = ref(0);
 const dataLoaded = ref(false);
-const apiBaseUrl = process.env.NUXT_PUBLIC_API_BASE_URL || 'http://localhost:8000/api';
+const apiBaseUrl = useApiBaseUrl();
 
 ////////////////////////////////
 // METHODS
@@ -55,7 +55,7 @@ onMounted(() => {
                 src="/logo_mousetube_big.png"
                 alt="logo mouseTube"
                 class="d-flex justify-center mx-10 mb-10"
-                style=" min-height: 249px;"
+                style="min-height: 249px"
               ></v-img>
             </v-row>
             <!-- <v-card-title class="text-h2 mt-5">Welcome to mouseTube</v-card-title> -->
@@ -110,7 +110,11 @@ onMounted(() => {
         <v-col cols="12" md="6">
           <v-card variant="flat" class="mx-auto flex-grow-1" max-width="700">
             <v-card-item class="d-flex flex-column">
-              <v-card class="mx-auto pt-2 pl-2 flex-grow-1" variant="tonal" title="What is mouseTube?">
+              <v-card
+                class="mx-auto pt-2 pl-2 flex-grow-1"
+                variant="tonal"
+                title="What is mouseTube?"
+              >
                 <v-card-text>
                   Rodents communicate with each other through their various sensory modalities:
                   olfaction (scent marking, glands), vision (postures), touch (contacts) and hearing
@@ -225,7 +229,6 @@ onMounted(() => {
     </v-container>
   </v-main>
 </template>
-
 
 <style scoped>
 a {
