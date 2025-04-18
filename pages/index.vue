@@ -50,12 +50,11 @@ onMounted(() => {
           <v-card variant="flat" class="mx-auto flex-grow-1 mt-10" max-width="710">
             <v-row justify="center" no-gutters>
               <v-img
-                cover
-                :width="450"
+                contain
+                height="250"
                 src="/logo_mousetube_big.png"
                 alt="logo mouseTube"
                 class="d-flex justify-center mx-10 mb-10"
-                style="min-height: 249px"
               ></v-img>
             </v-row>
             <!-- <v-card-title class="text-h2 mt-5">Welcome to mouseTube</v-card-title> -->

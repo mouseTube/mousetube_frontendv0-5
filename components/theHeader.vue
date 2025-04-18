@@ -13,38 +13,52 @@ import { AudioLines } from 'lucide-vue-next';
 </script>
 
 <template>
-  <v-app-bar color="#0d0d0d" height="56" class="d-flex align-center">
-    <v-app-bar-title class="fill-height d-flex justify-start align-center">
-      <v-row class="fill-height">
-        <v-col class="fill-height d-flex justify-start align-center">
-          <nuxt-link to="/" class="nuxt-link d-flex align-center" exact-active-class="active-logo">
-            <v-img
-              :width="70"
-              src="/logo_mousetube_carre.png"
-              alt="mouseTube"
-              class="rounded-circle logo-img"
-              style="background-color: white; padding: 5px"
-            ></v-img>
-            <span class="ml-3 site-title">MouseTube</span>
-          </nuxt-link>
-        </v-col>
-      </v-row>
-    </v-app-bar-title>
-
-    <v-row class="fill-height">
-      <v-col class="fill-height d-flex justify-start align-center">
-        <nuxt-link to="/Vocalizations" class="nav-item" exact-active-class="active-link">
+  <v-app-bar color="#0d0d0d" height="56" dense flat>
+    <v-row no-gutters align="center" class="w-100" style="min-width: 0">
+      <v-col cols="auto" class="d-flex align-center flex-shrink-1" style="min-width: 0">
+        <nuxt-link
+          to="/"
+          class="nuxt-link d-flex align-center text-truncate"
+          exact-active-class="active-logo"
+        >
+          <v-img
+            :width="$vuetify.display.smAndDown ? 40 : 60"
+            src="/logo_mousetube_carre.png"
+            alt="mouseTube"
+            class="rounded-circle logo-img"
+            style="background-color: white; padding: 4px"
+          />
+          <span
+            class="ml-2 site-title"
+            :style="{ fontSize: $vuetify.display.smAndDown ? '16px' : '20px' }"
+          >
+            MouseTube
+          </span>
+        </nuxt-link>
+      </v-col>
+      <v-col
+        cols="auto"
+        class="d-flex justify-center align-center flex-nowrap"
+        style="gap: 8px; min-width: 0; flex-grow: 2; justify-content: center"
+      >
+        <nuxt-link to="/Vocalizations" class="nav-item px-2" exact-active-class="active-link">
           <span class="nav-link-content">
             <AudioLines class="nav-icon" />
             <span class="nav-label">Vocalizations</span>
           </span>
         </nuxt-link>
-        <nuxt-link to="/Team" class="nuxt-link nav-item" exact-active-class="active-link">
+        <nuxt-link to="/Team" class="nuxt-link nav-item px-2" exact-active-class="active-link">
           <span class="nav-link-content">
             <Users class="nav-icon" />
-            <span class="nav-label"> Team</span>
+            <span class="nav-label">Team</span>
           </span>
         </nuxt-link>
+      </v-col>
+      <v-col
+        cols="auto"
+        class="d-flex align-center"
+        style="min-width: 0; flex-shrink: 0; width: 186px; max-width: 200px"
+      >
       </v-col>
     </v-row>
   </v-app-bar>
@@ -57,10 +71,12 @@ import { AudioLines } from 'lucide-vue-next';
   background-color: white;
   border: 2px solid transparent;
 }
+
 .nuxt-link:hover .logo-img,
 .active-logo .logo-img {
   border-color: red;
 }
+
 .nav-icon {
   stroke: white;
   transition: stroke 0.3s ease;
@@ -68,13 +84,16 @@ import { AudioLines } from 'lucide-vue-next';
   display: inline-block;
   vertical-align: middle;
 }
+
 .nav-link-content {
   display: inline-flex;
   align-items: center;
 }
+
 .nav-label {
   color: white;
 }
+
 .site-title {
   color: white;
 }
@@ -103,34 +122,24 @@ import { AudioLines } from 'lucide-vue-next';
   margin-right: 16px;
 }
 
-/* .nav-item::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: white;
-  border-radius: 12px;
-  opacity: 0;
-  box-shadow: 0 0 8px rgba(248, 247, 247, 0.6);
-  z-index: -1;
-  transition:
-    opacity 0.4s ease,
-    box-shadow 0.4s ease;
-}
+@media screen and (max-width: 600px) {
+  .nav-item {
+    font-size: 16px;
+    padding: 8px 12px;
+    margin-right: 8px;
+  }
 
-.nav-item:hover::before {
-  opacity: 0.1;
-} */
+  .site-title {
+    font-size: 16px !important;
+  }
 
-.active-link::before {
-  opacity: 0.1;
+  .logo-img {
+    width: 40px;
+  }
 }
 
 .nav-item:hover .nav-icon,
 .active-link .nav-icon {
   stroke: red;
-}
-
-.site-title::before {
-  content: none !important;
 }
 </style>
