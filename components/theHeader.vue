@@ -15,12 +15,12 @@ import { AudioLines } from 'lucide-vue-next';
 <template>
   <v-app-bar color="#0d0d0d" height="56" dense flat>
     <v-row no-gutters align="center" class="w-100" style="min-width: 0">
-      <v-col
-        cols="auto"
-        class="d-flex align-center flex-shrink-1"
-        style="min-width: 0"
-      >
-        <nuxt-link to="/" class="nuxt-link d-flex align-center text-truncate" exact-active-class="active-logo">
+      <v-col cols="auto" class="d-flex align-center flex-shrink-1" style="min-width: 0">
+        <nuxt-link
+          to="/"
+          class="nuxt-link d-flex align-center text-truncate"
+          exact-active-class="active-logo"
+        >
           <v-img
             :width="$vuetify.display.smAndDown ? 40 : 60"
             src="/logo_mousetube_carre.png"
@@ -28,7 +28,10 @@ import { AudioLines } from 'lucide-vue-next';
             class="rounded-circle logo-img"
             style="background-color: white; padding: 4px"
           />
-          <span class="ml-2 site-title" :style="{ fontSize: $vuetify.display.smAndDown ? '16px' : '20px' }">
+          <span
+            class="ml-2 site-title"
+            :style="{ fontSize: $vuetify.display.smAndDown ? '16px' : '20px' }"
+          >
             MouseTube
           </span>
         </nuxt-link>
@@ -54,7 +57,7 @@ import { AudioLines } from 'lucide-vue-next';
       <v-col
         cols="auto"
         class="d-flex align-center"
-        style="min-width: 0; flex-shrink: 0; width: 186px; max-width: 200px;"
+        style="min-width: 0; flex-shrink: 0; width: 186px; max-width: 200px"
       >
       </v-col>
     </v-row>
