@@ -10,7 +10,6 @@ Code under GPL v3.0 licence
 <script setup>
 // Team page
 import { Users } from 'lucide-vue-next';
-
 </script>
 
 <template>
@@ -37,7 +36,8 @@ import { Users } from 'lucide-vue-next';
                 </v-card-title>
                 <v-card-text>
                   <v-list>
-                    <v-list-item><strong>Elodie Ey</strong> (PhD -
+                    <v-list-item
+                      ><strong>Elodie Ey</strong> (PhD -
                       <nuxt-link
                         to="http://www.igbmc.fr/research/department/4/team/45/"
                         target="_blank"
@@ -50,7 +50,8 @@ import { Users } from 'lucide-vue-next';
                         Cellulaire: IGBMC</nuxt-link
                       >, Fr)
                     </v-list-item>
-                    <v-list-item><strong>Nicolas Torquet</strong> (Research and Development pole -
+                    <v-list-item
+                      ><strong>Nicolas Torquet</strong> (Research and Development pole -
                       <nuxt-link to="http://www.ics-mci.fr/en/" target="_blank"
                         >Institut Clinique de la Souris</nuxt-link
                       >
@@ -60,7 +61,8 @@ import { Users } from 'lucide-vue-next';
                         Cellulaire: IGBMC</nuxt-link
                       >, Fr)
                     </v-list-item>
-                    <v-list-item><strong>Emma Cahill</strong> (PhD - lecturer at
+                    <v-list-item
+                      ><strong>Emma Cahill</strong> (PhD - lecturer at
                       <nuxt-link to="https://www.bristol.ac.uk/phys-pharm-neuro/" target="_blank"
                         >School of Physiology, Pharmacology and Neuroscience</nuxt-link
                       >
@@ -69,7 +71,8 @@ import { Users } from 'lucide-vue-next';
                         >University of Bristol</nuxt-link
                       >, UK)
                     </v-list-item>
-                    <v-list-item><strong>Laurent Bouri</strong> (Web developer - Research and Development pole
+                    <v-list-item
+                      ><strong>Laurent Bouri</strong> (Web developer - Research and Development pole
                       -
                       <nuxt-link to="http://www.ics-mci.fr/en/" target="_blank"
                         >Institut Clinique de la Souris</nuxt-link
@@ -183,21 +186,26 @@ import { Users } from 'lucide-vue-next';
                 </v-card-title>
                 <v-card-text>
                   <v-list>
-                    <v-list-item class="bullet-item"><strong>Thomas Bourgeron</strong> (Institut Pasteur, Paris,
+                    <v-list-item class="bullet-item"
+                      ><strong>Thomas Bourgeron</strong> (Institut Pasteur, Paris,
                       France)</v-list-item
                     >
-                    <v-list-item class="bullet-item"><strong>Fabrice de Chaumont</strong> (Institut Pasteur, Paris,
+                    <v-list-item class="bullet-item"
+                      ><strong>Fabrice de Chaumont</strong> (Institut Pasteur, Paris,
                       France)</v-list-item
                     >
-                    <v-list-item class="bullet-item"><strong>Philippe Faure</strong> (ESPCI, Paris, France)</v-list-item
+                    <v-list-item class="bullet-item"
+                      ><strong>Philippe Faure</strong> (ESPCI, Paris, France)</v-list-item
                     >
-                    <v-list-item class="bullet-item"><strong>Julien Seiler</strong> (IFB, Strasbourg, France)</v-list-item
+                    <v-list-item class="bullet-item"
+                      ><strong>Julien Seiler</strong> (IFB, Strasbourg, France)</v-list-item
                     >
-                    <v-list-item class="bullet-item">mouseTube logo by <strong>Ioan Lemoël</strong><br
+                    <v-list-item class="bullet-item"
+                      >mouseTube logo by <strong>Ioan Lemoël</strong><br
                     /></v-list-item>
                   </v-list>
                 </v-card-text>
-                <v-card-text  class="text-center">
+                <v-card-text class="text-center">
                   MouseTube is hosted by IFB (Institut Français de Bioinformatique)<br />
                   <nuxt-link to="https://www.france-bioinformatique.fr/"
                     ><img src="/logo_ifb.png" alt="IFB" class="ifb ml-2 mr-2 mt-2"

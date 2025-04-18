@@ -80,15 +80,12 @@ onMounted(() => {
               </v-row>
             </v-card-text>
             <v-card-item class="d-flex flex-column">
-              <v-card
-                class="mx-auto py-2 px-2 flex-grow-1"
-                variant="tonal"
-              >
+              <v-card class="mx-auto py-2 px-2 flex-grow-1" variant="tonal">
                 <v-card-title class="font-weight-bold mx-4 my-4">
                   <v-icon class="me-2">mdi-information</v-icon>
                   About this version (v0.5)
                 </v-card-title>
-                <v-card-text  class="text-justify">
+                <v-card-text class="text-justify">
                   This is a temporary version of <strong>mouseTube</strong>.<br />
                   This version uses the same database as the initial version but with more recent
                   and safer technologies. The main improvement is that data are now accessible
@@ -126,10 +123,7 @@ onMounted(() => {
         <v-col cols="12" md="6">
           <v-card variant="flat" class="mx-auto flex-grow-1" max-width="700">
             <v-card-item class="d-flex flex-column">
-              <v-card
-                class="mx-auto py-2 px-2 flex-grow-1"
-                variant="tonal"
-              >
+              <v-card class="mx-auto py-2 px-2 flex-grow-1" variant="tonal">
                 <v-card-title class="font-weight-bold mx-4 my-4">
                   <v-icon class="me-2">mdi-rodent</v-icon>
                   What is mouseTube?
@@ -198,24 +192,20 @@ onMounted(() => {
               </v-card>
             </v-card-item>
             <v-card-item class="d-flex flex-column">
-              <v-card
-                class="mx-auto py-2 px-2 flex-grow-1"
-                variant="tonal"
-              >
+              <v-card class="mx-auto py-2 px-2 flex-grow-1" variant="tonal">
                 <v-card-title class="font-weight-bold mx-4 my-4">
                   <v-icon class="me-2">mdi-newspaper-variant-multiple-outline</v-icon>
                   MouseTube's publications
                 </v-card-title>
                 <v-card-text class="text-justify">
-                  Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. mouseTube – a
-                  database to collaboratively unravel mouse ultrasonic communication [version 1;
-                  peer review: 2 approved]. F1000Research 2016, 5:2332 (<nuxt-link
+                  Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. mouseTube – a database
+                  to collaboratively unravel mouse ultrasonic communication [version 1; peer review:
+                  2 approved]. F1000Research 2016, 5:2332 (<nuxt-link
                     href="https://doi.org/10.12688/f1000research.9439.1"
                     target="_blank"
                     >https://doi.org/10.12688/f1000research.9439.1</nuxt-link
-                  >) (2016).
-                  Ferhat A. T., Torquet N., Le Sourd A. M., de Chaumont F., Olivo-Marin J. C.,
-                  Faure P., Bourgeron T., Ey E. Recording Mouse Ultrasonic Vocalizations to
+                  >) (2016). Ferhat A. T., Torquet N., Le Sourd A. M., de Chaumont F., Olivo-Marin
+                  J. C., Faure P., Bourgeron T., Ey E. Recording Mouse Ultrasonic Vocalizations to
                   Evaluate Social Communication. J. Vis. Exp. (112), e53871,
                   <nuxt-link href="https://dx.doi.org/10.3791/53871" target="_blank"
                     >doi:10.3791/53871</nuxt-link
@@ -290,7 +280,8 @@ a:hover {
 }
 
 @keyframes wave {
-  0%, 100% {
+  0%,
+  100% {
     transform: scaleY(1);
   }
   50% {

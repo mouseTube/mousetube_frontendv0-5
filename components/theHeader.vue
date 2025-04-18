@@ -41,15 +41,15 @@ import { AudioLines } from 'lucide-vue-next';
         class="d-flex justify-center align-center flex-nowrap"
         style="gap: 8px; min-width: 0; flex-grow: 2; justify-content: center"
       >
-      <nuxt-link to="/Vocalizations" class="nav-item px-2" exact-active-class="active-link">
-        <span class="nav-link-content">
-          <AudioLines class="nav-icon audio-hover-icon" />
-          <span class="nav-label">Vocalizations</span>
-        </span>
-      </nuxt-link>
+        <nuxt-link to="/Vocalizations" class="nav-item px-2" exact-active-class="active-link">
+          <span class="nav-link-content">
+            <AudioLines class="nav-icon audio-hover-icon" />
+            <span class="nav-label">Vocalizations</span>
+          </span>
+        </nuxt-link>
         <nuxt-link to="/Team" class="nuxt-link nav-item px-2" exact-active-class="active-link">
           <span class="nav-link-content">
-            <Users class="nav-icon  audio-hover-icon" />
+            <Users class="nav-icon audio-hover-icon" />
             <span class="nav-label">Team</span>
           </span>
         </nuxt-link>
@@ -66,11 +66,21 @@ import { AudioLines } from 'lucide-vue-next';
 
 <style scoped>
 @keyframes wiggle {
-  0%   { transform: rotate(0deg) scaleY(1); }
-  25%  { transform: rotate(-3deg) scaleY(1.1); }
-  50%  { transform: rotate(3deg) scaleY(1.05); }
-  75%  { transform: rotate(-2deg) scaleY(1.08); }
-  100% { transform: rotate(0deg) scaleY(1); }
+  0% {
+    transform: rotate(0deg) scaleY(1);
+  }
+  25% {
+    transform: rotate(-3deg) scaleY(1.1);
+  }
+  50% {
+    transform: rotate(3deg) scaleY(1.05);
+  }
+  75% {
+    transform: rotate(-2deg) scaleY(1.08);
+  }
+  100% {
+    transform: rotate(0deg) scaleY(1);
+  }
 }
 
 .nav-item:hover .audio-hover-icon {
@@ -158,5 +168,4 @@ import { AudioLines } from 'lucide-vue-next';
 .active-link .nav-label {
   color: rgb(193, 193, 193);
 }
-
 </style>

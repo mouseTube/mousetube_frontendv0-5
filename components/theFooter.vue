@@ -14,7 +14,6 @@ Code under GPL v3.0 licence
 <template>
   <v-footer color="black">
     <div class="px-4 py-2 bg-black text-center w-100">
-      
       <v-row>
         <v-col>
           <!-- <nuxt-link to="/team" class="nuxt-link"
