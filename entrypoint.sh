@@ -3,14 +3,25 @@
 set -e
 
 echo "📦 Installing dependencies..."
-npm install
 
 if [ "$DEBUG" = "false" ]; then
-    echo "🚀 Building for production..."
+    echo "⚙️ Production mode detected (DEBUG=false)"
+    export NODE_ENV=production
+
+    echo "🔧 Installing production dependencies only..."
+    npm install --omit=dev
+
+    echo "🚀 Building Nuxt app for production..."
     npm run build
+
     echo "🌐 Starting Nuxt in production mode..."
     exec npm run start
 else
-    echo "🛠️ Starting Nuxt in development mode..."
+    echo "🛠️ Development mode detected (DEBUG=$DEBUG)"
+    export NODE_ENV=development
+    echo "🔧 Installing all dependencies..."
+    npm install
+
+    echo "🔧 Starting Nuxt in development mode..."
     exec npm run dev -- --host 0.0.0.0
 fi

@@ -54,14 +54,25 @@ onMounted(() => {
                 height="250"
                 src="/logo_mousetube_big.png"
                 alt="logo mouseTube"
-                class="d-flex justify-center mx-10 mb-10"
+                class="d-flex justify-center mx-10"
               ></v-img>
             </v-row>
             <!-- <v-card-title class="text-h2 mt-5">Welcome to mouseTube</v-card-title> -->
             <v-card-text class="mt-10">
               <v-row justify="center" no-gutters>
-                <v-col class="text-h4 font-weight-bold" v-if="dataLoaded">
-                  {{ numberOfFiles }} vocalization files available!
+                <v-col
+                  class="text-h4 font-weight-bold d-flex align-center justify-center flex-column"
+                  v-if="dataLoaded"
+                >
+                  <div class="soundwaves mb-10">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  {{ numberOfFiles }} vocalization files available
                 </v-col>
                 <v-col v-else>
                   <v-progress-circular color="red-darken-4" indeterminate></v-progress-circular>
@@ -69,13 +80,12 @@ onMounted(() => {
               </v-row>
             </v-card-text>
             <v-card-item class="d-flex flex-column">
-              <v-card
-                class="mx-auto pt-2 pl-2 flex-grow-1"
-                variant="tonal"
-                title="About this version (v0.5)"
-                prepend-icon="mdi-information"
-              >
-                <v-card-text>
+              <v-card class="mx-auto py-2 px-2 flex-grow-1" variant="tonal">
+                <v-card-title class="font-weight-bold mx-4 my-4">
+                  <v-icon class="me-2">mdi-information</v-icon>
+                  About this version (v0.5)
+                </v-card-title>
+                <v-card-text class="text-justify">
                   This is a temporary version of <strong>mouseTube</strong>.<br />
                   This version uses the same database as the initial version but with more recent
                   and safer technologies. The main improvement is that data are now accessible
@@ -88,8 +98,12 @@ onMounted(() => {
             </v-card-item>
 
             <v-card-item class="d-flex flex-column">
-              <v-card class="mx-auto pt-2 pl-2 flex-grow-1" variant="tonal" title="Call for papers">
-                <v-card-text>
+              <v-card class="mx-auto pt-2 pl-2 flex-grow-1" variant="tonal">
+                <v-card-title class="font-weight-bold mx-4 my-4">
+                  <v-icon class="me-2">mdi-handshake-outline</v-icon>
+                  Call for papers
+                </v-card-title>
+                <v-card-text class="text-justify">
                   Working on ultrasonic vocalizations? Together, Dr. Elodie Ey and Dr. Markus Wöhr
                   are serving as guest editors for a Behavioural Brain Research special issue on
                   Ultrasonic Communication in Rodents. They are more than happy to learn about your
@@ -109,12 +123,12 @@ onMounted(() => {
         <v-col cols="12" md="6">
           <v-card variant="flat" class="mx-auto flex-grow-1" max-width="700">
             <v-card-item class="d-flex flex-column">
-              <v-card
-                class="mx-auto pt-2 pl-2 flex-grow-1"
-                variant="tonal"
-                title="What is mouseTube?"
-              >
-                <v-card-text>
+              <v-card class="mx-auto py-2 px-2 flex-grow-1" variant="tonal">
+                <v-card-title class="font-weight-bold mx-4 my-4">
+                  <v-icon class="me-2">mdi-rodent</v-icon>
+                  What is mouseTube?
+                </v-card-title>
+                <v-card-text class="text-justify">
                   Rodents communicate with each other through their various sensory modalities:
                   olfaction (scent marking, glands), vision (postures), touch (contacts) and hearing
                   (vocalizations). In the latter case, vocalizations are mainly emitted in the
@@ -161,7 +175,7 @@ onMounted(() => {
                     >Premoli et al., 2023</nuxt-link
                   >).
                 </v-card-text>
-                <v-card-text>
+                <v-card-text class="text-justify">
                   The mechanisms of production, the temporal organization into sequences, the
                   significance of the acoustic features and the effect on the recipient are far from
                   elucidated. Understanding the complexity of this communication system requires a
@@ -177,34 +191,26 @@ onMounted(() => {
                 </v-card-text>
               </v-card>
             </v-card-item>
-
             <v-card-item class="d-flex flex-column">
-              <v-card
-                variant="tonal"
-                class="mx-auto pt-2 pl-2 flex-grow-1"
-                title="Check out the mouseTube's publications:"
-              >
-                <v-card-text>
-                  <v-list>
-                    <v-list-item>
-                      Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. mouseTube – a
-                      database to collaboratively unravel mouse ultrasonic communication [version 1;
-                      peer review: 2 approved]. F1000Research 2016, 5:2332 (<nuxt-link
-                        href="https://doi.org/10.12688/f1000research.9439.1"
-                        target="_blank"
-                        >https://doi.org/10.12688/f1000research.9439.1</nuxt-link
-                      >) (2016).
-                    </v-list-item>
-                    <v-list-item>
-                      Ferhat A. T., Torquet N., Le Sourd A. M., de Chaumont F., Olivo-Marin J. C.,
-                      Faure P., Bourgeron T., Ey E. Recording Mouse Ultrasonic Vocalizations to
-                      Evaluate Social Communication. J. Vis. Exp. (112), e53871,
-                      <nuxt-link href="https://dx.doi.org/10.3791/53871" target="_blank"
-                        >doi:10.3791/53871</nuxt-link
-                      >
-                      (2016).
-                    </v-list-item>
-                  </v-list>
+              <v-card class="mx-auto py-2 px-2 flex-grow-1" variant="tonal">
+                <v-card-title class="font-weight-bold mx-4 my-4">
+                  <v-icon class="me-2">mdi-newspaper-variant-multiple-outline</v-icon>
+                  MouseTube's publications
+                </v-card-title>
+                <v-card-text class="text-justify">
+                  Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. mouseTube – a database
+                  to collaboratively unravel mouse ultrasonic communication [version 1; peer review:
+                  2 approved]. F1000Research 2016, 5:2332 (<nuxt-link
+                    href="https://doi.org/10.12688/f1000research.9439.1"
+                    target="_blank"
+                    >https://doi.org/10.12688/f1000research.9439.1</nuxt-link
+                  >) (2016). Ferhat A. T., Torquet N., Le Sourd A. M., de Chaumont F., Olivo-Marin
+                  J. C., Faure P., Bourgeron T., Ey E. Recording Mouse Ultrasonic Vocalizations to
+                  Evaluate Social Communication. J. Vis. Exp. (112), e53871,
+                  <nuxt-link href="https://dx.doi.org/10.3791/53871" target="_blank"
+                    >doi:10.3791/53871</nuxt-link
+                  >
+                  (2016).
                 </v-card-text>
                 <v-card-actions>
                   <nuxt-link
@@ -237,5 +243,49 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+.soundwaves {
+  display: flex;
+  gap: 4px;
+  height: 10px;
+  align-items: center;
+}
+
+.soundwaves div {
+  width: 4px;
+  height: 100%;
+  background-color: rgb(230, 45, 45);
+  animation: wave 1s infinite ease-in-out;
+  transform-origin: center center;
+}
+
+.soundwaves div:nth-child(1) {
+  animation-delay: 0s;
+}
+.soundwaves div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.soundwaves div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.soundwaves div:nth-child(4) {
+  animation-delay: 0.6s;
+}
+.soundwaves div:nth-child(5) {
+  animation-delay: 0.8s;
+}
+.soundwaves div:nth-child(6) {
+  animation-delay: 1s;
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(3);
+  }
 }
 </style>

@@ -15,14 +15,11 @@ Code under GPL v3.0 licence
   <v-footer color="black">
     <div class="px-4 py-2 bg-black text-center w-100">
       <v-row>
-        <v-col>mouseTube v0.5 - Copyright © CNRS - INSERM - UNISTRA - ICS - IGBMC 2025</v-col>
-      </v-row>
-      <v-row>
         <v-col>
-          <nuxt-link to="/team" class="nuxt-link"
+          <!-- <nuxt-link to="/team" class="nuxt-link"
             ><v-icon icon="mdi-account-group"></v-icon> Team</nuxt-link
           >
-          -
+          - -->
           <nuxt-link to="https://mastodon.social/@mousetube" target="_blank" class="nuxt-link"
             ><v-icon icon="mdi-mastodon"></v-icon> Mastodon</nuxt-link
           >
@@ -31,6 +28,9 @@ Code under GPL v3.0 licence
             ><v-icon icon="mdi-github"></v-icon> GitHub</nuxt-link
           >
         </v-col>
+      </v-row>
+      <v-row>
+        <v-col>mouseTube v0.5 - Copyright © CNRS - INSERM - UNISTRA - ICS - IGBMC 2025</v-col>
       </v-row>
     </div>
   </v-footer>

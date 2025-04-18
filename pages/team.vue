@@ -18,21 +18,25 @@ import { Users } from 'lucide-vue-next';
       <v-row>
         <v-col>
           <v-card variant="flat" class="mx-auto" max-width="800">
-            <v-img
+            <!-- <v-img
               cover
               :width="500"
               src="/logo_mousetube_big.png"
               alt="logo mouseTube"
               class="mx-auto d-block"
               style="min-height: 249px"
-            />
-            <h1 class="ml-5"><Users /> Team and information</h1>
+            /> -->
+            <h1 class="ml-5 text-center mt-1"><Users /> Team and information</h1>
 
             <v-card-item>
-              <v-card class="mx-auto my-2 pt-2 pl-2" variant="tonal" title="The mouseTube Team">
+              <v-card class="mx-auto my-2 pt-2 pl-2 rounded-lg border elevation-3" variant="tonal">
+                <v-card-title class="font-weight-bold mx-4 my-4">
+                  <v-icon class="me-2">mdi-account-group-outline</v-icon>
+                  The mouseTube Team
+                </v-card-title>
                 <v-card-text>
                   <v-list>
-                    <v-list-item prepend-icon="mdi-account-circle"
+                    <v-list-item
                       ><strong>Elodie Ey</strong> (PhD -
                       <nuxt-link
                         to="http://www.igbmc.fr/research/department/4/team/45/"
@@ -46,7 +50,7 @@ import { Users } from 'lucide-vue-next';
                         Cellulaire: IGBMC</nuxt-link
                       >, Fr)
                     </v-list-item>
-                    <v-list-item prepend-icon="mdi-account-circle"
+                    <v-list-item
                       ><strong>Nicolas Torquet</strong> (Research and Development pole -
                       <nuxt-link to="http://www.ics-mci.fr/en/" target="_blank"
                         >Institut Clinique de la Souris</nuxt-link
@@ -57,7 +61,7 @@ import { Users } from 'lucide-vue-next';
                         Cellulaire: IGBMC</nuxt-link
                       >, Fr)
                     </v-list-item>
-                    <v-list-item prepend-icon="mdi-account-circle"
+                    <v-list-item
                       ><strong>Emma Cahill</strong> (PhD - lecturer at
                       <nuxt-link to="https://www.bristol.ac.uk/phys-pharm-neuro/" target="_blank"
                         >School of Physiology, Pharmacology and Neuroscience</nuxt-link
@@ -67,7 +71,7 @@ import { Users } from 'lucide-vue-next';
                         >University of Bristol</nuxt-link
                       >, UK)
                     </v-list-item>
-                    <v-list-item prepend-icon="mdi-account-circle"
+                    <v-list-item
                       ><strong>Laurent Bouri</strong> (Web developer - Research and Development pole
                       -
                       <nuxt-link to="http://www.ics-mci.fr/en/" target="_blank"
@@ -85,7 +89,11 @@ import { Users } from 'lucide-vue-next';
             </v-card-item>
 
             <v-card-item>
-              <v-card class="mx-auto my-2 pt-1 pl-2" variant="tonal" title="Contact and network">
+              <v-card class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3" variant="tonal">
+                <v-card-title class="font-weight-bold mx-4 my-4">
+                  <v-icon class="me-2">mdi-card-account-mail-outline</v-icon>
+                  Contact and network
+                </v-card-title>
                 <v-card-text>
                   <v-list>
                     <v-list-item max-height="1em" prepend-icon="mdi-email"
@@ -108,7 +116,11 @@ import { Users } from 'lucide-vue-next';
             </v-card-item>
 
             <v-card-item>
-              <v-card class="mx-auto my-2 pt-1 pl-2" variant="tonal" title="Bibliography">
+              <v-card class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3" variant="tonal">
+                <v-card-title class="font-weight-bold mx-4 my-4">
+                  <v-icon class="me-2">mdi-bookshelf</v-icon>
+                  Bibliography
+                </v-card-title>
                 <v-card-text>
                   <v-list>
                     <v-list-item prepend-icon="mdi-newspaper-variant-outline">
@@ -135,7 +147,11 @@ import { Users } from 'lucide-vue-next';
             </v-card-item>
 
             <v-card-item>
-              <v-card class="mx-auto my-2 pt-1 pl-2" variant="tonal" title="mouseTube in the media">
+              <v-card class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3" variant="tonal">
+                <v-card-title class="font-weight-bold mx-4 my-4">
+                  <v-icon class="me-2">mdi-multimedia</v-icon>
+                  mouseTube in the media
+                </v-card-title>
                 <v-card-text>
                   <v-list>
                     <v-list-item prepend-icon="mdi-trophy">
@@ -163,45 +179,49 @@ import { Users } from 'lucide-vue-next';
             </v-card-item>
 
             <v-card-item>
-              <v-card class="mx-auto my-2 pt-1 pl-2" variant="tonal" title="Acknowledgments">
+              <v-card class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3" variant="tonal">
+                <v-card-title class="font-weight-bold mx-4 my-4">
+                  <v-icon class="me-2">mdi-handshake-outline</v-icon>
+                  Acknowledgments
+                </v-card-title>
                 <v-card-text>
                   <v-list>
-                    <v-list-item prepend-icon="mdi-account-circle"
+                    <v-list-item class="bullet-item"
                       ><strong>Thomas Bourgeron</strong> (Institut Pasteur, Paris,
                       France)</v-list-item
                     >
-                    <v-list-item prepend-icon="mdi-account-circle"
+                    <v-list-item class="bullet-item"
                       ><strong>Fabrice de Chaumont</strong> (Institut Pasteur, Paris,
                       France)</v-list-item
                     >
-                    <v-list-item prepend-icon="mdi-account-circle"
+                    <v-list-item class="bullet-item"
                       ><strong>Philippe Faure</strong> (ESPCI, Paris, France)</v-list-item
                     >
-                    <v-list-item prepend-icon="mdi-account-circle"
+                    <v-list-item class="bullet-item"
                       ><strong>Julien Seiler</strong> (IFB, Strasbourg, France)</v-list-item
                     >
-                    <v-list-item prepend-icon="mdi-account-circle"
+                    <v-list-item class="bullet-item"
                       >mouseTube logo by <strong>Ioan Lemoël</strong><br
                     /></v-list-item>
                   </v-list>
                 </v-card-text>
-                <v-card-text>
+                <v-card-text class="text-center">
                   MouseTube is hosted by IFB (Institut Français de Bioinformatique)<br />
                   <nuxt-link to="https://www.france-bioinformatique.fr/"
-                    ><img src="/logo_ifb.png" alt="IFB" class="ifb ml-2 mr-2"
+                    ><img src="/logo_ifb.png" alt="IFB" class="ifb ml-2 mr-2 mt-2"
                   /></nuxt-link>
                 </v-card-text>
-                <v-card-text>
+                <v-card-text class="text-center">
                   We would like to thank the FC3R (French Center for 3R) and the French Ministry of
                   Higher Education and Research for their financial support.<br />
                   <nuxt-link to="https://www.fc3r.com/" target="_blank"
-                    ><img src="/logo-fc3r_bleu.png" alt="FC3R" class="ml-2 mr-2"
+                    ><img src="/logo-fc3r_bleu.png" alt="FC3R" class="ml-2 mr-2 mt-2"
                   /></nuxt-link>
                   <nuxt-link to="https://www.ouvrirlascience.fr" target="_blank"
                     ><img
                       src="/macaron_recherche_data_gouv.png"
                       alt="Recherche Data Gouv"
-                      class="mr-2"
+                      class="mr-2 mt-2"
                   /></nuxt-link>
                 </v-card-text>
               </v-card>
@@ -229,5 +249,10 @@ a:hover {
 
 .ifb {
   max-width: 100px;
+}
+.bullet-item::before {
+  content: '•';
+  margin-right: 8px;
+  color: black;
 }
 </style>
