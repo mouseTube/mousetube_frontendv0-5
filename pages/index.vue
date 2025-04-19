@@ -80,31 +80,37 @@ onMounted(() => {
               </v-row>
             </v-card-text>
           </v-card>
-          <v-card class="mx-4 py-2 px-2 flex-grow-1 mt-4 rounded-lg border elevation-3" variant="tonal">
+          <v-card
+            class="mx-4 py-2 px-2 flex-grow-1 mt-4 rounded-lg border elevation-3"
+            variant="tonal"
+          >
             <v-card-title class="font-weight-bold mx-4 my-4">
               <v-icon class="me-2">mdi-information</v-icon>
               About this version (v0.5)
             </v-card-title>
             <v-card-text class="text-justify">
               This is a temporary version of <strong>mouseTube</strong>.<br />
-              This version uses the same database as the initial version but with more recent
-              and safer technologies. The main improvement is that data are now accessible
-              without authentication.<br />
+              This version uses the same database as the initial version but with more recent and
+              safer technologies. The main improvement is that data are now accessible without
+              authentication.<br />
               If you want to share vocalization files, please contact us. This version does not
               allow to share file but we can do it manually.<br />
               We are currently developing a new version with more functionalities.
             </v-card-text>
           </v-card>
-          <v-card class="mx-4 py-2 px-2 flex-grow-1 mt-8 rounded-lg border elevation-3" variant="tonal">
+          <v-card
+            class="mx-4 py-2 px-2 flex-grow-1 mt-8 rounded-lg border elevation-3"
+            variant="tonal"
+          >
             <v-card-title class="font-weight-bold mx-4 my-4">
               <v-icon class="me-2">mdi-handshake-outline</v-icon>
               Call for papers
             </v-card-title>
             <v-card-text class="text-justify">
-              Working on ultrasonic vocalizations? Together, Dr. Elodie Ey and Dr. Markus Wöhr
-              are serving as guest editors for a Behavioural Brain Research special issue on
-              Ultrasonic Communication in Rodents. They are more than happy to learn about your
-              most recent discoveries.<br />
+              Working on ultrasonic vocalizations? Together, Dr. Elodie Ey and Dr. Markus Wöhr are
+              serving as guest editors for a Behavioural Brain Research special issue on Ultrasonic
+              Communication in Rodents. They are more than happy to learn about your most recent
+              discoveries.<br />
               <br />
               More information here:
               <nuxt-link
@@ -116,7 +122,10 @@ onMounted(() => {
           </v-card>
         </v-col>
         <v-col cols="12" md="6" class="h-100">
-          <v-card class="mx-4 py-2 px-2 flex-grow-1 mt-2 rounded-lg border elevation-3" variant="tonal">
+          <v-card
+            class="mx-4 py-2 px-2 flex-grow-1 mt-2 rounded-lg border elevation-3"
+            variant="tonal"
+          >
             <v-card-title class="font-weight-bold mx-4 my-4">
               <v-icon class="me-2">mdi-rodent</v-icon>
               What is mouseTube?
@@ -143,13 +152,12 @@ onMounted(() => {
               >;
               <nuxt-link href="https://doi.org/10.7554/eLife.54020" target="_blank"
                 >Schweinfurth, 2020</nuxt-link
-              >). Ultrasonic vocalizations are emitted in various contexts: by isolated pups
-              during the first two weeks of life, by juveniles and adults during same-sex social
-              interactions, by males in the presence of females, and by individuals in aversive
-              or appetitive situations (restraint stress, anticipation of pain, social play,
-              food rewards) and exploring an unfamiliar environment. These ultrasonic
-              vocalizations are used as markers of motivation and social communication
-              (<nuxt-link
+              >). Ultrasonic vocalizations are emitted in various contexts: by isolated pups during
+              the first two weeks of life, by juveniles and adults during same-sex social
+              interactions, by males in the presence of females, and by individuals in aversive or
+              appetitive situations (restraint stress, anticipation of pain, social play, food
+              rewards) and exploring an unfamiliar environment. These ultrasonic vocalizations are
+              used as markers of motivation and social communication (<nuxt-link
                 href="https://doi.org/10.1111/j.1601-183X.2010.00610.x"
                 target="_blank"
                 >Fischer and Hammerschmidt, 2010</nuxt-link
@@ -157,9 +165,7 @@ onMounted(() => {
               <nuxt-link href="https://doi.org/10.7554/eLife.54020" target="_blank"
                 >Schweinfurth, 2020</nuxt-link
               >), or of susceptibility to stress or anxiety, depending on the type of signal
-              examined (<nuxt-link
-                href="https://doi.org/10.1007/s10519-004-0858-3"
-                target="_blank"
+              examined (<nuxt-link href="https://doi.org/10.1007/s10519-004-0858-3" target="_blank"
                 >Brudzynski, 2005</nuxt-link
               >). Ultrasonic vocalizations are therefore routinely measured in rodent models of
               neuropsychiatric conditions (<nuxt-link
@@ -171,46 +177,42 @@ onMounted(() => {
             <v-card-text class="text-justify">
               The mechanisms of production, the temporal organization into sequences, the
               significance of the acoustic features and the effect on the recipient are far from
-              elucidated. Understanding the complexity of this communication system requires a
-              vast amount of data to explore with high-performance analysis methods. For that
-              purpose, we developed <strong>mouseTube</strong>, a database designed to
-              facilitate sharing, archiving and analysing raw recording files of rodent
-              ultrasonic vocalizations following the FAIR (Findable, Accessible, Interoperable,
-              Reusable) principles (<nuxt-link
-                href="https://doi.org/10.1038/sdata.2016.18"
-                target="_blank"
+              elucidated. Understanding the complexity of this communication system requires a vast
+              amount of data to explore with high-performance analysis methods. For that purpose, we
+              developed <strong>mouseTube</strong>, a database designed to facilitate sharing,
+              archiving and analysing raw recording files of rodent ultrasonic vocalizations
+              following the FAIR (Findable, Accessible, Interoperable, Reusable) principles
+              (<nuxt-link href="https://doi.org/10.1038/sdata.2016.18" target="_blank"
                 >Wilkinson et al., 2016</nuxt-link
               >).
             </v-card-text>
           </v-card>
-          <v-card class="mx-4 py-2 px-2 flex-grow-1 mt-8 rounded-lg border elevation-3" variant="tonal">
+          <v-card
+            class="mx-4 py-2 px-2 flex-grow-1 mt-8 rounded-lg border elevation-3"
+            variant="tonal"
+          >
             <v-card-title class="font-weight-bold mx-4 my-4">
               <v-icon class="me-2">mdi-newspaper-variant-multiple-outline</v-icon>
               MouseTube's publications
             </v-card-title>
             <v-card-text class="text-justify">
-              Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. mouseTube – a database
-              to collaboratively unravel mouse ultrasonic communication [version 1; peer review:
-              2 approved]. F1000Research 2016, 5:2332 (<nuxt-link
+              Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. mouseTube – a database to
+              collaboratively unravel mouse ultrasonic communication [version 1; peer review: 2
+              approved]. F1000Research 2016, 5:2332 (<nuxt-link
                 href="https://doi.org/10.12688/f1000research.9439.1"
                 target="_blank"
                 >https://doi.org/10.12688/f1000research.9439.1</nuxt-link
-              >) (2016). Ferhat A. T., Torquet N., Le Sourd A. M., de Chaumont F., Olivo-Marin
-              J. C., Faure P., Bourgeron T., Ey E. Recording Mouse Ultrasonic Vocalizations to
-              Evaluate Social Communication. J. Vis. Exp. (112), e53871,
+              >) (2016). Ferhat A. T., Torquet N., Le Sourd A. M., de Chaumont F., Olivo-Marin J.
+              C., Faure P., Bourgeron T., Ey E. Recording Mouse Ultrasonic Vocalizations to Evaluate
+              Social Communication. J. Vis. Exp. (112), e53871,
               <nuxt-link href="https://dx.doi.org/10.3791/53871" target="_blank"
                 >doi:10.3791/53871</nuxt-link
               >
               (2016).
             </v-card-text>
             <v-card-actions>
-              <nuxt-link
-                to="https://mastodon.social/@mousetube"
-                target="_blank"
-                class="nuxt-link"
-                ><v-btn prepend-icon="mdi-mastodon"
-                  >Follow mouseTube on Mastodon</v-btn
-                ></nuxt-link
+              <nuxt-link to="https://mastodon.social/@mousetube" target="_blank" class="nuxt-link"
+                ><v-btn prepend-icon="mdi-mastodon">Follow mouseTube on Mastodon</v-btn></nuxt-link
               >
             </v-card-actions>
           </v-card>
