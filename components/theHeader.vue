@@ -87,15 +87,20 @@ import { AudioLines } from 'lucide-vue-next';
   animation: wiggle 0.5s ease-in-out;
 }
 .logo-img {
-  transition: border 0.3s ease;
+  filter: grayscale(30%);
+  transition:
+    filter 0.3s ease,
+    box-shadow 0.3s ease;
   border-radius: 50%;
-  background-color: white;
-  border: 2px solid transparent;
 }
 
 .nuxt-link:hover .logo-img,
 .active-logo .logo-img {
-  border-color: red;
+  filter: grayscale(0%);
+  box-shadow:
+    inset 0 0 5px rgba(157, 157, 157, 0.5),
+    inset 0 0 10px rgba(157, 157, 157, 0.3),
+    inset 0 0 20px rgba(157, 157, 157, 0.2);
 }
 
 .nav-icon {
