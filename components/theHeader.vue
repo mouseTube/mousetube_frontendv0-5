@@ -113,6 +113,7 @@ import { AudioLines } from 'lucide-vue-next';
 
 .nav-label {
   color: white;
+  transition: color 0.3s ease;
 }
 
 .site-title {
