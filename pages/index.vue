@@ -243,11 +243,12 @@ a:hover {
 }
 
 .soundwaves div {
-  width: 4px;
+  width: 3px;
   height: 100%;
   background-color: rgb(230, 45, 45);
   animation: wave 1s infinite ease-in-out;
   transform-origin: center center;
+  border-radius: 10px;
 }
 
 .soundwaves div:nth-child(1) {
