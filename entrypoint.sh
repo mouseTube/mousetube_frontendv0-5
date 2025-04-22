@@ -4,7 +4,7 @@ set -e
 
 echo "📦 Installing dependencies..."
 
-if [ "$DEBUG" = "false" ]; then
+if [ "$(echo "$DEBUG" | tr '[:upper:]' '[:lower:]')" = "false" ]; then
     echo "⚙️ Production mode detected (DEBUG=false)"
     export NODE_ENV=production
 
