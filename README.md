@@ -1,6 +1,6 @@
-<h1 align="center">mouseTube_frontendv0.5</h1>
+<h1 align="center">mouseTube_frontendv0-5</h1>
 
-![Build Passing](https://img.shields.io/github/actions/workflow/status/mouseTube/mousetube_frontendv0.5/ci.yml?branch=main)
+![Build Passing](https://img.shields.io/github/actions/workflow/status/mouseTube/mousetube_frontendv0-5/ci.yml?branch=main)
 [![Made with Nuxt](https://img.shields.io/badge/Made%20with-Nuxt-green)](https://nuxt.com/)
 [![Made with Vuetify](https://img.shields.io/badge/Made%20with-Vuetify-1976D2)](https://vuetifyjs.com/)
 
@@ -49,7 +49,7 @@ yarn dev
 ```
 
 ### Production
-1. Add a .env file in the mousetube_frontendv0.5 folder with the following content:
+1. Add a .env file in the mousetube_frontendv0-5 folder with the following content:
 
    ```env
    DEBUG=false #DEBUG muste be false in production mode, not mandatory for development mode
