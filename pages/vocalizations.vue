@@ -199,19 +199,19 @@ onMounted(() => fetchFiles());
                     elevated
                   >
                     <v-card-title>
-                      {{ file.link_file.split('/').pop() }}
+                      {{ file.link.split('/').pop() }}
                     </v-card-title>
                     <v-card-subtitle>
                       {{ file.experiment.protocol.user.first_name_user }}
                       {{ file.experiment.protocol.user.name_user }}
                     </v-card-subtitle>
                     <v-card-item class="bg-surface-light pt-4">
-                      <v-label class="mr-2">Name subject: </v-label>{{ file.subject.name_subject
+                      <v-label class="mr-2">Name subject: </v-label>{{ file.subject.name
                       }}<br />
                       <v-label class="mr-2">Strain: </v-label
-                      >{{ file.subject.strain_subject.name_strain }}<br />
+                      >{{ file.subject.strain.name }}<br />
                       <v-label class="mr-2">Protocol name: </v-label
-                      >{{ file.experiment.protocol.name_protocol }}<br />
+                      >{{ file.experiment.protocol.name }}<br />
                     </v-card-item>
 
                     <!-- Expansion Panel -->
@@ -222,32 +222,32 @@ onMounted(() => fetchFiles());
                             <v-card-item>
                               <v-card-text>
                                 <v-label class="mr-2">Strain: </v-label
-                                >{{ file.subject.strain_subject.name_strain }}<br />
+                                >{{ file.subject.strain.name }}<br />
                                 <v-label class="mr-2">Background: </v-label
-                                >{{ file.subject.strain_subject.background }}<br />
+                                >{{ file.subject.strain.background }}<br />
                                 <v-label class="mr-2">Bibliography: </v-label
-                                >{{ file.subject.strain_subject.biblio_strain }}<br />
+                                >{{ file.subject.strain.bibliography }}<br />
 
                                 <ul class="ml-3 mt-2">
                                   <li>
                                     <v-label class="mr-2">Name: </v-label
-                                    >{{ file.subject.name_subject }}
+                                    >{{ file.subject.name }}
                                   </li>
                                   <li>
                                     <v-label class="mr-2">Origin: </v-label
-                                    >{{ file.subject.origin_subject }}
+                                    >{{ file.subject.origin }}
                                   </li>
                                   <li>
                                     <v-label class="mr-2">Sex: </v-label
-                                    >{{ file.subject.sex_subject }}
+                                    >{{ file.subject.sex }}
                                   </li>
                                   <li>
                                     <v-label class="mr-2">Group: </v-label
-                                    >{{ file.subject.group_subject }}
+                                    >{{ file.subject.group }}
                                   </li>
                                   <li>
                                     <v-label class="mr-2">Genotype: </v-label
-                                    >{{ file.subject.genotype_subject }}
+                                    >{{ file.subject.genotype }}
                                   </li>
                                   <li>
                                     <v-label class="mr-2">Treatment: </v-label
@@ -261,11 +261,11 @@ onMounted(() => fetchFiles());
                           <v-card class="mx-auto my-2 pt-2 pl-2" title="Protocol">
                             <v-card-text>
                               <v-label class="mr-2">Protocol name: </v-label
-                              >{{ file.experiment.protocol.name_protocol }}<br />
+                              >{{ file.experiment.protocol.name }}<br />
                               <v-label class="mr-2">Number of files: </v-label
                               >{{ file.experiment.protocol.number_files }}<br />
                               <v-label class="mr-2">Description: </v-label>
-                              {{ file.experiment.protocol.protocol_description }}
+                              {{ file.experiment.protocol.description }}
                             </v-card-text>
                           </v-card>
 
@@ -274,7 +274,7 @@ onMounted(() => fetchFiles());
                               <ul class="ml-3 mt-2">
                                 <li>
                                   <v-label class="mr-2">Name experiment: </v-label
-                                  >{{ file.experiment.name_experiment }}
+                                  >{{ file.experiment.name }}
                                 </li>
                                 <li>
                                   <v-label class="mr-2">Group: </v-label
@@ -282,11 +282,11 @@ onMounted(() => fetchFiles());
                                 </li>
                                 <li>
                                   <v-label class="mr-2">Date: </v-label
-                                  >{{ file.experiment.date_experiment }}
+                                  >{{ file.experiment.date }}
                                 </li>
                                 <li>
                                   <v-label class="mr-2">File number: </v-label
-                                  >{{ file.file_number }}
+                                  >{{ file.number }}
                                 </li>
                                 <li>
                                   <v-label class="mr-2">Temperature: </v-label
@@ -312,21 +312,21 @@ onMounted(() => fetchFiles());
                     <v-card-actions class="d-flex align-center">
                       <v-row class="w-100">
                         <v-col class="d-flex align-center" cols="auto">
-                          <v-chip class="ma-2" label color="red-lighten-1" v-if="file.doi_file">
+                          <v-chip class="ma-2" label color="red-lighten-1" v-if="file.doi">
                             DOI:
                             <a
-                              v-if="file.doi_file.includes('zenodo')"
+                              v-if="file.doi.includes('zenodo')"
                               :href="
-                                'https://zenodo.org/record/' + file.doi_file.split('zenodo.')[1]
+                                'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]
                               "
                               target="_blank"
                               class="doi"
                             >
-                              {{ file.doi_file }}
+                              {{ file.doi }}
                             </a>
                           </v-chip>
-                          <span v-if="file.notes_file" class="ml-2">
-                            <strong class="mr-2">Notes:</strong> {{ file.notes_file }}
+                          <span v-if="file.notes" class="ml-2">
+                            <strong class="mr-2">Notes:</strong> {{ file.notes }}
                           </span>
                         </v-col>
 
@@ -341,7 +341,7 @@ onMounted(() => fetchFiles());
                             elevation="4"
                             class="ma-2 hover-effect border-sm"
                           >
-                            <a :href="file.link_file" target="_blank">Download</a>
+                            <a :href="file.link" target="_blank">Download</a>
                           </v-btn>
                           <v-btn
                             v-else
@@ -351,7 +351,7 @@ onMounted(() => fetchFiles());
                             elevation="4"
                             class="ma-2 border-sm"
                           >
-                            <a :href="file.link_file" target="_blank"> Invalid link</a>
+                            <a :href="file.link" target="_blank"> Invalid link</a>
                           </v-btn>
                         </v-col>
                       </v-row>
