@@ -20,13 +20,14 @@ import axios from 'axios';
 const numberOfFiles = ref(0);
 const dataLoaded = ref(false);
 const apiBaseUrl = useApiBaseUrl();
+const filters = ref(['is_valid_link']);
 
 ////////////////////////////////
 // METHODS
 ////////////////////////////////
 const getNumberOfFiles = () => {
   axios
-    .get(`${apiBaseUrl}/file`)
+    .get(`${apiBaseUrl}/file/?filter=${filters.value}`)
     .then((response) => {
       numberOfFiles.value = response.data.count;
       dataLoaded.value = true;
