@@ -206,10 +206,8 @@ onMounted(() => fetchFiles());
                       {{ file.experiment.protocol.user.name_user }}
                     </v-card-subtitle>
                     <v-card-item class="bg-surface-light pt-4">
-                      <v-label class="mr-2">Name subject: </v-label>{{ file.subject.name
-                      }}<br />
-                      <v-label class="mr-2">Strain: </v-label
-                      >{{ file.subject.strain.name }}<br />
+                      <v-label class="mr-2">Name subject: </v-label>{{ file.subject.name }}<br />
+                      <v-label class="mr-2">Strain: </v-label>{{ file.subject.strain.name }}<br />
                       <v-label class="mr-2">Protocol name: </v-label
                       >{{ file.experiment.protocol.name }}<br />
                     </v-card-item>
@@ -221,8 +219,8 @@ onMounted(() => fetchFiles());
                           <v-card class="mx-auto my-2 pt-2 pl-2" title="Subject">
                             <v-card-item>
                               <v-card-text>
-                                <v-label class="mr-2">Strain: </v-label
-                                >{{ file.subject.strain.name }}<br />
+                                <v-label class="mr-2">Strain: </v-label>{{ file.subject.strain.name
+                                }}<br />
                                 <v-label class="mr-2">Background: </v-label
                                 >{{ file.subject.strain.background }}<br />
                                 <v-label class="mr-2">Bibliography: </v-label
@@ -230,20 +228,17 @@ onMounted(() => fetchFiles());
 
                                 <ul class="ml-3 mt-2">
                                   <li>
-                                    <v-label class="mr-2">Name: </v-label
-                                    >{{ file.subject.name }}
+                                    <v-label class="mr-2">Name: </v-label>{{ file.subject.name }}
                                   </li>
                                   <li>
                                     <v-label class="mr-2">Origin: </v-label
                                     >{{ file.subject.origin }}
                                   </li>
                                   <li>
-                                    <v-label class="mr-2">Sex: </v-label
-                                    >{{ file.subject.sex }}
+                                    <v-label class="mr-2">Sex: </v-label>{{ file.subject.sex }}
                                   </li>
                                   <li>
-                                    <v-label class="mr-2">Group: </v-label
-                                    >{{ file.subject.group }}
+                                    <v-label class="mr-2">Group: </v-label>{{ file.subject.group }}
                                   </li>
                                   <li>
                                     <v-label class="mr-2">Genotype: </v-label
@@ -281,12 +276,10 @@ onMounted(() => fetchFiles());
                                   >{{ file.experiment.group_subject }}
                                 </li>
                                 <li>
-                                  <v-label class="mr-2">Date: </v-label
-                                  >{{ file.experiment.date }}
+                                  <v-label class="mr-2">Date: </v-label>{{ file.experiment.date }}
                                 </li>
                                 <li>
-                                  <v-label class="mr-2">File number: </v-label
-                                  >{{ file.number }}
+                                  <v-label class="mr-2">File number: </v-label>{{ file.number }}
                                 </li>
                                 <li>
                                   <v-label class="mr-2">Temperature: </v-label
@@ -316,9 +309,7 @@ onMounted(() => fetchFiles());
                             DOI:
                             <a
                               v-if="file.doi.includes('zenodo')"
-                              :href="
-                                'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]
-                              "
+                              :href="'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]"
                               target="_blank"
                               class="doi"
                             >
