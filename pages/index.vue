@@ -94,7 +94,7 @@ onMounted(() => {
               This version uses the same database as the initial version but with more recent and
               safer technologies. The main improvement is that data are now accessible without
               authentication.<br />
-              If you want to share vocalization files, please contact us. This version does not
+              If you want to share vocalization files, please <nuxt-link to="/team#contact">contact us</nuxt-link>. This version does not
               allow to share file but we can do it manually.<br />
               We are currently developing a new version with more functionalities.
             </v-card-text>
