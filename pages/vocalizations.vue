@@ -219,15 +219,14 @@ onMounted(() => fetchFiles());
                   >
                   <v-badge
                     :content="file.downloads + ' Downloads'"
-                    prepend-icon="mdi-download"
                     overlap
-                    style="position: absolute; top: 25px; right: 40px;"
+                    style="position: absolute; top: 20px; right: 40px;"
                     color="red-lighten-5"
                   >
                     <template #badge>
-                      <div style=" background-color: transparent">
-                        <v-icon small>mdi-download</v-icon>
-                        <span style="margin-left: 5px;">{{ file.downloads }}</span>
+                      <div style="background-color: transparent; font-size: 0.875rem; color: gray; border-radius: 12px;">
+                        <v-icon style="font-size: 0.875rem; color: gray;">mdi-download</v-icon>
+                        <span style="margin-left: 8px;">{{ file.downloads }}</span>
                       </div>
                     </template>
                   </v-badge>
