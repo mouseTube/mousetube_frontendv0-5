@@ -10,23 +10,23 @@ Code under GPL v3.0 licence
 <script setup>
 // Team page
 import { Users } from 'lucide-vue-next';
-import { onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 
-const route = useRoute()
+const route = useRoute();
 
 onMounted(() => {
   if (route.hash) {
     setTimeout(() => {
-      const el = document.querySelector(route.hash)
+      const el = document.querySelector(route.hash);
       if (el) {
-        const yOffset = -80
-        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset
-        window.scrollTo({ top: y, behavior: 'smooth' })
+        const yOffset = -80;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
       }
-    }, 200)
+    }, 200);
   }
-})
+});
 </script>
 
 <template>
@@ -106,7 +106,11 @@ onMounted(() => {
             </v-card-item>
 
             <v-card-item>
-              <v-card id="contact" class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3" variant="tonal">
+              <v-card
+                id="contact"
+                class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3"
+                variant="tonal"
+              >
                 <v-card-title class="font-weight-bold mx-4 my-4">
                   <v-icon class="me-2">mdi-card-account-mail-outline</v-icon>
                   Contact and network
@@ -114,15 +118,27 @@ onMounted(() => {
                 <v-card-text>
                   <v-list>
                     <v-list-item max-height="1em" prepend-icon="mdi-email">
-                      <nuxt-link :to="'mailto:mousetube@igbmc.fr'" class="text-body-1">mousetube@igbmc.fr</nuxt-link>
+                      <nuxt-link :to="'mailto:mousetube@igbmc.fr'" class="text-body-1"
+                        >mousetube@igbmc.fr</nuxt-link
+                      >
                     </v-list-item>
 
                     <v-list-item max-height="1em" prepend-icon="mdi-mastodon">
-                      <nuxt-link :to="'https://mastodon.social/@mousetube'" target="_blank" class="text-body-1">MouseTube on Mastodon</nuxt-link>
+                      <nuxt-link
+                        :to="'https://mastodon.social/@mousetube'"
+                        target="_blank"
+                        class="text-body-1"
+                        >MouseTube on Mastodon</nuxt-link
+                      >
                     </v-list-item>
 
                     <v-list-item max-height="1em" prepend-icon="mdi-github">
-                      <nuxt-link :to="'https://github.com/mousetube'" target="_blank" class="text-body-1">MouseTube on GitHub</nuxt-link>
+                      <nuxt-link
+                        :to="'https://github.com/mousetube'"
+                        target="_blank"
+                        class="text-body-1"
+                        >MouseTube on GitHub</nuxt-link
+                      >
                     </v-list-item>
                   </v-list>
                 </v-card-text>
