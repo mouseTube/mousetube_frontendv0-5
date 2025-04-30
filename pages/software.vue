@@ -140,16 +140,16 @@ onMounted(() => fetchSoftware());
                 >
                   <h3 class="text-subtitle-1 mb-2">Filters</h3>
                   <v-row>
-                  <v-col cols="12" sm="4">
-                    <v-select
-                      v-model="filters"
-                      :items="['all', 'acquisition', 'analysis', 'acquisition and analysis']"
-                      label="Filter by Software Type"
-                      dense
-                      hide-details
-                      class="py-0"
-                    />
-                  </v-col>
+                    <v-col cols="12" sm="4">
+                      <v-select
+                        v-model="filters"
+                        :items="['all', 'acquisition', 'analysis', 'acquisition and analysis']"
+                        label="Filter by Software Type"
+                        dense
+                        hide-details
+                        class="py-0"
+                      />
+                    </v-col>
                   </v-row>
                 </v-sheet>
               </v-expand-transition>
@@ -192,11 +192,11 @@ onMounted(() => fetchSoftware());
                       {{ software.made_by }}
                     </v-card-subtitle>
                     <v-chip
-                    v-bind:class="{
-                      'bg-blue-darken-2': software.type === 'acquisition',
-                      'bg-red-darken-2': software.type === 'analysis',
-                      'bg-orange-darken-2': software.type === 'acquisition and analysis'
-                    }"
+                      v-bind:class="{
+                        'bg-blue-darken-2': software.type === 'acquisition',
+                        'bg-red-darken-2': software.type === 'analysis',
+                        'bg-orange-darken-2': software.type === 'acquisition and analysis',
+                      }"
                       class="ml-2 position-absolute top-0 right-0 mt-3 mr-3"
                       label
                     >
@@ -219,24 +219,29 @@ onMounted(() => fetchSoftware());
                               md="4"
                               lg="3"
                             >
-                            <v-card
-                              elevation="1"
-                              class="pa-3"
-                              color="grey-lighten-4"
-                              rounded="lg"
-                              style="min-height: auto;"
-                            >
-                              <a
-                                :href="reference.url"
-                                target="_blank"
-                                class="d-flex align-center justify-between mb-2 text-decoration-none text-red-darken-2"
-                                :title="reference.name"
+                              <v-card
+                                elevation="1"
+                                class="pa-3"
+                                color="grey-lighten-4"
+                                rounded="lg"
+                                style="min-height: auto"
                               >
-                                <span class="text-truncate text-body-2 font-weight-medium" style="max-width: calc(100% - 24px);">
-                                  {{ reference.name }}
-                                </span>
-                                <v-icon size="16" color="red-darken-2" class="ml-2">mdi-open-in-new</v-icon>
-                              </a>
+                                <a
+                                  :href="reference.url"
+                                  target="_blank"
+                                  class="d-flex align-center justify-between mb-2 text-decoration-none text-red-darken-2"
+                                  :title="reference.name"
+                                >
+                                  <span
+                                    class="text-truncate text-body-2 font-weight-medium"
+                                    style="max-width: calc(100% - 24px)"
+                                  >
+                                    {{ reference.name }}
+                                  </span>
+                                  <v-icon size="16" color="red-darken-2" class="ml-2"
+                                    >mdi-open-in-new</v-icon
+                                  >
+                                </a>
                                 <div class="text-caption">
                                   {{ reference.description }}
                                 </div>
@@ -253,11 +258,18 @@ onMounted(() => fetchSoftware());
                           v-for="user in software.users"
                           :key="user.id"
                           class="d-flex align-center"
-                          style="white-space: nowrap;"
+                          style="white-space: nowrap"
                         >
-                          <a :href="`mailto:${user.email_user}`" class="d-flex align-center text-decoration-none">
+                          <a
+                            :href="`mailto:${user.email_user}`"
+                            class="d-flex align-center text-decoration-none"
+                          >
                             <v-icon size="18" class="me-1" icon="mdi-email" />
-                            <span>{{ user.name_user ? `${user.first_name_user} ${user.name_user}` : software.made_by }}</span>
+                            <span>{{
+                              user.name_user
+                                ? `${user.first_name_user} ${user.name_user}`
+                                : software.made_by
+                            }}</span>
                           </a>
                         </div>
                       </div>
