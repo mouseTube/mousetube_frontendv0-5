@@ -10,6 +10,13 @@ Code under GPL v3.0 licence
 // Header page
 import { Users } from 'lucide-vue-next';
 import { AudioLines } from 'lucide-vue-next';
+import { ref, onMounted } from 'vue';
+
+const isClient = ref(false);
+
+onMounted(() => {
+  isClient.value = true;
+});
 </script>
 
 <template>
@@ -22,18 +29,21 @@ import { AudioLines } from 'lucide-vue-next';
           exact-active-class="active-logo"
         >
           <v-img
+            v-if="isClient"
             :width="$vuetify.display.smAndDown ? 40 : 60"
+            :height="$vuetify.display.smAndDown ? 40 : 60"
             src="/logo_mousetube_carre.png"
             alt="mouseTube"
-            class="rounded-circle logo-img"
-            style="background-color: white; padding: 4px"
+            class="logo-img"
+            style="
+              background-color: white;
+              padding: 4px;
+              object-fit: contain;
+              max-width: 100%;
+              height: auto;
+            "
           />
-          <span
-            class="ml-2 site-title"
-            :style="{ fontSize: $vuetify.display.smAndDown ? '16px' : '20px' }"
-          >
-            MouseTube
-          </span>
+          <span class="ml-2 site-title">MouseTube</span>
         </nuxt-link>
       </v-col>
       <v-col
@@ -86,6 +96,7 @@ import { AudioLines } from 'lucide-vue-next';
 .nav-item:hover .audio-hover-icon {
   animation: wiggle 0.5s ease-in-out;
 }
+
 .logo-img {
   filter: grayscale(30%);
   transition:
@@ -109,6 +120,7 @@ import { AudioLines } from 'lucide-vue-next';
   margin-right: 8px;
   display: inline-block;
   vertical-align: middle;
+  position: relative;
 }
 
 .nav-link-content {
@@ -157,7 +169,7 @@ import { AudioLines } from 'lucide-vue-next';
   }
 
   .site-title {
-    font-size: 16px !important;
+    font-size: 16px;
   }
 
   .logo-img {

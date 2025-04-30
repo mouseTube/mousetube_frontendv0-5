@@ -80,7 +80,7 @@ const onToggleIsValidLink = () => {
   onSearch();
 };
 
-const incrementDownloads = async (fileId) => {
+const incrementDownloads = async (fileId, fileLink) => {
   try {
     const response = await axios.patch(`${apiBaseUrl}/file/${fileId}/`, {
       downloads: 'increment',
@@ -97,6 +97,9 @@ const incrementDownloads = async (fileId) => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error updating downloads:', error);
+  } finally {
+    // Always open the file link
+    window.open(fileLink, '_blank');
   }
 };
 
@@ -371,9 +374,9 @@ onMounted(() => fetchFiles());
                             variant="tonal"
                             elevation="4"
                             class="ma-2 hover-effect border-sm"
-                            @click.stop="incrementDownloads(file.id)"
+                            @click="incrementDownloads(file.id, file.link)"
                           >
-                            <a :href="file.link" target="_blank">Download</a>
+                            Download
                           </v-btn>
                           <v-btn
                             v-else
