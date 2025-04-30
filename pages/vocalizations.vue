@@ -80,6 +80,26 @@ const onToggleIsValidLink = () => {
   onSearch();
 };
 
+const incrementDownloads = async (fileId) => {
+  try {
+    const response = await axios.patch(`${apiBaseUrl}/file/${fileId}/`, {
+      downloads: 'increment',
+    });
+
+    if (response.status === 200) {
+      const updatedFile = response.data;
+      // Update the downloads count in the local files array
+      const fileIndex = files.value.findIndex((file) => file.id === fileId);
+      if (fileIndex !== -1) {
+        files.value[fileIndex].downloads = updatedFile.downloads;
+      }
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error updating downloads:', error);
+  }
+};
+
 ////////////////////////////////
 // WATCHER
 ////////////////////////////////
@@ -198,6 +218,26 @@ onMounted(() => fetchFiles());
                     :key="file.id"
                     elevated
                   >
+                    <v-badge
+                      :content="file.downloads + ' Downloads'"
+                      overlap
+                      style="position: absolute; top: 20px; right: 40px"
+                      color="red-lighten-5"
+                    >
+                      <template #badge>
+                        <div
+                          style="
+                            background-color: transparent;
+                            font-size: 0.875rem;
+                            color: gray;
+                            border-radius: 12px;
+                          "
+                        >
+                          <v-icon style="font-size: 0.875rem; color: gray">mdi-download</v-icon>
+                          <span style="margin-left: 8px">{{ file.downloads }}</span>
+                        </div>
+                      </template>
+                    </v-badge>
                     <v-card-title>
                       {{ file.link.split('/').pop() }}
                     </v-card-title>
@@ -331,6 +371,7 @@ onMounted(() => fetchFiles());
                             variant="tonal"
                             elevation="4"
                             class="ma-2 hover-effect border-sm"
+                            @click.stop="incrementDownloads(file.id)"
                           >
                             <a :href="file.link" target="_blank">Download</a>
                           </v-btn>
