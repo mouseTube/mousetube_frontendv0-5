@@ -21,7 +21,7 @@ const count = ref(0);
 const currentPage = ref(1);
 const perPage = ref(10);
 const showFilters = ref(false);
-const filters = ref(['software_type']);
+const filters = ref(['all']);
 const apiBaseUrl = useApiBaseUrl();
 const softwareTypeFilter = ref('all');
 
@@ -34,7 +34,7 @@ const softwareTypeFilter = ref('all');
  * @param {string} url - The URL to fetch data from
  */
 const fetchSoftware = async (
-  url = `${apiBaseUrl}/software/?page_size=${perPage.value}&filter=${filters.value}`
+  url = `${apiBaseUrl}/software/?page_size=${perPage.value}&filter=${encodeURIComponent(filters.value)}`
 ) => {
   dataLoaded.value = false;
   try {
@@ -58,29 +58,9 @@ const fetchSoftware = async (
  */
 const onSearch = debounce(() => {
   fetchSoftware(
-    `${apiBaseUrl}/software/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}&filter=${filters.value}`
+    `${apiBaseUrl}/software/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}&filter=${encodeURIComponent(filters.value)}`
   );
 }, 600);
-
-const onToggleAcquisition = () => {
-  const index = filters.value.indexOf('software_type');
-  if (index > -1) {
-    filters.value.splice(index, 1);
-  } else {
-    filters.value.push('software_type');
-  }
-  onSearch();
-};
-
-const onToggleSoftwareType = () => {
-  const index = filters.value.indexOf('software_type');
-  if (index > -1) {
-    filters.value.splice(index, 1);
-  } else {
-    filters.value.push('software_type');
-  }
-  onSearch();
-};
 
 ////////////////////////////////
 // WATCHER
@@ -95,6 +75,11 @@ watch(search, async (newSearch) => {
     search.value = '';
     await fetchSoftware();
   }
+});
+
+// Watch filters value and trigger fetchSoftware
+watch(filters, () => {
+  fetchSoftware();
 });
 
 ////////////////////////////////
@@ -155,24 +140,16 @@ onMounted(() => fetchSoftware());
                 >
                   <h3 class="text-subtitle-1 mb-2">Filters</h3>
                   <v-row>
-                    <v-col cols="12" sm="4">
-                      <v-checkbox
-                        :model-value="filters.includes('software_type')"
-                        @change="onToggleAcquisition"
-                        label="Acquisition"
-                        density="compact"
-                        hide-details
-                        class="py-0"
-                      />
-                      <v-checkbox
-                        :model-value="filters.includes('software_type')"
-                        @change="onToggleAnalysis"
-                        label="Analysis"
-                        density="compact"
-                        hide-details
-                        class="py-0"
-                      />
-                    </v-col>
+                  <v-col cols="12" sm="4">
+                    <v-select
+                      v-model="filters"
+                      :items="['all', 'acquisition', 'analysis', 'acquisition and analysis']"
+                      label="Filter by Software Type"
+                      dense
+                      hide-details
+                      class="py-0"
+                    />
+                  </v-col>
                   </v-row>
                 </v-sheet>
               </v-expand-transition>
@@ -209,33 +186,82 @@ onMounted(() => fetchSoftware());
                     elevated
                   >
                     <v-card-title>
-                      {{ software.software_name }}
+                      {{ software.name }}
                     </v-card-title>
                     <v-card-subtitle>
-                      {{ software.software_type }}
+                      {{ software.made_by }}
                     </v-card-subtitle>
+                    <v-chip
+                    v-bind:class="{
+                      'bg-blue-darken-2': software.type === 'acquisition',
+                      'bg-red-darken-2': software.type === 'analysis',
+                      'bg-orange-darken-2': software.type === 'acquisition and analysis'
+                    }"
+                      class="ml-2 position-absolute top-0 right-0 mt-3 mr-3"
+                      label
+                    >
+                      {{ software.type }}
+                    </v-chip>
                     <v-card-item class="bg-surface-light pt-4">
-                      <v-label class="mr-2">Made by: </v-label>{{ software.made_by }}<br />
-                      <v-label class="mr-2">Description: </v-label>{{ software.description }}<br />
+                      <v-label class="mr-2"></v-label>{{ software.description }}<br />
                     </v-card-item>
 
-                    <!-- Users Section -->
+                    <!-- References Section -->
                     <v-expansion-panels>
-                      <v-expansion-panel title="Users" bg-color="grey-lighten-2">
+                      <v-expansion-panel title="References" bg-color="grey-lighten-2">
                         <v-expansion-panel-text>
-                          <v-card class="mx-auto my-2 pt-2 pl-2" title="User Information">
-                            <v-card-item v-for="user in software.users" :key="user.id">
-                              <v-card-text>
-                                <v-label class="mr-2">Name: </v-label>{{ user.first_name_user }} {{ user.name_user }}<br />
-                                <v-label class="mr-2">Email: </v-label>{{ user.email_user }}<br />
-                              </v-card-text>
-                            </v-card-item>
-                          </v-card>
+                          <v-row dense align="start" justify="start" class="pa-2">
+                            <v-col
+                              v-for="reference in software.references"
+                              :key="reference.id"
+                              cols="12"
+                              sm="6"
+                              md="4"
+                              lg="3"
+                            >
+                            <v-card
+                              elevation="1"
+                              class="pa-3"
+                              color="grey-lighten-4"
+                              rounded="lg"
+                              style="min-height: auto;"
+                            >
+                              <a
+                                :href="reference.url"
+                                target="_blank"
+                                class="d-flex align-center justify-between mb-2 text-decoration-none text-red-darken-2"
+                                :title="reference.name"
+                              >
+                                <span class="text-truncate text-body-2 font-weight-medium" style="max-width: calc(100% - 24px);">
+                                  {{ reference.name }}
+                                </span>
+                                <v-icon size="16" color="red-darken-2" class="ml-2">mdi-open-in-new</v-icon>
+                              </a>
+                                <div class="text-caption">
+                                  {{ reference.description }}
+                                </div>
+                              </v-card>
+                            </v-col>
+                          </v-row>
                         </v-expansion-panel-text>
                       </v-expansion-panel>
                     </v-expansion-panels>
                     <v-divider class="mx-4"></v-divider>
-
+                    <v-card-actions v-if="software.users && software.users.length" class="pl-4">
+                      <div class="d-flex flex-wrap align-center ga-4">
+                        <div
+                          v-for="user in software.users"
+                          :key="user.id"
+                          class="d-flex align-center"
+                          style="white-space: nowrap;"
+                        >
+                          <a :href="`mailto:${user.email_user}`" class="d-flex align-center text-decoration-none">
+                            <v-icon size="18" class="me-1" icon="mdi-email" />
+                            <span>{{ user.name_user ? `${user.first_name_user} ${user.name_user}` : software.made_by }}</span>
+                          </a>
+                        </div>
+                      </div>
+                    </v-card-actions>
                   </v-card>
                 </v-container>
               </template>
@@ -278,7 +304,7 @@ onMounted(() => fetchSoftware());
 
 a {
   text-decoration: none;
-  color: rgb(219, 98, 98);
+  color: rgba(198, 40, 40, 0.9);
 }
 
 .doi:hover {
