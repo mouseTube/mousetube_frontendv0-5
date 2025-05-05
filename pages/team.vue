@@ -457,8 +457,15 @@ watch(
         </v-col>
       </v-row>
     </v-container>
-    <v-btn v-if="showButton" fab color="red" dark class="fixed-btn" @click="scrollToTop">
-      <v-icon>mdi-arrow-up</v-icon>
+    <v-btn
+      v-if="showButton"
+      icon
+      size="x-small"
+      color="red-lighten-3"
+      class="fixed-btn"
+      @click="scrollToTop"
+    >
+      <v-icon color="white">mdi-arrow-up</v-icon>
     </v-btn>
   </v-main>
 </template>
@@ -489,9 +496,6 @@ a:hover {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #fab1ab !important;
-  padding: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 </style>
