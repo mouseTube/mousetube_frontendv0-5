@@ -8,20 +8,16 @@ Code under GPL v3.0 licence
 -->
 <script setup>
 // Header page
-import { Users } from 'lucide-vue-next';
-import { AudioLines } from 'lucide-vue-next';
-import { MonitorCog } from 'lucide-vue-next';
+import { Users, AudioLines, MonitorCog } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
+import { useDisplay } from 'vuetify';
 
-const isClient = ref(false);
+const { smAndDown } = useDisplay();
 
-onMounted(() => {
-  isClient.value = true;
-});
 </script>
 
 <template>
-  <v-app-bar color="#0d0d0d" height="56" dense flat>
+  <v-app-bar role="navigation" color="#0d0d0d" height="56" dense flat>
     <v-row no-gutters align="center" class="w-100" style="min-width: 0">
       <v-col cols="auto" class="d-flex align-center flex-shrink-1" style="min-width: 0">
         <nuxt-link
@@ -30,9 +26,8 @@ onMounted(() => {
           exact-active-class="active-logo"
         >
           <v-img
-            v-if="isClient"
-            :width="$vuetify.display.smAndDown ? 40 : 60"
-            :height="$vuetify.display.smAndDown ? 40 : 60"
+            :width="smAndDown ? 40 : 60"
+            :height="smAndDown ? 40 : 60"
             src="/logo_mousetube_carre.png"
             alt="mouseTube"
             class="logo-img"
@@ -49,8 +44,8 @@ onMounted(() => {
       </v-col>
       <v-col
         cols="auto"
-        class="d-flex justify-center align-center flex-nowrap"
-        style="gap: 8px; min-width: 0; flex-grow: 2; justify-content: center"
+
+        class="nav-links d-flex justify-center align-center"
       >
         <nuxt-link to="/vocalizations" class="nav-item px-2" exact-active-class="active-link">
           <span class="nav-link-content">
@@ -165,10 +160,17 @@ onMounted(() => {
   color: white;
   font-weight: 800;
   font-size: 20px;
-  margin-right: 16px;
 }
 
-@media screen and (max-width: 600px) {
+.nav-links {
+  gap: 16px;
+  min-width: 0;
+  flex-grow: 2;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 700px) {
   .nav-item {
     font-size: 16px;
     padding: 8px 12px;
@@ -182,6 +184,35 @@ onMounted(() => {
   .logo-img {
     width: 40px;
   }
+}
+
+@media screen and (max-width: 575px) {
+  .nav-item {
+    font-size: 12px;
+    padding: 8px 12px;
+    margin-right: 8px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .nav-label {
+    display: none;
+  }
+  .nav-icon {
+    width: 23px;
+    height: 23px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .nav-item {
+    padding: 0px 4px;
+    margin-right: 0px;
+    gap: 0px;
+  }
+  .nav-links {
+  gap: 0px;
+}
 }
 
 .nav-item:hover .nav-icon,
