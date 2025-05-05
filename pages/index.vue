@@ -73,8 +73,8 @@ onMounted(() => {
                     <div></div>
                     <div></div>
                   </div>
-                  <nuxt-link to="/vocalizations" style="color: black;">
-                  {{ numberOfFiles }} vocalization files available
+                  <nuxt-link to="/vocalizations" style="color: black">
+                    {{ numberOfFiles }} vocalization files available
                   </nuxt-link>
                 </v-col>
                 <v-col v-else>
@@ -100,11 +100,21 @@ onMounted(() => {
               <nuxt-link to="/team#contact">contact us</nuxt-link>. This version does not allow to
               share file but we can do it manually.<br />
               <v-expansion-panels class="mt-4" accordion>
-                <v-expansion-panel class="expanded-panel" title="We are currently developing a new version with more functionalities." bg-color="grey-lighten-4">
-                  <v-expansion-panel-text >
+                <v-expansion-panel
+                  class="expanded-panel"
+                  title="We are currently developing a new version with more functionalities."
+                  bg-color="grey-lighten-4"
+                >
+                  <v-expansion-panel-text>
                     <ul>
-                      <li>Improvement of features from the initial mouseTube version (protocol and vocalization creation)</li>
-                      <li>Option to share vocalization files on Zenodo, the European institutional repository</li>
+                      <li>
+                        Improvement of features from the initial mouseTube version (protocol and
+                        vocalization creation)
+                      </li>
+                      <li>
+                        Option to share vocalization files on Zenodo, the European institutional
+                        repository
+                      </li>
                       <li>Extension of mouseTube to rats</li>
                       <li>Reference datasets from mice and rats</li>
                       <li>More intuitive interface</li>
@@ -112,8 +122,7 @@ onMounted(() => {
                     </ul>
                   </v-expansion-panel-text>
                 </v-expansion-panel>
-            </v-expansion-panels>
-              
+              </v-expansion-panels>
             </v-card-text>
           </v-card>
           <!-- <v-card
@@ -321,6 +330,6 @@ a:hover {
 }
 
 ::v-deep .v-expansion-panel-title {
-    padding: 7px 7px;
-  }
+  padding: 7px 7px;
+}
 </style>
