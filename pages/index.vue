@@ -73,7 +73,9 @@ onMounted(() => {
                     <div></div>
                     <div></div>
                   </div>
+                  <nuxt-link to="/vocalizations" style="color: black;">
                   {{ numberOfFiles }} vocalization files available
+                  </nuxt-link>
                 </v-col>
                 <v-col v-else>
                   <v-progress-circular color="red-darken-4" indeterminate></v-progress-circular>
@@ -97,10 +99,24 @@ onMounted(() => {
               If you want to share vocalization files, please
               <nuxt-link to="/team#contact">contact us</nuxt-link>. This version does not allow to
               share file but we can do it manually.<br />
-              We are currently developing a new version with more functionalities.
+              <v-expansion-panels class="mt-4" accordion>
+                <v-expansion-panel class="expanded-panel" title="We are currently developing a new version with more functionalities." bg-color="grey-lighten-4">
+                  <v-expansion-panel-text >
+                    <ul>
+                      <li>Improvement of features from the initial mouseTube version (protocol and vocalization creation)</li>
+                      <li>Option to share vocalization files on Zenodo, the European institutional repository</li>
+                      <li>Extension of mouseTube to rats</li>
+                      <li>Reference datasets from mice and rats</li>
+                      <li>More intuitive interface</li>
+                      <li>Hardware section for recording material (microphones, soundcards)</li>
+                    </ul>
+                  </v-expansion-panel-text>
+                </v-expansion-panel>
+            </v-expansion-panels>
+              
             </v-card-text>
           </v-card>
-          <v-card
+          <!-- <v-card
             class="mx-4 py-2 px-2 flex-grow-1 mt-8 rounded-lg border elevation-3"
             variant="tonal"
           >
@@ -121,7 +137,7 @@ onMounted(() => {
                 >Behavioural Brain Research - Ultrasonic Communication in Rodents</nuxt-link
               >
             </v-card-text>
-          </v-card>
+          </v-card> -->
         </v-col>
         <v-col cols="12" md="6" class="h-100">
           <v-card
@@ -194,6 +210,28 @@ onMounted(() => {
             variant="tonal"
           >
             <v-card-title class="font-weight-bold mx-4 my-4">
+              <v-icon class="me-2">mdi-handshake-outline</v-icon>
+              Call for papers
+            </v-card-title>
+            <v-card-text class="text-justify">
+              Working on ultrasonic vocalizations? Together, Dr. Elodie Ey and Dr. Markus Wöhr are
+              serving as guest editors for a Behavioural Brain Research special issue on Ultrasonic
+              Communication in Rodents. They are more than happy to learn about your most recent
+              discoveries.<br />
+              <br />
+              More information here:
+              <nuxt-link
+                href="https://www.sciencedirect.com/special-issue/317071/ultrasonic-communication-in-rodents"
+                target="_blank"
+                >Behavioural Brain Research - Ultrasonic Communication in Rodents</nuxt-link
+              >
+            </v-card-text>
+          </v-card>
+          <!-- <v-card
+            class="mx-4 py-2 px-2 flex-grow-1 mt-8 rounded-lg border elevation-3"
+            variant="tonal"
+          >
+            <v-card-title class="font-weight-bold mx-4 my-4">
               <v-icon class="me-2">mdi-newspaper-variant-multiple-outline</v-icon>
               MouseTube's publications
             </v-card-title>
@@ -217,7 +255,7 @@ onMounted(() => {
                 ><v-btn prepend-icon="mdi-mastodon">Follow mouseTube on Mastodon</v-btn></nuxt-link
               >
             </v-card-actions>
-          </v-card>
+          </v-card> -->
         </v-col>
       </v-row>
       <v-row>
@@ -281,4 +319,8 @@ a:hover {
     transform: scaleY(3);
   }
 }
+
+::v-deep .v-expansion-panel-title {
+    padding: 7px 7px;
+  }
 </style>
