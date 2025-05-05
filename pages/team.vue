@@ -10,10 +10,19 @@ Code under GPL v3.0 licence
 <script setup>
 // Team page
 import { Users } from 'lucide-vue-next';
-import { onMounted, nextTick } from 'vue';
+import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
+const showButton = ref(false);
 const route = useRoute();
+
+const handleScroll = () => {
+  if (window.scrollY > 200) {
+    showButton.value = true;
+  } else {
+    showButton.value = false;
+  }
+};
 
 function scrollToHash(hash) {
   if (hash) {
@@ -28,8 +37,20 @@ function scrollToHash(hash) {
   }
 }
 
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+}
+
 onMounted(() => {
   scrollToHash(route.hash);
+  window.addEventListener('scroll', handleScroll);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('scroll', handleScroll);
 });
 
 watch(
@@ -50,7 +71,7 @@ watch(
               cover
               :width="500"
               src="/logo_mousetube_big.png"
-              alt="logo MouseTube"
+              alt="logo mouseTube"
               class="mx-auto d-block"
               style="min-height: 249px"
             /> -->
@@ -60,7 +81,7 @@ watch(
               <v-card class="mx-auto my-2 pt-2 pl-2 rounded-lg border elevation-3" variant="tonal">
                 <v-card-title class="font-weight-bold mx-4 my-4">
                   <v-icon class="me-2">mdi-account-group-outline</v-icon>
-                  The MouseTube Team
+                  The mouseTube Team
                 </v-card-title>
                 <v-card-text>
                   <v-list>
@@ -139,7 +160,7 @@ watch(
                         :to="'https://mastodon.social/@mousetube'"
                         target="_blank"
                         class="text-body-1"
-                        >MouseTube on Mastodon</nuxt-link
+                        >mouseTube on Mastodon</nuxt-link
                       >
                     </v-list-item>
 
@@ -148,7 +169,7 @@ watch(
                         :to="'https://github.com/mousetube'"
                         target="_blank"
                         class="text-body-1"
-                        >MouseTube on GitHub</nuxt-link
+                        >mouseTube on GitHub</nuxt-link
                       >
                     </v-list-item>
                   </v-list>
@@ -165,7 +186,7 @@ watch(
                 <v-card-text>
                   <v-list>
                     <v-list-item prepend-icon="mdi-newspaper-variant-outline">
-                      Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. MouseTube – a
+                      Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. mouseTube – a
                       database to collaboratively unravel mouse ultrasonic communication [version 1;
                       peer review: 2 approved]. F1000Research 2016, 5:2332 (<nuxt-link
                         href="https://doi.org/10.12688/f1000research.9439.1"
@@ -191,12 +212,12 @@ watch(
               <v-card class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3" variant="tonal">
                 <v-card-title class="font-weight-bold mx-4 my-4">
                   <v-icon class="me-2">mdi-multimedia</v-icon>
-                  MouseTube in the media
+                  mouseTube in the media
                 </v-card-title>
                 <v-card-text>
                   <v-list>
                     <v-list-item prepend-icon="mdi-trophy">
-                      In 2022, <strong>MouseTube</strong> was awarded the
+                      In 2022, <strong>mouseTube</strong> was awarded the
                       <nuxt-link
                         href="https://www.ouvrirlascience.fr/prix-science-ouverte-des-donnees-de-la-recherche/"
                         target="_blank"
@@ -242,12 +263,12 @@ watch(
                       ><strong>Julien Seiler</strong> (IFB, Strasbourg, France)</v-list-item
                     >
                     <v-list-item class="bullet-item"
-                      >MouseTube logo by <strong>Ioan Lemoël</strong><br
+                      >mouseTube logo by <strong>Ioan Lemoël</strong><br
                     /></v-list-item>
                   </v-list>
                 </v-card-text>
                 <v-card-text class="text-center">
-                  MouseTube is hosted by IFB (Institut Français de Bioinformatique)<br />
+                  mouseTube is hosted by IFB (Institut Français de Bioinformatique)<br />
                   <nuxt-link to="https://www.france-bioinformatique.fr/"
                     ><img src="/logo_ifb.png" alt="IFB" class="ifb ml-2 mr-2 mt-2"
                   /></nuxt-link>
@@ -283,7 +304,7 @@ watch(
 
                 <v-card-text class="mt-4">
                   <p>
-                    The <strong>MouseTube</strong> platform respects your privacy and complies with
+                    The <strong>mouseTube</strong> platform respects your privacy and complies with
                     the <strong>General Data Protection Regulation (GDPR)</strong>.
                   </p>
 
@@ -291,7 +312,7 @@ watch(
                     1. Data Collected and Displayed
                   </h3>
                   <p>
-                    MouseTube may display limited personal data associated with audio files
+                    mouseTube may display limited personal data associated with audio files
                     referenced on the platform, including:
                   </p>
                   <ul class="pl-4">
@@ -304,7 +325,7 @@ watch(
                   </p>
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">2. Legal Basis</h3>
-                  <p>The publication of personal data on MouseTube is based on:</p>
+                  <p>The publication of personal data on mouseTube is based on:</p>
                   <ul class="pl-4">
                     <li>Explicit consent given at the time of submission, and/or</li>
                     <li>
@@ -314,11 +335,11 @@ watch(
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">3. Data Retention</h3>
                   <p>
-                    MouseTube does not host the actual data files. It only stores references (links)
+                    mouseTube does not host the actual data files. It only stores references (links)
                     to external repositories where the data are hosted.
                   </p>
                   <p>
-                    These links remain visible and accessible on MouseTube as long as they are valid
+                    These links remain visible and accessible on mouseTube as long as they are valid
                     and publicly available, unless the data owner requests their removal.
                   </p>
 
@@ -343,7 +364,7 @@ watch(
                   </p>
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">6. Cookies</h3>
-                  <p>MouseTube does not use any tracking or analytics cookies.</p>
+                  <p>mouseTube does not use any tracking or analytics cookies.</p>
                 </v-card-text>
               </v-card>
             </v-card-item>
@@ -363,7 +384,7 @@ watch(
 
                 <v-card-text class="mt-4">
                   <p>
-                    <strong>MouseTube</strong> is a collaborative database dedicated to mouse
+                    <strong>mouseTube</strong> is a collaborative database dedicated to mouse
                     ultrasonic communication. It collects and shares ultrasonic vocalization
                     recordings with the scientific community.
                   </p>
@@ -372,8 +393,8 @@ watch(
                     1. Data Usage and Ownership
                   </h3>
                   <p>
-                    Data uploaded to MouseTube remain the property of the originating laboratory.
-                    However, by uploading, the contributor grants permission to all MouseTube
+                    Data uploaded to mouseTube remain the property of the originating laboratory.
+                    However, by uploading, the contributor grants permission to all mouseTube
                     members to use the data for analysis and scientific publications.
                   </p>
                   <p>
@@ -385,19 +406,19 @@ watch(
                     2. Data Sharing and Accessibility
                   </h3>
                   <p>
-                    All data on MouseTube are openly available to registered members of the
+                    All data on mouseTube are openly available to registered members of the
                     community. Any member can download and use the data in accordance with these
                     terms.
                   </p>
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">3. Citation Requirement</h3>
                   <p>
-                    Any use of MouseTube data in publications must include the following citation:
+                    Any use of mouseTube data in publications must include the following citation:
                   </p>
                   <blockquote class="pa-3 my-2 bg-grey-lighten-4 rounded">
                     Torquet N, de Chaumont F, Faure P, Bourgeron T, Ey E. <br />
                     <em
-                      >MouseTube – a database to collaboratively unravel mouse ultrasonic
+                      >mouseTube – a database to collaboratively unravel mouse ultrasonic
                       communication</em
                     >. <br />
                     F1000Research 2016, 5:2332. <br />
@@ -408,13 +429,13 @@ watch(
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">4. Responsibility</h3>
                   <p>
-                    MouseTube administrators disclaim any responsibility for the accuracy or content
+                    mouseTube administrators disclaim any responsibility for the accuracy or content
                     of uploaded data and metadata.
                   </p>
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">5. Source Code License</h3>
                   <p>
-                    The source code of MouseTube is released under the
+                    The source code of mouseTube is released under the
                     <strong>GNU General Public License v3 (GPL-3.0)</strong>. It may be freely
                     reused, modified, and redistributed, provided that all derivative works are also
                     distributed under the same license.
@@ -426,7 +447,7 @@ watch(
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">6. Updates to Terms</h3>
                   <p>
-                    MouseTube administrators reserve the right to modify these terms of use at any
+                    mouseTube administrators reserve the right to modify these terms of use at any
                     time. Changes will be communicated to all registered members by email.
                   </p>
                 </v-card-text>
@@ -436,6 +457,9 @@ watch(
         </v-col>
       </v-row>
     </v-container>
+    <v-btn v-if="showButton" fab color="red" dark class="fixed-btn" @click="scrollToTop">
+      <v-icon>mdi-arrow-up</v-icon>
+    </v-btn>
   </v-main>
 </template>
 
@@ -460,5 +484,14 @@ a:hover {
   content: '•';
   margin-right: 8px;
   color: black;
+}
+.fixed-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #fab1ab !important;
+  padding: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 </style>
