@@ -10,6 +10,7 @@ Code under GPL v3.0 licence
 // Header page
 import { Users } from 'lucide-vue-next';
 import { AudioLines } from 'lucide-vue-next';
+import { MonitorCog } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 
 const isClient = ref(false);
@@ -55,6 +56,12 @@ onMounted(() => {
           <span class="nav-link-content">
             <AudioLines class="nav-icon audio-hover-icon" />
             <span class="nav-label">Vocalizations</span>
+          </span>
+        </nuxt-link>
+        <nuxt-link to="/software" class="nav-item px-2" exact-active-class="active-link">
+          <span class="nav-link-content">
+            <MonitorCog class="nav-icon audio-hover-icon" />
+            <span class="nav-label">Software</span>
           </span>
         </nuxt-link>
         <nuxt-link to="/team" class="nuxt-link nav-item px-2" exact-active-class="active-link">
