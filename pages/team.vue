@@ -26,15 +26,18 @@ function scrollToHash(hash) {
       }
     }, 200);
   }
-};
+}
 
 onMounted(() => {
   scrollToHash(route.hash);
 });
 
-watch(() => route.hash, (newHash) => {
-  scrollToHash(newHash);
-});
+watch(
+  () => route.hash,
+  (newHash) => {
+    scrollToHash(newHash);
+  }
+);
 </script>
 
 <template>
@@ -265,129 +268,170 @@ watch(() => route.hash, (newHash) => {
               </v-card>
             </v-card-item>
             <v-card-item>
-              <v-card id="privacy" class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3" variant="tonal">
+              <v-card
+                id="privacy"
+                class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3"
+                variant="tonal"
+              >
                 <v-card-title class="font-weight-bold mx-4 my-4">
                   <v-icon class="me-2">mdi-shield-lock-outline</v-icon>
                   Privacy policy
                 </v-card-title>
-                <v-card-subtitle class="text-caption text-grey mx-4">Last updated: May 5th, 2025</v-card-subtitle>
+                <v-card-subtitle class="text-caption text-grey mx-4"
+                  >Last updated: May 5th, 2025</v-card-subtitle
+                >
 
                 <v-card-text class="mt-4">
                   <p>
-                    The <strong>MouseTube</strong> platform respects your privacy and complies with the <strong>General Data Protection Regulation (GDPR)</strong>.
+                    The <strong>MouseTube</strong> platform respects your privacy and complies with
+                    the <strong>General Data Protection Regulation (GDPR)</strong>.
                   </p>
 
-                  <h3 class="text-subtitle-1 font-weight-medium mt-4">1. Data Collected and Displayed</h3>
+                  <h3 class="text-subtitle-1 font-weight-medium mt-4">
+                    1. Data Collected and Displayed
+                  </h3>
                   <p>
-                    MouseTube may display limited personal data associated with audio files referenced on the platform, including:
+                    MouseTube may display limited personal data associated with audio files
+                    referenced on the platform, including:
                   </p>
                   <ul class="pl-4">
                     <li>Full names of contributors</li>
                     <li>Academic or professional email addresses</li>
                   </ul>
                   <p>
-                    This information is provided voluntarily by users for scientific attribution and collaboration.
+                    This information is provided voluntarily by users for scientific attribution and
+                    collaboration.
                   </p>
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">2. Legal Basis</h3>
-                  <p>
-                    The publication of personal data on MouseTube is based on:
-                  </p>
+                  <p>The publication of personal data on MouseTube is based on:</p>
                   <ul class="pl-4">
                     <li>Explicit consent given at the time of submission, and/or</li>
-                    <li>The legitimate interest of promoting transparency in scientific research.</li>
+                    <li>
+                      The legitimate interest of promoting transparency in scientific research.
+                    </li>
                   </ul>
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">3. Data Retention</h3>
                   <p>
-                    MouseTube does not host the actual data files. It only stores references (links) to external repositories where the data are hosted. 
+                    MouseTube does not host the actual data files. It only stores references (links)
+                    to external repositories where the data are hosted.
                   </p>
                   <p>
-                    These links remain visible and accessible on MouseTube as long as they are valid and publicly available, unless the data owner requests their removal.
+                    These links remain visible and accessible on MouseTube as long as they are valid
+                    and publicly available, unless the data owner requests their removal.
                   </p>
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">4. Your Rights</h3>
                   <p>
-                    You may request access to, correction of, or deletion of your personal data by contacting us at:
+                    You may request access to, correction of, or deletion of your personal data by
+                    contacting us at:
                     <a href="mailto:mousetube@igbmc.fr" class="text-primary">mousetube@igbmc.fr</a>
                   </p>
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">5. Hosting and Security</h3>
                   <p>
-                    mouseTube does not host the data files themselves. Instead, it provides curated links to externally hosted datasets, typically stored on institutional repositories or other trusted platforms.
+                    mouseTube does not host the data files themselves. Instead, it provides curated
+                    links to externally hosted datasets, typically stored on institutional
+                    repositories or other trusted platforms.
                   </p>
                   <p>
-                    These links and associated contributor information are publicly visible for transparency and scientific attribution. While the platform is openly accessible, administrative actions such as editing or removing content are restricted to authorized users to ensure data integrity and security.
+                    These links and associated contributor information are publicly visible for
+                    transparency and scientific attribution. While the platform is openly
+                    accessible, administrative actions such as editing or removing content are
+                    restricted to authorized users to ensure data integrity and security.
                   </p>
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">6. Cookies</h3>
+                  <p>MouseTube does not use any tracking or analytics cookies.</p>
+                </v-card-text>
+              </v-card>
+            </v-card-item>
+            <v-card-item>
+              <v-card
+                id="term"
+                class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3"
+                variant="tonal"
+              >
+                <v-card-title class="font-weight-bold mx-4 my-4">
+                  <v-icon class="me-2">mdi-scale-balance</v-icon>
+                  Terms of use
+                </v-card-title>
+                <v-card-subtitle class="text-caption text-grey mx-4">
+                  Last updated: May 5th, 2025
+                </v-card-subtitle>
+
+                <v-card-text class="mt-4">
                   <p>
-                    MouseTube does not use any tracking or analytics cookies.
+                    <strong>MouseTube</strong> is a collaborative database dedicated to mouse
+                    ultrasonic communication. It collects and shares ultrasonic vocalization
+                    recordings with the scientific community.
+                  </p>
+
+                  <h3 class="text-subtitle-1 font-weight-medium mt-4">
+                    1. Data Usage and Ownership
+                  </h3>
+                  <p>
+                    Data uploaded to MouseTube remain the property of the originating laboratory.
+                    However, by uploading, the contributor grants permission to all MouseTube
+                    members to use the data for analysis and scientific publications.
+                  </p>
+                  <p>
+                    Contributors are fully responsible for the content of uploaded files and the
+                    accuracy of the associated metadata.
+                  </p>
+
+                  <h3 class="text-subtitle-1 font-weight-medium mt-4">
+                    2. Data Sharing and Accessibility
+                  </h3>
+                  <p>
+                    All data on MouseTube are openly available to registered members of the
+                    community. Any member can download and use the data in accordance with these
+                    terms.
+                  </p>
+
+                  <h3 class="text-subtitle-1 font-weight-medium mt-4">3. Citation Requirement</h3>
+                  <p>
+                    Any use of MouseTube data in publications must include the following citation:
+                  </p>
+                  <blockquote class="pa-3 my-2 bg-grey-lighten-4 rounded">
+                    Torquet N, de Chaumont F, Faure P, Bourgeron T, Ey E. <br />
+                    <em
+                      >MouseTube – a database to collaboratively unravel mouse ultrasonic
+                      communication</em
+                    >. <br />
+                    F1000Research 2016, 5:2332. <br />
+                    <a href="https://doi.org/10.12688/f1000research.9439.1" target="_blank">
+                      https://doi.org/10.12688/f1000research.9439.1
+                    </a>
+                  </blockquote>
+
+                  <h3 class="text-subtitle-1 font-weight-medium mt-4">4. Responsibility</h3>
+                  <p>
+                    MouseTube administrators disclaim any responsibility for the accuracy or content
+                    of uploaded data and metadata.
+                  </p>
+
+                  <h3 class="text-subtitle-1 font-weight-medium mt-4">5. Source Code License</h3>
+                  <p>
+                    The source code of MouseTube is released under the
+                    <strong>GNU General Public License v3 (GPL-3.0)</strong>. It may be freely
+                    reused, modified, and redistributed, provided that all derivative works are also
+                    distributed under the same license.
+                  </p>
+                  <p>
+                    This ensures continued access, transparency, and freedom to collaborate, while
+                    protecting the rights of contributors.
+                  </p>
+
+                  <h3 class="text-subtitle-1 font-weight-medium mt-4">6. Updates to Terms</h3>
+                  <p>
+                    MouseTube administrators reserve the right to modify these terms of use at any
+                    time. Changes will be communicated to all registered members by email.
                   </p>
                 </v-card-text>
               </v-card>
             </v-card-item>
-          <v-card-item>
-            <v-card id="term" class="mx-auto my-2 pt-1 pl-2 rounded-lg border elevation-3" variant="tonal">
-              <v-card-title class="font-weight-bold mx-4 my-4">
-                  <v-icon class="me-2">mdi-scale-balance</v-icon>
-                  Terms of use
-                </v-card-title>
-              <v-card-subtitle class="text-caption text-grey mx-4">
-                Last updated: May 5th, 2025
-              </v-card-subtitle>
-
-              <v-card-text class="mt-4">
-                <p>
-                  <strong>MouseTube</strong> is a collaborative database dedicated to mouse ultrasonic communication. It collects and shares ultrasonic vocalization recordings with the scientific community.
-                </p>
-
-                <h3 class="text-subtitle-1 font-weight-medium mt-4">1. Data Usage and Ownership</h3>
-                <p>
-                  Data uploaded to MouseTube remain the property of the originating laboratory. However, by uploading, the contributor grants permission to all MouseTube members to use the data for analysis and scientific publications.
-                </p>
-                <p>
-                  Contributors are fully responsible for the content of uploaded files and the accuracy of the associated metadata.
-                </p>
-
-                <h3 class="text-subtitle-1 font-weight-medium mt-4">2. Data Sharing and Accessibility</h3>
-                <p>
-                  All data on MouseTube are openly available to registered members of the community. Any member can download and use the data in accordance with these terms.
-                </p>
-
-                <h3 class="text-subtitle-1 font-weight-medium mt-4">3. Citation Requirement</h3>
-                <p>
-                  Any use of MouseTube data in publications must include the following citation:
-                </p>
-                <blockquote class="pa-3 my-2 bg-grey-lighten-4 rounded">
-                  Torquet N, de Chaumont F, Faure P, Bourgeron T, Ey E. <br>
-                  <em>MouseTube – a database to collaboratively unravel mouse ultrasonic communication</em>. <br>
-                  F1000Research 2016, 5:2332. <br>
-                  <a href="https://doi.org/10.12688/f1000research.9439.1" target="_blank">
-                    https://doi.org/10.12688/f1000research.9439.1
-                  </a>
-                </blockquote>
-
-                <h3 class="text-subtitle-1 font-weight-medium mt-4">4. Responsibility</h3>
-                <p>
-                  MouseTube administrators disclaim any responsibility for the accuracy or content of uploaded data and metadata.
-                </p>
-
-                <h3 class="text-subtitle-1 font-weight-medium mt-4">5. Source Code License</h3>
-                <p>
-                  The source code of MouseTube is released under the <strong>GNU General Public License v3 (GPL-3.0)</strong>. It may be freely reused, modified, and redistributed, provided that all derivative works are also distributed under the same license.
-                </p>
-                <p>
-                  This ensures continued access, transparency, and freedom to collaborate, while protecting the rights of contributors.
-                </p>
-
-                <h3 class="text-subtitle-1 font-weight-medium mt-4">6. Updates to Terms</h3>
-                <p>
-                  MouseTube administrators reserve the right to modify these terms of use at any time. Changes will be communicated to all registered members by email.
-                </p>
-              </v-card-text>
-            </v-card>
-          </v-card-item>
           </v-card>
         </v-col>
       </v-row>
