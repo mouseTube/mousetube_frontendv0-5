@@ -329,7 +329,7 @@ a:hover {
   }
 }
 
-::v-deep .v-expansion-panel-title {
+:deep(.v-expansion-panel-title) {
   padding: 7px 7px;
 }
 </style>
