@@ -42,7 +42,7 @@ const apiBaseUrl = useApiBaseUrl();
  * @param {string} url - The URL to fetch data from
  */
 const fetchFiles = async (
-  url = `${apiBaseUrl}/file/?page_size=${perPage.value}&filter=${filters.value}`
+  url = `${apiBaseUrl}/file/?page_size=${perPage.value}&filter=${filters.value.join(',')}`
 ) => {
   dataLoaded.value = false;
   try {
@@ -66,7 +66,7 @@ const fetchFiles = async (
  */
 const onSearch = debounce(() => {
   fetchFiles(
-    `${apiBaseUrl}/file/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}&filter=${filters.value}`
+    `${apiBaseUrl}/file/?search=${encodeURIComponent(search.value)}&page_size=${perPage.value}&filter=${filters.value.join(',')}`
   );
 }, 600);
 

@@ -54,11 +54,11 @@ onMounted(() => {
                 contain
                 height="250"
                 src="/logo_mousetube_big.png"
-                alt="logo mouseTube"
+                alt="logo MouseTube"
                 class="d-flex justify-center mx-10"
               ></v-img>
             </v-row>
-            <!-- <v-card-title class="text-h2 mt-5">Welcome to mouseTube</v-card-title> -->
+            <!-- <v-card-title class="text-h2 mt-5">Welcome to MouseTube</v-card-title> -->
             <v-card-text class="mt-10">
               <v-row justify="center" no-gutters>
                 <v-col
@@ -73,7 +73,9 @@ onMounted(() => {
                     <div></div>
                     <div></div>
                   </div>
-                  {{ numberOfFiles }} vocalization files available
+                  <nuxt-link to="/vocalizations" style="color: black">
+                    {{ numberOfFiles }} vocalization files available
+                  </nuxt-link>
                 </v-col>
                 <v-col v-else>
                   <v-progress-circular color="red-darken-4" indeterminate></v-progress-circular>
@@ -90,17 +92,40 @@ onMounted(() => {
               About this version (v0.5)
             </v-card-title>
             <v-card-text class="text-justify">
-              This is a temporary version of <strong>mouseTube</strong>.<br />
+              This is a temporary version of <strong>MouseTube</strong>.<br />
               This version uses the same database as the initial version but with more recent and
               safer technologies. The main improvement is that data are now accessible without
               authentication.<br />
               If you want to share vocalization files, please
               <nuxt-link to="/team#contact">contact us</nuxt-link>. This version does not allow to
               share file but we can do it manually.<br />
-              We are currently developing a new version with more functionalities.
+              <v-expansion-panels class="mt-4" accordion>
+                <v-expansion-panel
+                  class="expanded-panel"
+                  title="We are currently developing a new version with more functionalities."
+                  bg-color="grey-lighten-4"
+                >
+                  <v-expansion-panel-text>
+                    <ul>
+                      <li>
+                        Improvement of features from the initial MouseTube version (protocol and
+                        vocalization creation)
+                      </li>
+                      <li>
+                        Option to share vocalization files on Zenodo, the European institutional
+                        repository
+                      </li>
+                      <li>Extension of MouseTube to rats</li>
+                      <li>Reference datasets from mice and rats</li>
+                      <li>More intuitive interface</li>
+                      <li>Hardware section for recording material (microphones, soundcards)</li>
+                    </ul>
+                  </v-expansion-panel-text>
+                </v-expansion-panel>
+              </v-expansion-panels>
             </v-card-text>
           </v-card>
-          <v-card
+          <!-- <v-card
             class="mx-4 py-2 px-2 flex-grow-1 mt-8 rounded-lg border elevation-3"
             variant="tonal"
           >
@@ -121,7 +146,7 @@ onMounted(() => {
                 >Behavioural Brain Research - Ultrasonic Communication in Rodents</nuxt-link
               >
             </v-card-text>
-          </v-card>
+          </v-card> -->
         </v-col>
         <v-col cols="12" md="6" class="h-100">
           <v-card
@@ -130,7 +155,7 @@ onMounted(() => {
           >
             <v-card-title class="font-weight-bold mx-4 my-4">
               <v-icon class="me-2">mdi-rodent</v-icon>
-              What is mouseTube?
+              What is MouseTube?
             </v-card-title>
             <v-card-text class="text-justify">
               Rodents communicate with each other through their various sensory modalities:
@@ -181,7 +206,7 @@ onMounted(() => {
               significance of the acoustic features and the effect on the recipient are far from
               elucidated. Understanding the complexity of this communication system requires a vast
               amount of data to explore with high-performance analysis methods. For that purpose, we
-              developed <strong>mouseTube</strong>, a database designed to facilitate sharing,
+              developed <strong>MouseTube</strong>, a database designed to facilitate sharing,
               archiving and analysing raw recording files of rodent ultrasonic vocalizations
               following the FAIR (Findable, Accessible, Interoperable, Reusable) principles
               (<nuxt-link href="https://doi.org/10.1038/sdata.2016.18" target="_blank"
@@ -194,11 +219,33 @@ onMounted(() => {
             variant="tonal"
           >
             <v-card-title class="font-weight-bold mx-4 my-4">
+              <v-icon class="me-2">mdi-handshake-outline</v-icon>
+              Call for papers
+            </v-card-title>
+            <v-card-text class="text-justify">
+              Working on ultrasonic vocalizations? Together, Dr. Elodie Ey and Dr. Markus Wöhr are
+              serving as guest editors for a Behavioural Brain Research special issue on Ultrasonic
+              Communication in Rodents. They are more than happy to learn about your most recent
+              discoveries.<br />
+              <br />
+              More information here:
+              <nuxt-link
+                href="https://www.sciencedirect.com/special-issue/317071/ultrasonic-communication-in-rodents"
+                target="_blank"
+                >Behavioural Brain Research - Ultrasonic Communication in Rodents</nuxt-link
+              >
+            </v-card-text>
+          </v-card>
+          <!-- <v-card
+            class="mx-4 py-2 px-2 flex-grow-1 mt-8 rounded-lg border elevation-3"
+            variant="tonal"
+          >
+            <v-card-title class="font-weight-bold mx-4 my-4">
               <v-icon class="me-2">mdi-newspaper-variant-multiple-outline</v-icon>
               MouseTube's publications
             </v-card-title>
             <v-card-text class="text-justify">
-              Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. mouseTube – a database to
+              Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. MouseTube – a database to
               collaboratively unravel mouse ultrasonic communication [version 1; peer review: 2
               approved]. F1000Research 2016, 5:2332 (<nuxt-link
                 href="https://doi.org/10.12688/f1000research.9439.1"
@@ -214,10 +261,10 @@ onMounted(() => {
             </v-card-text>
             <v-card-actions>
               <nuxt-link to="https://mastodon.social/@mousetube" target="_blank" class="nuxt-link"
-                ><v-btn prepend-icon="mdi-mastodon">Follow mouseTube on Mastodon</v-btn></nuxt-link
+                ><v-btn prepend-icon="mdi-mastodon">Follow MouseTube on Mastodon</v-btn></nuxt-link
               >
             </v-card-actions>
-          </v-card>
+          </v-card> -->
         </v-col>
       </v-row>
       <v-row>
@@ -280,5 +327,9 @@ a:hover {
   50% {
     transform: scaleY(3);
   }
+}
+
+:deep(.v-expansion-panel-title) {
+  padding: 7px 7px;
 }
 </style>
