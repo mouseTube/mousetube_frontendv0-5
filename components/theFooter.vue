@@ -30,7 +30,18 @@ Code under GPL v3.0 licence
         </v-col>
       </v-row>
       <v-row>
-        <v-col>mouseTube v0.5 - Copyright © CNRS - INSERM - UNISTRA - ICS - IGBMC 2025</v-col>
+        <v-col>
+          mouseTube v0.5 —
+          Copyright © CNRS · INSERM · UNISTRA · ICS · IGBMC 2025 —
+          <nuxt-link to="/team#privacy" class="nuxt-link me-2">
+            <v-icon small class="me-1">mdi-shield-lock-outline</v-icon>
+            Privacy Policy
+          </nuxt-link>
+          <nuxt-link to="/team#term" class="nuxt-link">
+            <v-icon small class="me-1">mdi-scale-balance</v-icon>
+            Terms of Use
+          </nuxt-link>
+        </v-col>
       </v-row>
     </div>
   </v-footer>
