@@ -13,7 +13,6 @@ import { ref, onMounted } from 'vue';
 import { useDisplay } from 'vuetify';
 
 const { smAndDown } = useDisplay();
-
 </script>
 
 <template>
@@ -42,11 +41,7 @@ const { smAndDown } = useDisplay();
           <span class="ml-2 site-title">MouseTube</span>
         </nuxt-link>
       </v-col>
-      <v-col
-        cols="auto"
-
-        class="nav-links d-flex justify-center align-center"
-      >
+      <v-col cols="auto" class="nav-links d-flex justify-center align-center">
         <nuxt-link to="/vocalizations" class="nav-item px-2" exact-active-class="active-link">
           <span class="nav-link-content">
             <AudioLines class="nav-icon audio-hover-icon" />
@@ -211,8 +206,8 @@ const { smAndDown } = useDisplay();
     gap: 0px;
   }
   .nav-links {
-  gap: 0px;
-}
+    gap: 0px;
+  }
 }
 
 .nav-item:hover .nav-icon,
