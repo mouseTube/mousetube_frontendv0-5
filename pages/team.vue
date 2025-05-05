@@ -186,7 +186,7 @@ watch(
                 <v-card-text>
                   <v-list>
                     <v-list-item prepend-icon="mdi-newspaper-variant-outline">
-                      Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. MouseTube – a
+                      Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. mouseTube – a
                       database to collaboratively unravel mouse ultrasonic communication [version 1;
                       peer review: 2 approved]. F1000Research 2016, 5:2332 (<nuxt-link
                         href="https://doi.org/10.12688/f1000research.9439.1"
@@ -317,7 +317,8 @@ watch(
                   </p>
                   <ul class="pl-4">
                     <li>Full names of contributors</li>
-                    <li>Academic or professional email addresses</li>
+                    <li>Email</li>
+                    <li>Academic or professional addresses (optionally)</li>
                   </ul>
                   <p>
                     This information is provided voluntarily by users for scientific attribution and
@@ -394,8 +395,8 @@ watch(
                   </h3>
                   <p>
                     Data uploaded to MouseTube remain the property of the originating laboratory.
-                    However, by uploading, the contributor grants permission to all MouseTube
-                    members to use the data for analysis and scientific publications.
+                    However, by uploading, the contributor grants permission to all MouseTube users
+                    to use the data for analysis and scientific publications.
                   </p>
                   <p>
                     Contributors are fully responsible for the content of uploaded files and the
@@ -406,9 +407,8 @@ watch(
                     2. Data Sharing and Accessibility
                   </h3>
                   <p>
-                    All data on MouseTube are openly available to registered members of the
-                    community. Any member can download and use the data in accordance with these
-                    terms.
+                    All data on MouseTube are openly available to the community. Anyone can download
+                    and use the data in accordance with these terms.
                   </p>
 
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">3. Citation Requirement</h3>
@@ -436,9 +436,15 @@ watch(
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">5. Source Code License</h3>
                   <p>
                     The source code of MouseTube is released under the
-                    <strong>GNU General Public License v3 (GPL-3.0)</strong>. It may be freely
-                    reused, modified, and redistributed, provided that all derivative works are also
-                    distributed under the same license.
+                    <strong>
+                      <a
+                        href="https://github.com/mouseTube/mousetube_APIv0-5?tab=GPL-3.0-1-ov-file#readme"
+                        target="_blank"
+                      >
+                        GNU General Public License v3 (GPL-3.0)
+                      </a></strong
+                    >. It may be freely reused, modified, and redistributed, provided that all
+                    derivative works are also distributed under the same license.
                   </p>
                   <p>
                     This ensures continued access, transparency, and freedom to collaborate, while
@@ -448,7 +454,7 @@ watch(
                   <h3 class="text-subtitle-1 font-weight-medium mt-4">6. Updates to Terms</h3>
                   <p>
                     MouseTube administrators reserve the right to modify these terms of use at any
-                    time. Changes will be communicated to all registered members by email.
+                    time.
                   </p>
                 </v-card-text>
               </v-card>
