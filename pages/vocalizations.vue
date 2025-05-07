@@ -33,6 +33,8 @@ const showFilters = ref(false);
 const filters = ref(['is_valid_link']);
 const apiBaseUrl = useApiBaseUrl();
 
+const baseUrl = computed(() => apiBaseUrl.replace(/\/api\/?$/, ''));
+
 ////////////////////////////////
 // METHODS
 ////////////////////////////////
@@ -338,6 +340,14 @@ onMounted(() => fetchFiles());
                                 </li>
                               </ul>
                             </v-card-text>
+                          </v-card>
+                          <v-card v-if="file.spectrogram_image" class="mx-auto my-2 pt-2 pl-2">
+                            <v-card-title>Preview</v-card-title>
+                            <v-img
+                              :src="baseUrl + file.spectrogram_image"
+                              alt="Spectrogram"
+                              contain
+                            />
                           </v-card>
                         </v-expansion-panel-text>
                       </v-expansion-panel>
