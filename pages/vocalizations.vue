@@ -72,12 +72,12 @@ const onSearch = debounce(() => {
   );
 }, 600);
 
-const onToggleIsValidLink = () => {
-  const index = filters.value.indexOf('is_valid_link');
+const toggleFilter = (filterName) => {
+  const index = filters.value.indexOf(filterName);
   if (index > -1) {
     filters.value.splice(index, 1);
   } else {
-    filters.value.push('is_valid_link');
+    filters.value.push(filterName);
   }
   onSearch();
 };
@@ -181,8 +181,16 @@ onMounted(() => fetchFiles());
                     <v-col cols="12" sm="4">
                       <v-checkbox
                         :model-value="filters.includes('is_valid_link')"
-                        @change="onToggleIsValidLink"
-                        label="Valid links only"
+                        @change="() => toggleFilter('is_valid_link')"
+                        label="Valid links"
+                        density="compact"
+                        hide-details
+                        class="py-0"
+                      />
+                      <v-checkbox
+                        :model-value="filters.includes('preview_available')"
+                        @change="() => toggleFilter('preview_available')"
+                        label="Preview available"
                         density="compact"
                         hide-details
                         class="py-0"
