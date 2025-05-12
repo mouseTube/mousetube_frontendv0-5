@@ -252,7 +252,7 @@ onMounted(() => fetchFiles());
                       </template>
                     </v-badge>
                     <v-card-title>
-                      {{ file.link.split('/').pop() }}
+                      {{ file.name ? file.name : file.link.split('/').pop() }}
                     </v-card-title>
                     <v-card-subtitle>
                       {{ file.experiment.protocol.user.first_name_user }}
@@ -351,6 +351,14 @@ onMounted(() => fetchFiles());
                           </v-card>
                           <v-card v-if="file.spectrogram_image" class="mx-auto my-2 pt-2 pl-2">
                             <v-card-title>Preview</v-card-title>
+                            <v-card-subtitle>
+                              <div class="text-body-2 mr-2" style="white-space: normal">
+                                This 10-second preview was automatically extracted from the audio by
+                                detecting the loudest high-frequency segment (20–150 kHz) using
+                                spectral power analysis. The spectrogram highlights the most
+                                acoustically active part of the recording.
+                              </div>
+                            </v-card-subtitle>
                             <v-img
                               :src="baseUrl + file.spectrogram_image"
                               alt="Spectrogram"
