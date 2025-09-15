@@ -14,13 +14,14 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "axios": "^1.11.0",
+    "axios": "^1.12.0",
     "lucide-vue-next": "^0.488.0",
-    "nuxt": "^3.18.1",
+    "nuxt": "^3.19.2",
     "sass": "^1.83.1",
     "vue": "latest",
     "vue-router": "latest",
-    "vuetify": "^3.7.6"
+    "vuetify": "^3.9.2",
+    "vite-plugin-vuetify": "^2.1.1"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
