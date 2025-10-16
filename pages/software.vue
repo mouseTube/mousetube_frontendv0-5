@@ -5,7 +5,7 @@
 
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce.js';
 import { MonitorCog } from 'lucide-vue-next';
 
 ////////////////////////////////
