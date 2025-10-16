@@ -14,7 +14,7 @@ Code under GPL v3.0 licence
 
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce.js';
 import { AudioLines } from 'lucide-vue-next';
 
 ////////////////////////////////
@@ -187,14 +187,14 @@ onMounted(() => fetchFiles());
                         hide-details
                         class="py-0"
                       />
-                      <v-checkbox
+                      <!-- <v-checkbox
                         :model-value="filters.includes('preview_available')"
                         @change="() => toggleFilter('preview_available')"
                         label="Preview available"
                         density="compact"
                         hide-details
                         class="py-0"
-                      />
+                      /> -->
                     </v-col>
                   </v-row>
                 </v-sheet>
