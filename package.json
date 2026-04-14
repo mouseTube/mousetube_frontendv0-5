@@ -14,9 +14,9 @@
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",
-    "axios": "^1.13.5",
+    "axios": "^1.15.0",
     "lucide-vue-next": "^0.488.0",
-    "nuxt": "^3.21.1",
+    "nuxt": "^3.21.2",
     "sass": "^1.83.1",
     "vue": "latest",
     "vue-router": "latest",
