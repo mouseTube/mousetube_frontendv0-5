@@ -48,6 +48,12 @@ const { smAndDown } = useDisplay();
             <span class="nav-label">Vocalizations</span>
           </span>
         </nuxt-link>
+        <nuxt-link to="/dataset" class="nav-item px-2" exact-active-class="active-link">
+          <span class="nav-link-content">
+            <AudioLines class="nav-icon audio-hover-icon" />
+            <span class="nav-label">Datasets</span>
+          </span>
+        </nuxt-link>
         <nuxt-link to="/software" class="nav-item px-2" exact-active-class="active-link">
           <span class="nav-link-content">
             <MonitorCog class="nav-icon audio-hover-icon" />
