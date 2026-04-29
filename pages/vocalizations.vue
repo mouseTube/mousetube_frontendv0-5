@@ -258,7 +258,7 @@ onMounted(() => fetchFiles());
                       {{ file.experiment.protocol.user.first_name_user }}
                       {{ file.experiment.protocol.user.name_user }}
                     </v-card-subtitle>
-                    <v-card-item class="bg-surface-light pt-4">
+                    <v-card-item class="bg-surface-light pt-4" v-if="file.subject">
                       <v-label class="mr-2">Name subject: </v-label>{{ file.subject.name }}<br />
                       <v-label class="mr-2">Strain: </v-label>{{ file.subject.strain.name }}<br />
                       <v-label class="mr-2">Protocol name: </v-label
@@ -270,7 +270,7 @@ onMounted(() => fetchFiles());
                       <v-expansion-panel title="More information" bg-color="grey-lighten-2">
                         <v-expansion-panel-text>
                           <v-card class="mx-auto my-2 pt-2 pl-2" title="Subject">
-                            <v-card-item>
+                            <v-card-item v-if="file.subject">
                               <v-card-text>
                                 <v-label class="mr-2">Strain: </v-label>{{ file.subject.strain.name
                                 }}<br />

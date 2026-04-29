@@ -37,8 +37,11 @@ const previous = ref<string | null>(null);
 const count = ref(0);
 const currentPage = ref(1);
 const perPage = ref(10);
+const strains = ref({});
+const profiles = ref({});
 
 const apiBaseUrl = useApiBaseUrl();
+const imageFromAPI = apiBaseUrl.split("/api")[0];
 
 ////////////////////////////////
 // METHODS
@@ -83,6 +86,39 @@ function datasetDownloadLink(dataset) {
 //   });
 // }
 
+function getStrains(dataset) {
+  let strains = ref({});
+  try {
+    for (let recording_session in dataset.metadata.dataset.recording_session_list) {
+      console.log("recording session:");
+      console.log(recording_session);
+      strains.value = dataset.metadata.dataset.recording_session_list[recording_session].animal_profiles.strain;
+    }
+  } catch (error) {
+    console.error('error while getting strains :', error);
+  } finally {
+    console.log("get strain:");
+    console.log(strains.value);
+    return strains.value;
+  }
+}
+
+function getProfiles(dataset) {
+  let profiles_fun = ref({});
+  try {
+    for (let recording_session in dataset.metadata.dataset.recording_session_list) {
+      for (let profile in dataset.metadata.dataset.recording_session_list[recording_session].animal_profiles) {
+        profiles_fun.value[profile] = ref({});
+        profiles_fun.value[profile] = dataset.metadata.dataset.recording_session_list[recording_session].animal_profiles[profile];
+      }
+    }
+  } catch (error) {
+    console.error('error while getting profiles :', error);
+  } finally {
+    return profiles_fun;
+  }
+}
+
 // --- panel states for each file (independent) ---
 const activePanels = ref<Record<number, boolean>>({});
 
@@ -122,16 +158,24 @@ const fetchDatasets = async (
   try {
     const response = await axios.get(url);
     datasetList.value = response.data.results;
-    console.log("hello");
-    console.log(response.data.results);
-    console.log("bye");
     next.value = response.data.next;
     previous.value = response.data.previous;
     count.value = response.data.count;
     currentPage.value = new URL(url).searchParams.get('page') || 1;
+    // strains.value = ref({});
+    // for(let dataset in datasetList.value) {
+    //   console.log("---->");
+    //   console.log(dataset);
+    //   strains[dataset] = ref({});
+    //   strains[dataset] = getStrains(datasetList.value[dataset]);
+    // }
+    for(let dataset in datasetList.value) {
+      profiles.value[dataset] = ref({});
+      profiles.value[dataset] = getProfiles(datasetList.value[dataset]);
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('error while loading software :', error);
+    console.error('error while loading dataset :', error);
   } finally {
     dataLoaded.value = true;
   }
@@ -187,7 +231,7 @@ onMounted(() => fetchDatasets());
             <!-- LIST DATASETS -->
             <v-container fluid v-else class="pa-0">
               <v-card
-                v-for="dataset in datasetList"
+                v-for="(dataset, index) in datasetList"
                 :key="dataset.id"
                 class="mt-5 border-sm"
                 elevated
@@ -231,80 +275,103 @@ onMounted(() => fetchDatasets());
                 </v-card-title>
 
                 <v-card-text v-if="dataset.description">{{ dataset.description }}</v-card-text>
-
-                <v-card-text v-if="dataset.metadata">
-                  <div v-for="recording_session in dataset.metadata.dataset.recording_session_list">
-                    <h4>Protocol:</h4>
-                    <ul>
-                      <li v-for="(key, value) in recording_session.protocol">{{key}}: {{value}}</li>
-                    </ul>
-                    <h4>Files:</h4>
-                    <div v-for="file in recording_session">
-                      {{ file }}
-                    </div>
-                  </div>
-                </v-card-text>
                 <v-divider class="mx-4 mb-2" />
 
                 <!-- FILES -->
-<!--                <v-expansion-panels multiple>-->
-<!--                  <v-expansion-panel-->
-<!--                    v-for="file in sortFiles(dataset.files)"-->
-<!--                    :key="file.id"-->
-<!--                    v-model:active="activePanels[file.id]"-->
-<!--                    :readonly="!file.spectrogram_url && !file.plot_url"-->
-<!--                    :hide-actions="!file.spectrogram_url && !file.plot_url"-->
-<!--                  >-->
-<!--                    <v-expansion-panel-title>-->
-<!--                      <v-row align="center" justify="space-between" class="w-100">-->
-<!--                        <v-col cols="auto" class="d-flex align-center">-->
-<!--                          <v-icon class="me-2">{{ fileIcon(file.name) }}</v-icon>-->
-<!--                          <strong>{{ file.name }}</strong>-->
-<!--                        </v-col>-->
+                <div v-for="recording_session in dataset.metadata.dataset.recording_session_list">
+                  <v-card-text>
+                    <h4>Files:</h4>
+                    <v-expansion-panels multiple>
+                      <v-expansion-panel
+                        v-for="(file, index_file) in dataset.files"
+                        :key="file.id">
+  <!--                      v-model:active="activePanels[file.id]"-->
+  <!--                      :readonly="!file.spectrogram && !file.plot"-->
+  <!--                      :hide-actions="!file.spectrogram && !file.plot"-->
+  <!--                    >-->
+                        <v-expansion-panel-title>
+                          <v-row align="center" justify="space-between" class="w-100">
+                            <v-col cols="auto" class="d-flex align-center">
+                              <v-icon class="me-2">{{ fileIcon(file.name) }}</v-icon>
+                              <strong># {{ index_file }}</strong>
+                            </v-col>
+                            <div v-for="(value, key) in recording_session.protocol">
+                              <v-col cols="auto" class="d-flex align-center" v-if="key!='name' && key!='animals_housing' && key!='context_number_of_animals'">
+                                <v-chip label small color="#03DAC6" class="ma-0">{{ value }}</v-chip>
+                              </v-col>
+                            </div>
 
-<!--                        <v-col cols="auto" class="d-flex align-center">-->
-<!--                          <v-chip v-if="file.doi" label small color="#03DAC6" class="me-2">-->
-<!--                            DOI:-->
-<!--                            <a-->
-<!--                              v-if="file.doi.includes('zenodo')"-->
-<!--                              :href="'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]"-->
-<!--                              target="_blank"-->
-<!--                              class="doi"-->
-<!--                              >{{ file.doi }}</a-->
-<!--                            >-->
-<!--                          </v-chip>-->
+                            <v-col class="d-flex align-center" cols="auto">
+                              <v-chip class="ma-0" label color="red-lighten-1" v-for="profile in profiles[index]">
+                               {{ profile.strain.name }}
+                              </v-chip>
+                            </v-col>
+                            <v-col class="d-flex align-center" cols="auto">
+                              <v-chip class="ma-0" label color="red-lighten-1" v-for="profile in profiles[index]">
+                                {{ profile.sex }}
+                              </v-chip>
+                            </v-col>
 
-<!--                          <v-btn-->
-<!--                            v-if="file.link"-->
-<!--                            icon-->
-<!--                            :href="file.link"-->
-<!--                            target="_blank"-->
-<!--                            color="teal-darken-2"-->
-<!--                            title="Download file"-->
-<!--                            density="compact"-->
-<!--                            class="ms-1"-->
-<!--                          >-->
-<!--                            <v-icon size="18">mdi-download</v-icon>-->
-<!--                          </v-btn>-->
-<!--                        </v-col>-->
-<!--                      </v-row>-->
-<!--                    </v-expansion-panel-title>-->
 
-<!--                    <v-expansion-panel-text v-if="file.spectrogram_url || file.plot_url">-->
-<!--                      <v-row>-->
-<!--                        <v-col cols="12" sm="6" v-if="file.spectrogram_url">-->
-<!--                          <strong>Spectrogram:</strong>-->
-<!--                          <v-img :src="file.spectrogram_url" contain />-->
-<!--                        </v-col>-->
+                            <v-col cols="auto" class="d-flex align-center">
+                              <v-chip v-if="file.doi" label small color="#03DAC6" class="me-2">
+                                DOI:
+                                <a
+                                  v-if="file.doi.includes('zenodo')"
+                                  :href="'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]"
+                                  target="_blank"
+                                  class="doi"
+                                  >{{ file.doi }}</a
+                                >
+                              </v-chip>
 
-<!--                        <v-col cols="12" sm="6" v-if="file.plot_url">-->
-<!--                          <strong>Plot:</strong>-->
-<!--                          <v-img :src="file.plot_url" contain />-->
-<!--                        </v-col>-->
-<!--                      </v-row>-->
-<!--                    </v-expansion-panel-text>-->
-<!--                  </v-expansion-panel>-->
-<!--                </v-expansion-panels>-->
+                              <v-btn
+                                v-if="file.link"
+                                icon
+                                :href="file.link"
+                                target="_blank"
+                                color="teal-darken-2"
+                                title="Download file"
+                                density="compact"
+                                class="ms-1"
+                              >
+                                <v-icon size="18">mdi-download</v-icon>
+                              </v-btn>
+                            </v-col>
+                          </v-row>
+                        </v-expansion-panel-title>
+
+                        <v-expansion-panel-text>
+                          <v-row>
+                            {{ file.name }}
+                          </v-row>
+                          <v-row>
+                            <v-col cols="12" sm="6" v-if="file.spectrogram">
+                              <strong>Spectrogram:</strong>
+                              <v-img :src="`${imageFromAPI}file.spectrogram`" alt="spectrogram" contain />
+                            </v-col>
+<!--                            {{ imageFromAPI}}{{file.spectrogram }}-->
+                            <v-col cols="12" sm="6" v-if="file.plot">
+                              <strong>Plot:</strong>
+                              <v-img :src="`${imageFromAPI}file.plot`" alt="plot" contain />
+                            </v-col>
+                          </v-row>
+                        </v-expansion-panel-text>
+                      </v-expansion-panel>
+                    </v-expansion-panels>
+                  </v-card-text>
+
+                  <v-card-actions class="d-flex align-center">
+                    <v-row class="w-100">
+                      <v-col class="d-flex align-center" cols="auto">
+  <!--                      {{ profiles[index] }}-->
+                        <v-chip class="ma-2" label color="red-lighten-1">
+                         {{ dataset.species }}
+                        </v-chip>
+                      </v-col>
+                    </v-row>
+                  </v-card-actions>
+                </div>
               </v-card>
             </v-container>
           </v-card>

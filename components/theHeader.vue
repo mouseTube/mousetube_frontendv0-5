@@ -8,7 +8,7 @@ Code under GPL v3.0 licence
 -->
 <script setup>
 // Header page
-import { Users, AudioLines, MonitorCog } from 'lucide-vue-next';
+import { Users, AudioLines, MonitorCog, Database } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import { useDisplay } from 'vuetify';
 
@@ -50,7 +50,7 @@ const { smAndDown } = useDisplay();
         </nuxt-link>
         <nuxt-link to="/dataset" class="nav-item px-2" exact-active-class="active-link">
           <span class="nav-link-content">
-            <AudioLines class="nav-icon audio-hover-icon" />
+            <Database class="nav-icon audio-hover-icon" />
             <span class="nav-label">Datasets</span>
           </span>
         </nuxt-link>
