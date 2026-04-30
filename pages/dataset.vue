@@ -86,23 +86,6 @@ function datasetDownloadLink(dataset) {
 //   });
 // }
 
-function getStrains(dataset) {
-  let strains = ref({});
-  try {
-    for (let recording_session in dataset.metadata.dataset.recording_session_list) {
-      console.log("recording session:");
-      console.log(recording_session);
-      strains.value = dataset.metadata.dataset.recording_session_list[recording_session].animal_profiles.strain;
-    }
-  } catch (error) {
-    console.error('error while getting strains :', error);
-  } finally {
-    console.log("get strain:");
-    console.log(strains.value);
-    return strains.value;
-  }
-}
-
 function getProfiles(dataset) {
   let profiles_fun = ref({});
   try {
@@ -118,6 +101,53 @@ function getProfiles(dataset) {
     return profiles_fun;
   }
 }
+
+const incrementDownloadsFile = async (fileId, fileLink) => {
+  try {
+    const response = await axios.patch(`${apiBaseUrl}/file/${fileId}/`, {
+      downloads: 'increment',
+    });
+
+    if (response.status === 200) {
+      const updatedFile = response.data;
+      // Update the downloads count in the local files array
+      const fileIndex = files.value.findIndex((file) => file.id === fileId);
+      if (fileIndex !== -1) {
+        files.value[fileIndex].downloads = updatedFile.downloads;
+      }
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error updating file downloads:', error);
+  } finally {
+    // Always open the file link
+    window.open(fileLink, '_blank');
+  }
+};
+
+
+const incrementDownloadsDataset = async (datasetId, datasetLink) => {
+  try {
+    const response = await axios.patch(`${apiBaseUrl}/dataset/${datasetId}/`, {
+      downloads: 'increment',
+    });
+
+    if (response.status === 200) {
+      const updatedDataset = response.data;
+      // Update the downloads count in the local files array
+      const datasetIndex = dataset.value.findIndex((dataset) => dataset.id === datasetId);
+      if (datasetIndex !== -1) {
+        dataset.value[datasetIndex].downloads = updatedDataset.downloads;
+      }
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error updating dataset downloads:', error);
+  } finally {
+    // Always open the file link
+    window.open(datasetLink, '_blank');
+  }
+};
 
 // --- panel states for each file (independent) ---
 const activePanels = ref<Record<number, boolean>>({});
@@ -241,6 +271,7 @@ onMounted(() => fetchDatasets());
                     {{ dataset.name }}
                   </div>
 
+
                   <div class="d-flex align-center">
                     <v-chip
                       v-if="dataset.doi"
@@ -268,6 +299,7 @@ onMounted(() => fetchDatasets());
                       title="Download dataset (archive)"
                       density="compact"
                       class="ms-1"
+                      @click="incrementDownloadsDataset(dataset.id, datasetDownloadLink(dataset))"
                     >
                       <v-icon size="18">mdi-download</v-icon>
                     </v-btn>
@@ -292,7 +324,6 @@ onMounted(() => fetchDatasets());
                         <v-expansion-panel-title>
                           <v-row align="center" justify="space-between" class="w-100">
                             <v-col cols="auto" class="d-flex align-center">
-                              <v-icon class="me-2">{{ fileIcon(file.name) }}</v-icon>
                               <strong># {{ index_file }}</strong>
                             </v-col>
                             <div v-for="(value, key) in recording_session.protocol">
@@ -334,6 +365,7 @@ onMounted(() => fetchDatasets());
                                 title="Download file"
                                 density="compact"
                                 class="ms-1"
+                                @click="incrementDownloadsFile(file.id, file.link)"
                               >
                                 <v-icon size="18">mdi-download</v-icon>
                               </v-btn>
@@ -348,12 +380,12 @@ onMounted(() => fetchDatasets());
                           <v-row>
                             <v-col cols="12" sm="6" v-if="file.spectrogram">
                               <strong>Spectrogram:</strong>
-                              <v-img :src="`${imageFromAPI}file.spectrogram`" alt="spectrogram" contain />
+                              <v-img :src="`${imageFromAPI}`+file.spectrogram" alt="spectrogram" contain />
                             </v-col>
 <!--                            {{ imageFromAPI}}{{file.spectrogram }}-->
                             <v-col cols="12" sm="6" v-if="file.plot">
                               <strong>Plot:</strong>
-                              <v-img :src="`${imageFromAPI}file.plot`" alt="plot" contain />
+                              <v-img :src="`${imageFromAPI}`+file.plot" alt="plot" contain />
                             </v-col>
                           </v-row>
                         </v-expansion-panel-text>
@@ -362,12 +394,32 @@ onMounted(() => fetchDatasets());
                   </v-card-text>
 
                   <v-card-actions class="d-flex align-center">
-                    <v-row class="w-100">
-                      <v-col class="d-flex align-center" cols="auto">
-  <!--                      {{ profiles[index] }}-->
+                    <v-row>
+                      <v-col cols="11">
                         <v-chip class="ma-2" label color="red-lighten-1">
                          {{ dataset.species }}
                         </v-chip>
+                      </v-col>
+                      <v-col class="align-end">
+                        <v-badge
+                          :content="dataset.downloads + ' Downloads'"
+                          color="red-lighten-5"
+                          class="text-end"
+                        >
+                          <template #badge>
+                            <div
+                              style="
+                                background-color: transparent;
+                                font-size: 0.875rem;
+                                color: gray;
+                                border-radius: 12px;
+                              "
+                            >
+                              <v-icon style="font-size: 0.875rem; color: gray">mdi-download</v-icon>
+                              <span style="margin-left: 8px">{{ dataset.downloads }}</span>
+                            </div>
+                          </template>
+                        </v-badge>
                       </v-col>
                     </v-row>
                   </v-card-actions>
@@ -382,11 +434,21 @@ onMounted(() => fetchDatasets());
 </template>
 
 <style scoped>
+.hover-effect:hover {
+  transform: scale(1.05);
+  background-color: rgb(247, 226, 226);
+}
+
 a {
   text-decoration: none;
-  color: teal;
+  color: rgb(219, 98, 98);
 }
-a:hover {
+
+.doi:hover {
   text-decoration: underline;
+}
+
+li {
+  list-style: none;
 }
 </style>
