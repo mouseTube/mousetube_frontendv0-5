@@ -39,6 +39,9 @@ const currentPage = ref(1);
 const perPage = ref(10);
 const strains = ref({});
 const profiles = ref({});
+const showGraph = ref(false);
+const imageToShow = ref(null);
+const altImage = ref("");
 
 const apiBaseUrl = useApiBaseUrl();
 const imageFromAPI = apiBaseUrl.split("/api")[0];
@@ -124,6 +127,13 @@ const incrementDownloadsFile = async (fileId, fileLink) => {
     window.open(fileLink, '_blank');
   }
 };
+
+
+function showModal(image, typeImage) {
+  showGraph.value = !showGraph.value;
+  imageToShow.value = image;
+  altImage.value = typeImage;
+}
 
 
 const incrementDownloadsDataset = async (datasetId, datasetLink) => {
@@ -374,21 +384,80 @@ onMounted(() => fetchDatasets());
                         </v-expansion-panel-title>
 
                         <v-expansion-panel-text>
-                          <v-row>
-                            {{ file.name }}
-                          </v-row>
-                          <v-row>
-                            <v-col cols="12" sm="6" v-if="file.spectrogram">
-                              <strong>Spectrogram:</strong>
-                              <v-img :src="`${imageFromAPI}`+file.spectrogram" alt="spectrogram" contain />
-                            </v-col>
-<!--                            {{ imageFromAPI}}{{file.spectrogram }}-->
-                            <v-col cols="12" sm="6" v-if="file.plot">
-                              <strong>Plot:</strong>
-                              <v-img :src="`${imageFromAPI}`+file.plot" alt="plot" contain />
-                            </v-col>
-                          </v-row>
+                          <v-card>
+                            <v-card-title>
+                              {{ file.name }}
+                            </v-card-title>
+                            <v-card-text>
+                              <v-dialog v-model="showGraph" width="80%">
+                                <v-card :title="altImage">
+                                  <v-img :src="imageToShow" :alt="altImage" contain />
+                                  <v-card-actions>
+                                  <v-spacer></v-spacer>
+
+                                  <v-btn
+                                    text="Close"
+                                    variant="text"
+                                    @click="showModal"
+                                  ></v-btn>
+                                </v-card-actions>
+                              </v-card>
+                              </v-dialog>
+
+                              <v-row>
+                                <v-col cols="12" sm="6" v-if="file.spectrogram">
+                                  <v-img @click="showModal(imageFromAPI+file.spectrogram, 'Spectrogram')" :src="`${imageFromAPI}`+file.spectrogram" alt="Spectrogram" contain />
+                                </v-col>
+    <!--                            {{ imageFromAPI}}{{file.spectrogram }}-->
+                                <v-col cols="12" sm="6" v-if="file.plot">
+                                  <v-img @click="showModal(imageFromAPI+file.plot, 'Comparison plot')" :src="`${imageFromAPI}`+file.plot" alt="Comparison plot" contain />
+                                </v-col>
+                              </v-row>
+
+
+                            </v-card-text>
+                            <v-card-actions class="d-flex align-center">
+                              <v-row>
+                                <v-col class="align-end">
+                                  <v-badge
+                                    :content="dataset.downloads + ' Downloads'"
+                                    color="red-lighten-5"
+                                    class="text-end"
+                                  >
+                                    <template #badge>
+                                      <div
+                                        style="
+                                          background-color: transparent;
+                                          font-size: 0.875rem;
+                                          color: gray;
+                                          border-radius: 12px;
+                                        "
+                                      >
+                                        <v-icon style="font-size: 0.875rem; color: gray">mdi-download</v-icon>
+                                        <span style="margin-left: 8px">{{ dataset.downloads }}</span>
+                                      </div>
+                                    </template>
+                                  </v-badge>
+                                </v-col>
+                              </v-row>
+                            </v-card-actions>
+                          </v-card>
+<!--                          <v-row>-->
+<!--                            {{ file.name }}-->
+<!--                          </v-row>-->
+<!--                          <v-row>-->
+<!--                            <v-col cols="12" sm="6" v-if="file.spectrogram">-->
+<!--                              <strong>Spectrogram:</strong>-->
+<!--                              <v-img :src="`${imageFromAPI}`+file.spectrogram" alt="spectrogram" contain />-->
+<!--                            </v-col>-->
+<!--&lt;!&ndash;                            {{ imageFromAPI}}{{file.spectrogram }}&ndash;&gt;-->
+<!--                            <v-col cols="12" sm="6" v-if="file.plot">-->
+<!--                              <strong>Plot:</strong>-->
+<!--                              <v-img :src="`${imageFromAPI}`+file.plot" alt="plot" contain />-->
+<!--                            </v-col>-->
+<!--                          </v-row>-->
                         </v-expansion-panel-text>
+
                       </v-expansion-panel>
                     </v-expansion-panels>
                   </v-card-text>
