@@ -89,7 +89,7 @@ function datasetDownloadLink(dataset) {
 //   });
 // }
 
-function getProfiles(dataset) {
+function getProfiles(dataset: object) {
   let profiles_fun = ref({});
   try {
     for (let recording_session in dataset.metadata.dataset.recording_session_list) {
@@ -105,7 +105,7 @@ function getProfiles(dataset) {
   }
 }
 
-const incrementDownloadsFile = async (fileId, fileLink) => {
+const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetId: number) => {
   try {
     const response = await axios.patch(`${apiBaseUrl}/file/${fileId}/`, {
       downloads: 'increment',
@@ -114,9 +114,10 @@ const incrementDownloadsFile = async (fileId, fileLink) => {
     if (response.status === 200) {
       const updatedFile = response.data;
       // Update the downloads count in the local files array
-      const fileIndex = files.value.findIndex((file) => file.id === fileId);
+      const datasetIndex = datasetList.value.findIndex((dataset) => dataset.id === datasetId);
+      const fileIndex = datasetList.value[datasetIndex]['files'].findIndex((file) => file.id === fileId);
       if (fileIndex !== -1) {
-        files.value[fileIndex].downloads = updatedFile.downloads;
+        datasetList.value[datasetIndex]['files'][fileIndex].downloads = updatedFile.downloads;
       }
     }
   } catch (error) {
@@ -136,7 +137,7 @@ function showModal(image, typeImage) {
 }
 
 
-const incrementDownloadsDataset = async (datasetId, datasetLink) => {
+const incrementDownloadsDataset = async (datasetId: number, datasetLink: string) => {
   try {
     const response = await axios.patch(`${apiBaseUrl}/dataset/${datasetId}/`, {
       downloads: 'increment',
@@ -145,9 +146,9 @@ const incrementDownloadsDataset = async (datasetId, datasetLink) => {
     if (response.status === 200) {
       const updatedDataset = response.data;
       // Update the downloads count in the local files array
-      const datasetIndex = dataset.value.findIndex((dataset) => dataset.id === datasetId);
+      const datasetIndex = datasetList.value.findIndex((dataset) => dataset.id === datasetId);
       if (datasetIndex !== -1) {
-        dataset.value[datasetIndex].downloads = updatedDataset.downloads;
+        datasetList.value[datasetIndex].downloads = updatedDataset.downloads;
       }
     }
   } catch (error) {
@@ -304,7 +305,6 @@ onMounted(() => fetchDatasets());
                     <!-- Bouton download compact -->
                     <v-btn
                       icon
-                      :href="datasetDownloadLink(dataset)"
                       target="_blank"
                       title="Download dataset (archive)"
                       density="compact"
@@ -343,7 +343,7 @@ onMounted(() => fetchDatasets());
                             </div>
 
                             <v-col class="d-flex align-center" cols="auto">
-                              <v-chip class="ma-0" label color="red-lighten-1" v-for="profile in profiles[index]">
+                              <v-chip class="ma-0" label color="red-lighten-1" v-if="profiles.length>0" v-for="profile in profiles[index]">
                                {{ profile.strain.name }}
                               </v-chip>
                             </v-col>
@@ -369,13 +369,12 @@ onMounted(() => fetchDatasets());
                               <v-btn
                                 v-if="file.link"
                                 icon
-                                :href="file.link"
                                 target="_blank"
                                 color="teal-darken-2"
                                 title="Download file"
                                 density="compact"
                                 class="ms-1"
-                                @click="incrementDownloadsFile(file.id, file.link)"
+                                @click="incrementDownloadsFile(file.id, file.link, dataset.id)"
                               >
                                 <v-icon size="18">mdi-download</v-icon>
                               </v-btn>
@@ -391,7 +390,7 @@ onMounted(() => fetchDatasets());
                             <v-card-text>
                               <v-dialog v-model="showGraph" width="80%">
                                 <v-card :title="altImage">
-                                  <v-img :src="imageToShow" :alt="altImage" contain />
+                                  <v-img v-if="imageToShow" :src="imageToShow" :alt="altImage" contain />
                                   <v-card-actions>
                                   <v-spacer></v-spacer>
 
@@ -408,19 +407,17 @@ onMounted(() => fetchDatasets());
                                 <v-col cols="12" sm="6" v-if="file.spectrogram">
                                   <v-img @click="showModal(imageFromAPI+file.spectrogram, 'Spectrogram')" :src="`${imageFromAPI}`+file.spectrogram" alt="Spectrogram" contain />
                                 </v-col>
-    <!--                            {{ imageFromAPI}}{{file.spectrogram }}-->
                                 <v-col cols="12" sm="6" v-if="file.plot">
                                   <v-img @click="showModal(imageFromAPI+file.plot, 'Comparison plot')" :src="`${imageFromAPI}`+file.plot" alt="Comparison plot" contain />
                                 </v-col>
                               </v-row>
 
-
                             </v-card-text>
                             <v-card-actions class="d-flex align-center">
                               <v-row>
-                                <v-col class="align-end">
+                                <v-col class="ml-4">
                                   <v-badge
-                                    :content="dataset.downloads + ' Downloads'"
+                                    :content="file.downloads + ' Downloads'"
                                     color="red-lighten-5"
                                     class="text-end"
                                   >
@@ -434,7 +431,7 @@ onMounted(() => fetchDatasets());
                                         "
                                       >
                                         <v-icon style="font-size: 0.875rem; color: gray">mdi-download</v-icon>
-                                        <span style="margin-left: 8px">{{ dataset.downloads }}</span>
+                                        <span style="margin-left: 8px">{{ file.downloads }}</span>
                                       </div>
                                     </template>
                                   </v-badge>
@@ -442,20 +439,6 @@ onMounted(() => fetchDatasets());
                               </v-row>
                             </v-card-actions>
                           </v-card>
-<!--                          <v-row>-->
-<!--                            {{ file.name }}-->
-<!--                          </v-row>-->
-<!--                          <v-row>-->
-<!--                            <v-col cols="12" sm="6" v-if="file.spectrogram">-->
-<!--                              <strong>Spectrogram:</strong>-->
-<!--                              <v-img :src="`${imageFromAPI}`+file.spectrogram" alt="spectrogram" contain />-->
-<!--                            </v-col>-->
-<!--&lt;!&ndash;                            {{ imageFromAPI}}{{file.spectrogram }}&ndash;&gt;-->
-<!--                            <v-col cols="12" sm="6" v-if="file.plot">-->
-<!--                              <strong>Plot:</strong>-->
-<!--                              <v-img :src="`${imageFromAPI}`+file.plot" alt="plot" contain />-->
-<!--                            </v-col>-->
-<!--                          </v-row>-->
                         </v-expansion-panel-text>
 
                       </v-expansion-panel>
