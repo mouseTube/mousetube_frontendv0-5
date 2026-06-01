@@ -46,6 +46,9 @@ const altImage = ref("");
 const apiBaseUrl = useApiBaseUrl();
 const imageFromAPI = apiBaseUrl.split("/api")[0];
 
+// --- panel states for each file (independent) ---
+const activePanels = ref<Record<number, boolean>>({});
+
 ////////////////////////////////
 // METHODS
 ////////////////////////////////
@@ -159,37 +162,6 @@ const incrementDownloadsDataset = async (datasetId: number, datasetLink: string)
     window.open(datasetLink, '_blank');
   }
 };
-
-// --- panel states for each file (independent) ---
-const activePanels = ref<Record<number, boolean>>({});
-
-// --- fetch datasets ---
-// const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.value}`) => {
-//   dataLoaded.value = false;
-//   try {
-//     const response = await axios.get(url);
-//     datasetList.value = response.data.results;
-//     next.value = response.data.next;
-//     previous.value = response.data.previous;
-//     count.value = response.data.count;
-//     console.log(response.data.results);
-//
-//     // init activePanels for files
-//     // datasetList.value.forEach((dataset) => {
-//     //   console.log(dataset.name);
-//       // dataset.recording_session_list.forEach((recording_session) => {
-//       //   if (activePanels.value[recording_session.id] === undefined) {
-//       //     activePanels.value[recording_session.id] = false;
-//       //   }
-//       // });
-//     // });
-//   } catch (error) {
-//     // eslint-disable-next-line no-console
-//     console.error('Error while loading datasets:', error);
-//   } finally {
-//     dataLoaded.value = true;
-//   }
-// };
 
 
 const fetchDatasets = async (
@@ -322,15 +294,11 @@ onMounted(() => fetchDatasets());
                 <!-- FILES -->
                 <div v-for="recording_session in dataset.metadata.dataset.recording_session_list">
                   <v-card-text>
-                    <h4>Files:</h4>
+                    <h4 class="mb-2">Files:</h4>
                     <v-expansion-panels multiple>
                       <v-expansion-panel
                         v-for="(file, index_file) in dataset.files"
                         :key="file.id">
-  <!--                      v-model:active="activePanels[file.id]"-->
-  <!--                      :readonly="!file.spectrogram && !file.plot"-->
-  <!--                      :hide-actions="!file.spectrogram && !file.plot"-->
-  <!--                    >-->
                         <v-expansion-panel-title>
                           <v-row align="center" justify="space-between" class="w-100">
                             <v-col cols="auto" class="d-flex align-center">
@@ -355,17 +323,6 @@ onMounted(() => fetchDatasets());
 
 
                             <v-col cols="auto" class="d-flex align-center">
-                              <v-chip v-if="file.doi" label small color="#03DAC6" class="me-2">
-                                DOI:
-                                <a
-                                  v-if="file.doi.includes('zenodo')"
-                                  :href="'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]"
-                                  target="_blank"
-                                  class="doi"
-                                  >{{ file.doi }}</a
-                                >
-                              </v-chip>
-
                               <v-btn
                                 v-if="file.link"
                                 icon
@@ -415,11 +372,23 @@ onMounted(() => fetchDatasets());
                             </v-card-text>
                             <v-card-actions class="d-flex align-center">
                               <v-row>
-                                <v-col class="ml-4">
+                                <v-col cols="11" class="ml-4">
+                                  <v-chip v-if="file.doi" label small color="red lighten-3" text-color="red darken-3" class="me-2">
+                                    DOI:
+                                    <a
+                                      v-if="file.doi.includes('zenodo')"
+                                      :href="'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]"
+                                      target="_blank"
+                                      class="doi"
+                                      >{{ file.doi }}</a
+                                    >
+                                  </v-chip>
+                                </v-col>
+                                <v-col class="align-end">
                                   <v-badge
                                     :content="file.downloads + ' Downloads'"
                                     color="red-lighten-5"
-                                    class="text-end"
+                                    class="align-end"
                                   >
                                     <template #badge>
                                       <div
