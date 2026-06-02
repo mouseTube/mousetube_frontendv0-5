@@ -41,10 +41,10 @@ const strains = ref({});
 const profiles = ref({});
 const showGraph = ref(false);
 const imageToShow = ref(null);
-const altImage = ref("");
+const altImage = ref('');
 
 const apiBaseUrl = useApiBaseUrl();
-const imageFromAPI = apiBaseUrl.split("/api")[0];
+const imageFromAPI = apiBaseUrl.split('/api')[0];
 
 // --- panel states for each file (independent) ---
 const activePanels = ref<Record<number, boolean>>({});
@@ -79,7 +79,7 @@ function fileIcon(name?: string) {
   if (isArchive(ext)) return 'mdi-archive';
   return 'mdi-file';
 }
-function datasetDownloadLink(dataset) {
+function datasetDownloadLink(dataset: object) {
   if (dataset.link) return dataset.link;
   return `${apiBaseUrl}/dataset/${dataset.id}/download/`;
 }
@@ -96,9 +96,13 @@ function getProfiles(dataset: object) {
   let profiles_fun = ref({});
   try {
     for (let recording_session in dataset.metadata.dataset.recording_session_list) {
-      for (let profile in dataset.metadata.dataset.recording_session_list[recording_session].animal_profiles) {
+      for (let profile in dataset.metadata.dataset.recording_session_list[recording_session]
+        .animal_profiles) {
         profiles_fun.value[profile] = ref({});
-        profiles_fun.value[profile] = dataset.metadata.dataset.recording_session_list[recording_session].animal_profiles[profile];
+        profiles_fun.value[profile] =
+          dataset.metadata.dataset.recording_session_list[recording_session].animal_profiles[
+            profile
+          ];
       }
     }
   } catch (error) {
@@ -118,7 +122,9 @@ const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetI
       const updatedFile = response.data;
       // Update the downloads count in the local files array
       const datasetIndex = datasetList.value.findIndex((dataset) => dataset.id === datasetId);
-      const fileIndex = datasetList.value[datasetIndex]['files'].findIndex((file) => file.id === fileId);
+      const fileIndex = datasetList.value[datasetIndex]['files'].findIndex(
+        (file) => file.id === fileId
+      );
       if (fileIndex !== -1) {
         datasetList.value[datasetIndex]['files'][fileIndex].downloads = updatedFile.downloads;
       }
@@ -132,13 +138,11 @@ const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetI
   }
 };
 
-
 function showModal(image, typeImage) {
   showGraph.value = !showGraph.value;
   imageToShow.value = image;
   altImage.value = typeImage;
 }
-
 
 const incrementDownloadsDataset = async (datasetId: number, datasetLink: string) => {
   try {
@@ -163,9 +167,7 @@ const incrementDownloadsDataset = async (datasetId: number, datasetLink: string)
   }
 };
 
-
-const fetchDatasets = async (
-  url = `${apiBaseUrl}/dataset/?page_size=${perPage.value}`) => {
+const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.value}`) => {
   console.log(url);
   dataLoaded.value = false;
   try {
@@ -182,7 +184,7 @@ const fetchDatasets = async (
     //   strains[dataset] = ref({});
     //   strains[dataset] = getStrains(datasetList.value[dataset]);
     // }
-    for(let dataset in datasetList.value) {
+    for (let dataset in datasetList.value) {
       profiles.value[dataset] = ref({});
       profiles.value[dataset] = getProfiles(datasetList.value[dataset]);
     }
@@ -194,9 +196,7 @@ const fetchDatasets = async (
   }
 };
 
-
 watch(perPage, async () => fetchDatasets());
-
 
 onMounted(() => fetchDatasets());
 </script>
@@ -254,7 +254,6 @@ onMounted(() => fetchDatasets());
                     {{ dataset.name }}
                   </div>
 
-
                   <div class="d-flex align-center">
                     <v-chip
                       v-if="dataset.doi"
@@ -296,31 +295,49 @@ onMounted(() => fetchDatasets());
                   <v-card-text>
                     <h4 class="mb-2">Files:</h4>
                     <v-expansion-panels multiple>
-                      <v-expansion-panel
-                        v-for="(file, index_file) in dataset.files"
-                        :key="file.id">
+                      <v-expansion-panel v-for="(file, index_file) in dataset.files" :key="file.id">
                         <v-expansion-panel-title>
                           <v-row align="center" justify="space-between" class="w-100">
                             <v-col cols="auto" class="d-flex align-center">
                               <strong># {{ index_file }}</strong>
                             </v-col>
                             <div v-for="(value, key) in recording_session.protocol">
-                              <v-col cols="auto" class="d-flex align-center" v-if="key!='name' && key!='animals_housing' && key!='context_number_of_animals'">
-                                <v-chip label small color="#03DAC6" class="ma-0">{{ value }}</v-chip>
+                              <v-col
+                                cols="auto"
+                                class="d-flex align-center"
+                                v-if="
+                                  key != 'name' &&
+                                  key != 'animals_housing' &&
+                                  key != 'context_number_of_animals'
+                                "
+                              >
+                                <v-chip label small color="#03DAC6" class="ma-0">{{
+                                  value
+                                }}</v-chip>
                               </v-col>
                             </div>
 
                             <v-col class="d-flex align-center" cols="auto">
-                              <v-chip class="ma-0" label color="red-lighten-1" v-if="profiles.length>0" v-for="profile in profiles[index]">
-                               {{ profile.strain.name }}
+                              <v-chip
+                                class="ma-0"
+                                label
+                                color="red-lighten-1"
+                                v-if="profiles.length > 0"
+                                v-for="profile in profiles[index]"
+                              >
+                                {{ profile.strain.name }}
                               </v-chip>
                             </v-col>
                             <v-col class="d-flex align-center" cols="auto">
-                              <v-chip class="ma-0" label color="red-lighten-1" v-for="profile in profiles[index]">
+                              <v-chip
+                                class="ma-0"
+                                label
+                                color="red-lighten-1"
+                                v-for="profile in profiles[index]"
+                              >
                                 {{ profile.sex }}
                               </v-chip>
                             </v-col>
-
 
                             <v-col cols="auto" class="d-flex align-center">
                               <v-btn
@@ -347,37 +364,58 @@ onMounted(() => fetchDatasets());
                             <v-card-text>
                               <v-dialog v-model="showGraph" width="80%">
                                 <v-card :title="altImage">
-                                  <v-img v-if="imageToShow" :src="imageToShow" :alt="altImage" contain />
+                                  <v-img
+                                    v-if="imageToShow"
+                                    :src="imageToShow"
+                                    :alt="altImage"
+                                    contain
+                                  />
                                   <v-card-actions>
-                                  <v-spacer></v-spacer>
+                                    <v-spacer></v-spacer>
 
-                                  <v-btn
-                                    text="Close"
-                                    variant="text"
-                                    @click="showModal"
-                                  ></v-btn>
-                                </v-card-actions>
-                              </v-card>
+                                    <v-btn text="Close" variant="text" @click="showModal"></v-btn>
+                                  </v-card-actions>
+                                </v-card>
                               </v-dialog>
 
                               <v-row>
                                 <v-col cols="12" sm="6" v-if="file.spectrogram">
-                                  <v-img @click="showModal(imageFromAPI+file.spectrogram, 'Spectrogram')" :src="`${imageFromAPI}`+file.spectrogram" alt="Spectrogram" contain />
+                                  <v-img
+                                    @click="
+                                      showModal(imageFromAPI + file.spectrogram, 'Spectrogram')
+                                    "
+                                    :src="`${imageFromAPI}` + file.spectrogram"
+                                    alt="Spectrogram"
+                                    contain
+                                  />
                                 </v-col>
                                 <v-col cols="12" sm="6" v-if="file.plot">
-                                  <v-img @click="showModal(imageFromAPI+file.plot, 'Comparison plot')" :src="`${imageFromAPI}`+file.plot" alt="Comparison plot" contain />
+                                  <v-img
+                                    @click="showModal(imageFromAPI + file.plot, 'Comparison plot')"
+                                    :src="`${imageFromAPI}` + file.plot"
+                                    alt="Comparison plot"
+                                    contain
+                                  />
                                 </v-col>
                               </v-row>
-
                             </v-card-text>
                             <v-card-actions class="d-flex align-center">
                               <v-row>
                                 <v-col cols="11" class="ml-4">
-                                  <v-chip v-if="file.doi" label small color="red lighten-3" text-color="red darken-3" class="me-2">
+                                  <v-chip
+                                    v-if="file.doi"
+                                    label
+                                    small
+                                    color="red lighten-3"
+                                    text-color="red darken-3"
+                                    class="me-2"
+                                  >
                                     DOI:
                                     <a
                                       v-if="file.doi.includes('zenodo')"
-                                      :href="'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]"
+                                      :href="
+                                        'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]
+                                      "
                                       target="_blank"
                                       class="doi"
                                       >{{ file.doi }}</a
@@ -399,7 +437,9 @@ onMounted(() => fetchDatasets());
                                           border-radius: 12px;
                                         "
                                       >
-                                        <v-icon style="font-size: 0.875rem; color: gray">mdi-download</v-icon>
+                                        <v-icon style="font-size: 0.875rem; color: gray"
+                                          >mdi-download</v-icon
+                                        >
                                         <span style="margin-left: 8px">{{ file.downloads }}</span>
                                       </div>
                                     </template>
@@ -409,7 +449,6 @@ onMounted(() => fetchDatasets());
                             </v-card-actions>
                           </v-card>
                         </v-expansion-panel-text>
-
                       </v-expansion-panel>
                     </v-expansion-panels>
                   </v-card-text>
@@ -418,7 +457,7 @@ onMounted(() => fetchDatasets());
                     <v-row>
                       <v-col cols="11">
                         <v-chip class="ma-2" label color="red-lighten-1">
-                         {{ dataset.species }}
+                          {{ dataset.species }}
                         </v-chip>
                       </v-col>
                       <v-col class="align-end">
