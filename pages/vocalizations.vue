@@ -385,6 +385,9 @@ onMounted(() => fetchFiles());
                               {{ file.doi }}
                             </a>
                           </v-chip>
+                          <v-chip class="ma-2" label color="red-lighten-1">
+                            {{ file.species.name }}
+                          </v-chip>
                           <span v-if="file.notes" class="ml-2">
                             <strong class="mr-2">Notes:</strong> {{ file.notes }}
                           </span>
