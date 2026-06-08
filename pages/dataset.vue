@@ -123,7 +123,7 @@ const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetI
       // Update the downloads count in the local files array
       const datasetIndex = datasetList.value.findIndex((dataset) => dataset.id === datasetId);
       const fileIndex = datasetList.value[datasetIndex]['files'].findIndex(
-        (file) => file.id === fileId
+        (file: object) => file.id === fileId
       );
       if (fileIndex !== -1) {
         datasetList.value[datasetIndex]['files'][fileIndex].downloads = updatedFile.downloads;
@@ -138,7 +138,7 @@ const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetI
   }
 };
 
-function showModal(image, typeImage) {
+function showModal(image: string, typeImage: string) {
   showGraph.value = !showGraph.value;
   imageToShow.value = image;
   altImage.value = typeImage;
@@ -193,6 +193,7 @@ const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.v
     console.error('error while loading dataset :', error);
   } finally {
     dataLoaded.value = true;
+    console.log(datasetList.value);
   }
 };
 
@@ -457,7 +458,7 @@ onMounted(() => fetchDatasets());
                     <v-row>
                       <v-col cols="11">
                         <v-chip class="ma-2" label color="red-lighten-1">
-                          {{ dataset.species }}
+                          {{ dataset.species.name }}
                         </v-chip>
                       </v-col>
                       <v-col class="align-end">
