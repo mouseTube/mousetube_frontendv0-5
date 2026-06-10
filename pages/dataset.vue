@@ -168,7 +168,7 @@ const incrementDownloadsDataset = async (datasetId: number, datasetLink: string)
 };
 
 const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.value}`) => {
-  console.log(url);
+  // console.log(url);
   dataLoaded.value = false;
   try {
     const response = await axios.get(url);
@@ -177,13 +177,6 @@ const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.v
     previous.value = response.data.previous;
     count.value = response.data.count;
     currentPage.value = new URL(url).searchParams.get('page') || 1;
-    // strains.value = ref({});
-    // for(let dataset in datasetList.value) {
-    //   console.log("---->");
-    //   console.log(dataset);
-    //   strains[dataset] = ref({});
-    //   strains[dataset] = getStrains(datasetList.value[dataset]);
-    // }
     for (let dataset in datasetList.value) {
       profiles.value[dataset] = ref({});
       profiles.value[dataset] = getProfiles(datasetList.value[dataset]);
@@ -193,7 +186,6 @@ const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.v
     console.error('error while loading dataset :', error);
   } finally {
     dataLoaded.value = true;
-    console.log(datasetList.value);
   }
 };
 
@@ -243,7 +235,7 @@ onMounted(() => fetchDatasets());
             </v-alert>
 
             <!-- LIST DATASETS -->
-            <v-container fluid v-else class="pa-0">
+            <v-container fluid v-else class="pa-0" v-if="dataLoaded">
               <v-card
                 v-for="(dataset, index) in datasetList"
                 :key="dataset.id"
@@ -323,7 +315,7 @@ onMounted(() => fetchDatasets());
                                 class="ma-0"
                                 label
                                 color="red-lighten-1"
-                                v-if="profiles.length > 0"
+                                v-if="profiles[index]"
                                 v-for="profile in profiles[index]"
                               >
                                 {{ profile.strain.name }}
@@ -363,7 +355,7 @@ onMounted(() => fetchDatasets());
                               {{ file.name }}
                             </v-card-title>
                             <v-card-text>
-                              <v-dialog v-model="showGraph" width="80%">
+                              <v-dialog v-model="showGraph" width="80%" v-if="imageToShow">
                                 <v-card :title="altImage">
                                   <v-img
                                     v-if="imageToShow"

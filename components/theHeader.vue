@@ -13,6 +13,19 @@ import { ref, onMounted } from 'vue';
 import { useDisplay } from 'vuetify';
 
 const { smAndDown } = useDisplay();
+
+const width = ref(60);
+const height = ref(60);
+
+onMounted(() => {
+  if (smAndDown.value) {
+    width.value = 40;
+    height.value = 40;
+  } else {
+    width.value = 60;
+    height.value = 60;
+  }
+});
 </script>
 
 <template>
@@ -25,8 +38,8 @@ const { smAndDown } = useDisplay();
           exact-active-class="active-logo"
         >
           <v-img
-            :width="smAndDown ? 40 : 60"
-            :height="smAndDown ? 40 : 60"
+            :width="width"
+            :height="height"
             src="/logo_mousetube_carre.png"
             alt="mouseTube"
             class="logo-img"
