@@ -321,16 +321,6 @@ onMounted(() => fetchDatasets());
                                 {{ profile.strain.name }}
                               </v-chip>
                             </v-col>
-                            <v-col class="d-flex align-center" cols="auto">
-                              <v-chip
-                                class="ma-0"
-                                label
-                                color="red-lighten-1"
-                                v-for="profile in profiles[index]"
-                              >
-                                {{ profile.sex }}
-                              </v-chip>
-                            </v-col>
 
                             <v-col cols="auto" class="d-flex align-center">
                               <v-btn
