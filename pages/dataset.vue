@@ -209,10 +209,14 @@ onMounted(() => fetchDatasets());
             <!-- INFO BLOC -->
             <v-card class="mt-5 mb-5" color="grey-lighten-4">
               <v-card-text>
-                Datasets include multiple recording sessions, curated and annotated for practical
-                use in research and benchmarking.<br />
-                You can download the original dataset files, inspect metadata, or explore associated
-                DOI links when available.
+                Datasets are provided for practical use in research and benchmarking of existing or
+                new applications for ultrasonic vocalisation detection and analysis. Datasets
+                include multiple recording sessions, gathering recordings covering part of the
+                diversity of ultrasonic vocalisations for each species. Each recording is curated
+                and manually annotated by two experts. <br />
+                The files also underwent automatic detections by different applications (analysis
+                parameters are given). You can download the original audio files, as well as the
+                results of manual and automatic detections.
               </v-card-text>
             </v-card>
 
