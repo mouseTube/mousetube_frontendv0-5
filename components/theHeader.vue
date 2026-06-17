@@ -8,11 +8,24 @@ Code under GPL v3.0 licence
 -->
 <script setup>
 // Header page
-import { Users, AudioLines, MonitorCog } from 'lucide-vue-next';
+import { Users, AudioLines, MonitorCog, Database } from 'lucide-vue-next';
 import { ref, onMounted } from 'vue';
 import { useDisplay } from 'vuetify';
 
 const { smAndDown } = useDisplay();
+
+const width = ref(60);
+const height = ref(60);
+
+onMounted(() => {
+  if (smAndDown.value) {
+    width.value = 40;
+    height.value = 40;
+  } else {
+    width.value = 60;
+    height.value = 60;
+  }
+});
 </script>
 
 <template>
@@ -25,8 +38,8 @@ const { smAndDown } = useDisplay();
           exact-active-class="active-logo"
         >
           <v-img
-            :width="smAndDown ? 40 : 60"
-            :height="smAndDown ? 40 : 60"
+            :width="width"
+            :height="height"
             src="/logo_mousetube_carre.png"
             alt="mouseTube"
             class="logo-img"
@@ -46,6 +59,12 @@ const { smAndDown } = useDisplay();
           <span class="nav-link-content">
             <AudioLines class="nav-icon audio-hover-icon" />
             <span class="nav-label">Vocalizations</span>
+          </span>
+        </nuxt-link>
+        <nuxt-link to="/dataset" class="nav-item px-2" exact-active-class="active-link">
+          <span class="nav-link-content">
+            <Database class="nav-icon audio-hover-icon" />
+            <span class="nav-label">Datasets</span>
           </span>
         </nuxt-link>
         <nuxt-link to="/software" class="nav-item px-2" exact-active-class="active-link">

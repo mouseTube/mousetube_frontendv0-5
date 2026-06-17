@@ -125,28 +125,6 @@ onMounted(() => {
               </v-expansion-panels>
             </v-card-text>
           </v-card>
-          <!-- <v-card
-            class="mx-4 py-2 px-2 flex-grow-1 mt-8 rounded-lg border elevation-3"
-            variant="tonal"
-          >
-            <v-card-title class="font-weight-bold mx-4 my-4">
-              <v-icon class="me-2">mdi-handshake-outline</v-icon>
-              Call for papers
-            </v-card-title>
-            <v-card-text class="text-justify">
-              Working on ultrasonic vocalizations? Together, Dr. Elodie Ey and Dr. Markus Wöhr are
-              serving as guest editors for a Behavioural Brain Research special issue on Ultrasonic
-              Communication in Rodents. They are more than happy to learn about your most recent
-              discoveries.<br />
-              <br />
-              More information here:
-              <nuxt-link
-                href="https://www.sciencedirect.com/special-issue/317071/ultrasonic-communication-in-rodents"
-                target="_blank"
-                >Behavioural Brain Research - Ultrasonic Communication in Rodents</nuxt-link
-              >
-            </v-card-text>
-          </v-card> -->
         </v-col>
         <v-col cols="12" md="6" class="h-100">
           <v-card
@@ -219,52 +197,18 @@ onMounted(() => {
             variant="tonal"
           >
             <v-card-title class="font-weight-bold mx-4 my-4">
-              <v-icon class="me-2">mdi-handshake-outline</v-icon>
-              Call for papers
+              <v-icon class="me-2">mdi-newspaper-variant-outline</v-icon>
+              What’s new?
             </v-card-title>
             <v-card-text class="text-justify">
-              Working on ultrasonic vocalizations? Together, Dr. Elodie Ey and Dr. Markus Wöhr are
-              serving as guest editors for a Behavioural Brain Research special issue on Ultrasonic
-              Communication in Rodents. They are more than happy to learn about your most recent
-              discoveries.<br />
-              <br />
-              More information here:
-              <nuxt-link
-                href="https://www.sciencedirect.com/special-issue/317071/ultrasonic-communication-in-rodents"
-                target="_blank"
-                >Behavioural Brain Research - Ultrasonic Communication in Rodents</nuxt-link
-              >
+              <strong>10/06/2026</strong><br />
+              Two datasets were added: one with mouse vocalisation recordings and one with rat
+              vocalisation recordings. These recordings are manually annotated by two experts and
+              automatically analysed by six algorithms with basic settings (DeepSqueak, Avisoft
+              SASLab Pro, Sonotrack, LMT USV Toolbox, UsvSeg, RatRec). Annotations and segmentations
+              are available for benchmarking or to challenge your own application.
             </v-card-text>
           </v-card>
-          <!-- <v-card
-            class="mx-4 py-2 px-2 flex-grow-1 mt-8 rounded-lg border elevation-3"
-            variant="tonal"
-          >
-            <v-card-title class="font-weight-bold mx-4 my-4">
-              <v-icon class="me-2">mdi-newspaper-variant-multiple-outline</v-icon>
-              MouseTube's publications
-            </v-card-title>
-            <v-card-text class="text-justify">
-              Torquet N., de Chaumont F., Faure P., Bourgeron T., Ey E. MouseTube – a database to
-              collaboratively unravel mouse ultrasonic communication [version 1; peer review: 2
-              approved]. F1000Research 2016, 5:2332 (<nuxt-link
-                href="https://doi.org/10.12688/f1000research.9439.1"
-                target="_blank"
-                >https://doi.org/10.12688/f1000research.9439.1</nuxt-link
-              >) (2016). Ferhat A. T., Torquet N., Le Sourd A. M., de Chaumont F., Olivo-Marin J.
-              C., Faure P., Bourgeron T., Ey E. Recording Mouse Ultrasonic Vocalizations to Evaluate
-              Social Communication. J. Vis. Exp. (112), e53871,
-              <nuxt-link href="https://dx.doi.org/10.3791/53871" target="_blank"
-                >doi:10.3791/53871</nuxt-link
-              >
-              (2016).
-            </v-card-text>
-            <v-card-actions>
-              <nuxt-link to="https://mastodon.social/@mousetube" target="_blank" class="nuxt-link"
-                ><v-btn prepend-icon="mdi-mastodon">Follow MouseTube on Mastodon</v-btn></nuxt-link
-              >
-            </v-card-actions>
-          </v-card> -->
         </v-col>
       </v-row>
       <v-row>
