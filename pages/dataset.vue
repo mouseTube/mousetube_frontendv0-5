@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" xmlns="http://www.w3.org/1999/html">
 ////////////////////////////////
 // IMPORT
 ////////////////////////////////
@@ -31,6 +31,7 @@ import { Database } from 'lucide-vue-next';
 // };
 
 const dataLoaded = ref(false);
+const dataReceived = ref([]);
 const datasetList = ref([]);
 const next = ref<string | null>(null);
 const previous = ref<string | null>(null);
@@ -98,8 +99,8 @@ function getProfiles(dataset: object) {
     for (let recording_session in dataset.metadata.dataset.recording_session_list) {
       for (let profile in dataset.metadata.dataset.recording_session_list[recording_session]
         .animal_profiles) {
-        profiles_fun.value[profile] = ref({});
-        profiles_fun.value[profile] =
+        profiles_fun.value[recording_session][profile] = ref({});
+        profiles_fun.value[recording_session][profile] =
           dataset.metadata.dataset.recording_session_list[recording_session].animal_profiles[
             profile
           ];
@@ -108,6 +109,7 @@ function getProfiles(dataset: object) {
   } catch (error) {
     console.error('error while getting profiles :', error);
   } finally {
+    console.log('profiles_fun :', profiles_fun.value);
     return profiles_fun;
   }
 }
@@ -149,14 +151,41 @@ const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.v
   dataLoaded.value = false;
   try {
     const response = await axios.get(url);
-    datasetList.value = response.data.results;
+    dataReceived.value = response.data.results;
     next.value = response.data.next;
     previous.value = response.data.previous;
     count.value = response.data.count;
     currentPage.value = new URL(url).searchParams.get('page') || 1;
-    for (let dataset in datasetList.value) {
-      profiles.value[dataset] = ref({});
-      profiles.value[dataset] = getProfiles(datasetList.value[dataset]);
+    for (let dataset in dataReceived.value) {
+      datasetList.value[dataset] = dataReceived.value[dataset];
+      for (let recording_session in datasetList.value[dataset].metadata.dataset
+        .recording_session_list) {
+        for (let file in datasetList.value[dataset]['files']) {
+          if (
+            datasetList.value[dataset]['files'][file]['name'] ==
+            datasetList.value[dataset]['metadata']['dataset']['recording_session_list'][
+              recording_session
+            ]['file_list'][0]['name']
+          ) {
+            datasetList.value[dataset]['files'][file]['metadata'] =
+              datasetList.value[dataset]['metadata']['dataset']['recording_session_list'][
+                recording_session
+              ];
+            datasetList.value[dataset]['files'][file]['profiles'] = ref([]);
+            for (let profile in datasetList.value[dataset]['metadata']['dataset'][
+              'recording_session_list'
+            ][recording_session]['animal_profiles']) {
+              datasetList.value[dataset]['files'][file]['profiles'].push(
+                datasetList.value[dataset]['metadata']['dataset']['recording_session_list'][
+                  recording_session
+                ]['animal_profiles'][profile]
+              );
+            }
+
+            break;
+          }
+        }
+      }
     }
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -233,168 +262,171 @@ onMounted(() => fetchDatasets());
                 <v-divider class="mx-4 mb-2" />
 
                 <!-- FILES -->
-                <div v-for="recording_session in dataset.metadata.dataset.recording_session_list">
-                  <v-card-text>
-                    <h4 class="mb-2">Files:</h4>
-                    <v-expansion-panels multiple>
-                      <v-expansion-panel v-for="(file, index_file) in dataset.files" :key="file.id">
-                        <v-expansion-panel-title>
-                          <v-row align="center" justify="space-between" class="w-100">
-                            <v-col cols="auto" class="d-flex align-center">
-                              <strong># {{ index_file }}</strong>
+                <v-card-text>
+                  <h4 class="mb-2">Files:</h4>
+                  <v-expansion-panels multiple>
+                    <v-expansion-panel
+                      v-for="(file, index_file) in dataset.files"
+                      :key="file.id"
+                      class="mt-4"
+                    >
+                      <v-expansion-panel-title>
+                        <v-row
+                          align="center"
+                          justify="space-between"
+                          class="w-100"
+                          v-if="file.metadata"
+                        >
+                          <v-col cols="auto" class="align-center">
+                            <strong># {{ index_file + 1 }}</strong>
+                          </v-col>
+                          <div v-for="(value, key) in file.metadata.protocol">
+                            <v-col
+                              cols="auto"
+                              class="d-flex align-center"
+                              v-if="
+                                key != 'name' &&
+                                key != 'animals_housing' &&
+                                key != 'context_number_of_animals'
+                              "
+                            >
+                              <v-chip label small color="#03DAC6" class="ma-0">{{ value }}</v-chip>
                             </v-col>
-                            <div v-for="(value, key) in recording_session.protocol">
-                              <v-col
-                                cols="auto"
-                                class="d-flex align-center"
-                                v-if="
-                                  key != 'name' &&
-                                  key != 'animals_housing' &&
-                                  key != 'context_number_of_animals'
-                                "
-                              >
-                                <v-chip label small color="#03DAC6" class="ma-0">{{
-                                  value
-                                }}</v-chip>
+                          </div>
+
+                          <v-col class="d-flex align-center" cols="auto">
+                            <v-chip
+                              class="ma-0"
+                              label
+                              color="red-lighten-1"
+                              v-if="file.profiles"
+                              v-for="profile in file.profiles"
+                            >
+                              {{ profile.strain.name }}
+                            </v-chip>
+                          </v-col>
+
+                          <v-col cols="auto" class="d-flex align-center">
+                            <v-btn
+                              v-if="file.link"
+                              icon
+                              target="_blank"
+                              color="teal-darken-2"
+                              title="Download file"
+                              density="compact"
+                              class="ms-1"
+                              @click="incrementDownloadsFile(file.id, file.link, dataset.id)"
+                            >
+                              <v-icon size="18">mdi-download</v-icon>
+                            </v-btn>
+                          </v-col>
+                        </v-row>
+                      </v-expansion-panel-title>
+
+                      <v-expansion-panel-text>
+                        <v-card>
+                          <v-card-title>
+                            {{ file.name }}
+                          </v-card-title>
+                          <v-card-text>
+                            <v-dialog v-model="showGraph" width="80%" v-if="imageToShow">
+                              <v-card :title="altImage">
+                                <v-img
+                                  v-if="imageToShow"
+                                  :src="imageToShow"
+                                  :alt="altImage"
+                                  contain
+                                />
+                                <v-card-actions>
+                                  <v-spacer></v-spacer>
+
+                                  <v-btn text="Close" variant="text" @click="showModal"></v-btn>
+                                </v-card-actions>
+                              </v-card>
+                            </v-dialog>
+
+                            <v-row>
+                              <v-col cols="12" sm="6" v-if="file.spectrogram">
+                                <v-img
+                                  @click="showModal(imageFromAPI + file.spectrogram, 'Spectrogram')"
+                                  :src="`${imageFromAPI}` + file.spectrogram"
+                                  alt="Spectrogram"
+                                  contain
+                                />
                               </v-col>
-                            </div>
-
-                            <v-col class="d-flex align-center" cols="auto">
-                              <v-chip
-                                class="ma-0"
-                                label
-                                color="red-lighten-1"
-                                v-if="profiles[index]"
-                                v-for="profile in profiles[index]"
-                              >
-                                {{ profile.strain.name }}
-                              </v-chip>
-                            </v-col>
-
-                            <v-col cols="auto" class="d-flex align-center">
-                              <v-btn
-                                v-if="file.link"
-                                icon
-                                target="_blank"
-                                color="teal-darken-2"
-                                title="Download file"
-                                density="compact"
-                                class="ms-1"
-                                @click="incrementDownloadsFile(file.id, file.link, dataset.id)"
-                              >
-                                <v-icon size="18">mdi-download</v-icon>
-                              </v-btn>
-                            </v-col>
-                          </v-row>
-                        </v-expansion-panel-title>
-
-                        <v-expansion-panel-text>
-                          <v-card>
-                            <v-card-title>
-                              {{ file.name }}
-                            </v-card-title>
-                            <v-card-text>
-                              <v-dialog v-model="showGraph" width="80%" v-if="imageToShow">
-                                <v-card :title="altImage">
-                                  <v-img
-                                    v-if="imageToShow"
-                                    :src="imageToShow"
-                                    :alt="altImage"
-                                    contain
-                                  />
-                                  <v-card-actions>
-                                    <v-spacer></v-spacer>
-
-                                    <v-btn text="Close" variant="text" @click="showModal"></v-btn>
-                                  </v-card-actions>
-                                </v-card>
-                              </v-dialog>
-
-                              <v-row>
-                                <v-col cols="12" sm="6" v-if="file.spectrogram">
-                                  <v-img
-                                    @click="
-                                      showModal(imageFromAPI + file.spectrogram, 'Spectrogram')
+                              <v-col cols="12" sm="6" v-if="file.plot">
+                                <v-img
+                                  @click="showModal(imageFromAPI + file.plot, 'Comparison plot')"
+                                  :src="`${imageFromAPI}` + file.plot"
+                                  alt="Comparison plot"
+                                  contain
+                                />
+                              </v-col>
+                            </v-row>
+                          </v-card-text>
+                          <v-card-actions class="d-flex align-center">
+                            <v-row>
+                              <v-col cols="11" class="ml-4">
+                                <v-chip
+                                  v-if="file.doi"
+                                  label
+                                  small
+                                  color="red lighten-3"
+                                  text-color="red darken-3"
+                                  class="me-2"
+                                >
+                                  DOI:
+                                  <a
+                                    v-if="file.doi.includes('zenodo')"
+                                    :href="
+                                      'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]
                                     "
-                                    :src="`${imageFromAPI}` + file.spectrogram"
-                                    alt="Spectrogram"
-                                    contain
-                                  />
-                                </v-col>
-                                <v-col cols="12" sm="6" v-if="file.plot">
-                                  <v-img
-                                    @click="showModal(imageFromAPI + file.plot, 'Comparison plot')"
-                                    :src="`${imageFromAPI}` + file.plot"
-                                    alt="Comparison plot"
-                                    contain
-                                  />
-                                </v-col>
-                              </v-row>
-                            </v-card-text>
-                            <v-card-actions class="d-flex align-center">
-                              <v-row>
-                                <v-col cols="11" class="ml-4">
-                                  <v-chip
-                                    v-if="file.doi"
-                                    label
-                                    small
-                                    color="red lighten-3"
-                                    text-color="red darken-3"
-                                    class="me-2"
+                                    target="_blank"
+                                    class="doi"
+                                    >{{ file.doi }}</a
                                   >
-                                    DOI:
-                                    <a
-                                      v-if="file.doi.includes('zenodo')"
-                                      :href="
-                                        'https://zenodo.org/record/' + file.doi.split('zenodo.')[1]
+                                </v-chip>
+                              </v-col>
+                              <v-col class="align-end">
+                                <v-badge
+                                  :content="file.downloads + ' Downloads'"
+                                  color="red-lighten-5"
+                                  class="align-end"
+                                >
+                                  <template #badge>
+                                    <div
+                                      style="
+                                        background-color: transparent;
+                                        font-size: 0.875rem;
+                                        color: gray;
+                                        border-radius: 12px;
                                       "
-                                      target="_blank"
-                                      class="doi"
-                                      >{{ file.doi }}</a
                                     >
-                                  </v-chip>
-                                </v-col>
-                                <v-col class="align-end">
-                                  <v-badge
-                                    :content="file.downloads + ' Downloads'"
-                                    color="red-lighten-5"
-                                    class="align-end"
-                                  >
-                                    <template #badge>
-                                      <div
-                                        style="
-                                          background-color: transparent;
-                                          font-size: 0.875rem;
-                                          color: gray;
-                                          border-radius: 12px;
-                                        "
+                                      <v-icon style="font-size: 0.875rem; color: gray"
+                                        >mdi-download</v-icon
                                       >
-                                        <v-icon style="font-size: 0.875rem; color: gray"
-                                          >mdi-download</v-icon
-                                        >
-                                        <span style="margin-left: 8px">{{ file.downloads }}</span>
-                                      </div>
-                                    </template>
-                                  </v-badge>
-                                </v-col>
-                              </v-row>
-                            </v-card-actions>
-                          </v-card>
-                        </v-expansion-panel-text>
-                      </v-expansion-panel>
-                    </v-expansion-panels>
-                  </v-card-text>
+                                      <span style="margin-left: 8px">{{ file.downloads }}</span>
+                                    </div>
+                                  </template>
+                                </v-badge>
+                              </v-col>
+                            </v-row>
+                          </v-card-actions>
+                        </v-card>
+                      </v-expansion-panel-text>
+                    </v-expansion-panel>
+                  </v-expansion-panels>
+                </v-card-text>
 
-                  <v-card-actions class="d-flex align-center">
-                    <v-row>
-                      <v-col cols="11">
-                        <v-chip class="ma-2" label color="red-lighten-1">
-                          {{ dataset.species.name }}
-                        </v-chip>
-                      </v-col>
-                    </v-row>
-                  </v-card-actions>
-                </div>
+                <v-card-actions class="d-flex align-center">
+                  <v-row>
+                    <v-col cols="11">
+                      <v-chip class="ma-2" label color="red-lighten-1">
+                        {{ dataset.species.name }}
+                      </v-chip>
+                    </v-col>
+                  </v-row>
+                </v-card-actions>
               </v-card>
             </v-container>
           </v-card>
