@@ -144,29 +144,6 @@ function showModal(image: string, typeImage: string) {
   altImage.value = typeImage;
 }
 
-const incrementDownloadsDataset = async (datasetId: number, datasetLink: string) => {
-  try {
-    const response = await axios.patch(`${apiBaseUrl}/dataset/${datasetId}/`, {
-      downloads: 'increment',
-    });
-
-    if (response.status === 200) {
-      const updatedDataset = response.data;
-      // Update the downloads count in the local files array
-      const datasetIndex = datasetList.value.findIndex((dataset) => dataset.id === datasetId);
-      if (datasetIndex !== -1) {
-        datasetList.value[datasetIndex].downloads = updatedDataset.downloads;
-      }
-    }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error updating dataset downloads:', error);
-  } finally {
-    // Always open the file link
-    window.open(datasetLink, '_blank');
-  }
-};
-
 const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.value}`) => {
   // console.log(url);
   dataLoaded.value = false;
@@ -249,38 +226,6 @@ onMounted(() => fetchDatasets());
                 <v-card-title class="d-flex align-center justify-space-between">
                   <div>
                     {{ dataset.name }}
-                  </div>
-
-                  <div class="d-flex align-center">
-                    <v-chip
-                      v-if="dataset.doi"
-                      label
-                      small
-                      color="red lighten-3"
-                      text-color="red darken-3"
-                      class="me-2"
-                    >
-                      DOI:
-                      <a
-                        v-if="dataset.doi.includes('zenodo')"
-                        :href="'https://zenodo.org/record/' + dataset.doi.split('zenodo.')[1]"
-                        target="_blank"
-                        class="doi"
-                        >{{ dataset.doi }}</a
-                      >
-                    </v-chip>
-
-                    <!-- Bouton download compact -->
-                    <v-btn
-                      icon
-                      target="_blank"
-                      title="Download dataset (archive)"
-                      density="compact"
-                      class="ms-1"
-                      @click="incrementDownloadsDataset(dataset.id, datasetDownloadLink(dataset))"
-                    >
-                      <v-icon size="18">mdi-download</v-icon>
-                    </v-btn>
                   </div>
                 </v-card-title>
 
@@ -446,27 +391,6 @@ onMounted(() => fetchDatasets());
                         <v-chip class="ma-2" label color="red-lighten-1">
                           {{ dataset.species.name }}
                         </v-chip>
-                      </v-col>
-                      <v-col class="align-end">
-                        <v-badge
-                          :content="dataset.downloads + ' Downloads'"
-                          color="red-lighten-5"
-                          class="text-end"
-                        >
-                          <template #badge>
-                            <div
-                              style="
-                                background-color: transparent;
-                                font-size: 0.875rem;
-                                color: gray;
-                                border-radius: 12px;
-                              "
-                            >
-                              <v-icon style="font-size: 0.875rem; color: gray">mdi-download</v-icon>
-                              <span style="margin-left: 8px">{{ dataset.downloads }}</span>
-                            </div>
-                          </template>
-                        </v-badge>
                       </v-col>
                     </v-row>
                   </v-card-actions>
