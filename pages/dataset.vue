@@ -54,65 +54,6 @@ const activePanels = ref<Record<number, boolean>>({});
 // METHODS
 ////////////////////////////////
 
-// --- helpers for file types / icons / ordering ---
-function fileExt(name?: string) {
-  if (!name) return '';
-  const m = name.split('.').pop();
-  return (m || '').toLowerCase();
-}
-function isAudio(ext: string) {
-  return ['wav', 'mp3', 'flac', 'ogg', 'm4a', 'aac'].includes(ext);
-}
-function isImage(ext: string) {
-  return ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'].includes(ext);
-}
-function isPdf(ext: string) {
-  return ext === 'pdf';
-}
-function isArchive(ext: string) {
-  return ['zip', 'rar', 'tar', 'gz', 'tgz', '7z'].includes(ext);
-}
-function fileIcon(name?: string) {
-  const ext = fileExt(name);
-  if (isAudio(ext)) return 'mdi-music';
-  if (isImage(ext)) return 'mdi-image';
-  if (isPdf(ext)) return 'mdi-file-pdf';
-  if (isArchive(ext)) return 'mdi-archive';
-  return 'mdi-file';
-}
-function datasetDownloadLink(dataset: object) {
-  if (dataset.link) return dataset.link;
-  return `${apiBaseUrl}/dataset/${dataset.id}/download/`;
-}
-// function sortFiles(files = []) {
-//   return [...files].sort((a, b) => {
-//     const aIsAudio = isAudio(fileExt(a.name));
-//     const bIsAudio = isAudio(fileExt(b.name));
-//     if (aIsAudio === bIsAudio) return a.name.localeCompare(b.name);
-//     return aIsAudio ? -1 : 1; // audio first
-//   });
-// }
-
-function getProfiles(dataset: object) {
-  let profiles_fun = ref({});
-  try {
-    for (let recording_session in dataset.metadata.dataset.recording_session_list) {
-      for (let profile in dataset.metadata.dataset.recording_session_list[recording_session]
-        .animal_profiles) {
-        profiles_fun.value[recording_session][profile] = ref({});
-        profiles_fun.value[recording_session][profile] =
-          dataset.metadata.dataset.recording_session_list[recording_session].animal_profiles[
-            profile
-          ];
-      }
-    }
-  } catch (error) {
-    console.error('error while getting profiles :', error);
-  } finally {
-    console.log('profiles_fun :', profiles_fun.value);
-    return profiles_fun;
-  }
-}
 
 const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetId: number) => {
   try {
@@ -123,12 +64,12 @@ const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetI
     if (response.status === 200) {
       const updatedFile = response.data;
       // Update the downloads count in the local files array
-      const datasetIndex = datasetList.value.findIndex((dataset) => dataset.id === datasetId);
+      const datasetIndex = datasetList.value.findIndex((dataset: any) => (dataset as any).id === datasetId);
       const fileIndex = datasetList.value[datasetIndex]['files'].findIndex(
-        (file: object) => file.id === fileId
+        (file: any) => (file as any).id === fileId
       );
       if (fileIndex !== -1) {
-        datasetList.value[datasetIndex]['files'][fileIndex].downloads = updatedFile.downloads;
+        (datasetList.value[datasetIndex]['files'][fileIndex] as any).downloads = updatedFile.downloads;
       }
     }
   } catch (error) {
@@ -156,32 +97,31 @@ const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.v
     previous.value = response.data.previous;
     count.value = response.data.count;
     currentPage.value = new URL(url).searchParams.get('page') || 1;
-    for (let dataset in dataReceived.value) {
-      datasetList.value[dataset] = dataReceived.value[dataset];
-      for (let recording_session in datasetList.value[dataset].metadata.dataset
-        .recording_session_list) {
-        for (let file in datasetList.value[dataset]['files']) {
-          if (
-            datasetList.value[dataset]['files'][file]['name'] ==
-            datasetList.value[dataset]['metadata']['dataset']['recording_session_list'][
-              recording_session
-            ]['file_list'][0]['name']
-          ) {
-            datasetList.value[dataset]['files'][file]['metadata'] =
-              datasetList.value[dataset]['metadata']['dataset']['recording_session_list'][
-                recording_session
-              ];
-            datasetList.value[dataset]['files'][file]['profiles'] = ref([]);
-            for (let profile in datasetList.value[dataset]['metadata']['dataset'][
-              'recording_session_list'
-            ][recording_session]['animal_profiles']) {
-              datasetList.value[dataset]['files'][file]['profiles'].push(
-                datasetList.value[dataset]['metadata']['dataset']['recording_session_list'][
-                  recording_session
-                ]['animal_profiles'][profile]
-              );
-            }
-
+    
+    for (let datasetIndex in dataReceived.value) {
+      const dataset = dataReceived.value[datasetIndex];
+      datasetList.value[datasetIndex] = dataset;
+      
+      const recordingSessionList = dataset.metadata?.dataset?.recording_session_list || [];
+      
+      for (let sessionIndex in recordingSessionList) {
+        const session = recordingSessionList[sessionIndex];
+        const firstFileName = session?.file_list?.[0]?.name;
+        
+        if (!firstFileName) continue;
+        
+        for (let fileIndex in dataset.files) {
+          const file = dataset.files[fileIndex];
+          
+          if (file?.name === firstFileName) {
+            file.metadata = session;
+            const animalProfiles = session?.animal_profiles;
+            file.profiles = Array.isArray(animalProfiles)
+              ? animalProfiles.filter(Boolean)
+              : animalProfiles
+                ? [animalProfiles]
+                : [];
+            
             break;
           }
         }
@@ -267,7 +207,7 @@ onMounted(() => fetchDatasets());
                   <v-expansion-panels multiple>
                     <v-expansion-panel
                       v-for="(file, index_file) in dataset.files"
-                      :key="file.id"
+                      :key="file.id ?? index_file"
                       class="mt-4"
                     >
                       <v-expansion-panel-title>
@@ -278,7 +218,7 @@ onMounted(() => fetchDatasets());
                           v-if="file.metadata"
                         >
                           <v-col cols="auto" class="align-center">
-                            <strong># {{ index_file + 1 }}</strong>
+                            <strong># {{ Number(index_file) + 1 }}</strong>
                           </v-col>
                           <div v-for="(value, key) in file.metadata.protocol">
                             <v-col
@@ -296,13 +236,13 @@ onMounted(() => fetchDatasets());
 
                           <v-col class="d-flex align-center" cols="auto">
                             <v-chip
+                              v-for="(profile, index) in file.profiles"
+                              :key="index"
                               class="ma-0"
                               label
                               color="red-lighten-1"
-                              v-if="file.profiles"
-                              v-for="profile in file.profiles"
                             >
-                              {{ profile.strain.name }}
+                              {{ profile?.strain?.name || 'Unknown strain' }}
                             </v-chip>
                           </v-col>
 
