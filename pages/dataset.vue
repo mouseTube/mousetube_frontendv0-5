@@ -11,37 +11,77 @@ import { Database } from 'lucide-vue-next';
 // DATA
 ////////////////////////////////
 
-// interface FileType {
-//   id: number;
-//   name: string;
-//   doi?: string | null;
-//   link?: string | null;
-//   spectrogram_url?: string | null;
-//   plot_url?: string | null;
-// };
-//
-// interface DatasetType {
-//   id: number;
-//   name: string;
-//   doi?: string | null;
-//   link?: string | null;
-//   description?: string;
-//   created_at: string;
-//   files: FileType[];
-// };
+interface MetadataDataset {
+  recording_session_list: RecordingSession[];
+}
+
+interface Metadata {
+  dataset: MetadataDataset;
+}
+
+interface AnimalProfile {
+  name?: string;
+  strain?: {
+    name?: string;
+    background?: string;
+    species?: { name?: string };
+  };
+  sex?: string;
+  age?: string;
+  genotype?: string;
+  [key: string]: unknown;
+}
+
+interface RecordingSession {
+  name?: string;
+  file_list?: { name?: string }[];
+  animal_profiles?: AnimalProfile | AnimalProfile[];
+  protocol?: Record<string, unknown>;
+}
+
+interface FileType {
+  id: number;
+  name: string;
+  doi?: string | null;
+  link?: string | null;
+  spectrogram?: string | null;
+  plot?: string | null;
+  downloads?: number;
+  metadata?: Record<string, unknown>;
+  profiles?: AnimalProfile[];
+  species?: { name: string };
+  experiment?: Record<string, unknown>;
+  subject?: Record<string, unknown> | null;
+}
+
+interface DatasetType {
+  id: number;
+  name: string;
+  doi?: string | null;
+  link?: string | null;
+  description?: string;
+  created_at?: string;
+  files: FileType[];
+  metadata?: {
+    dataset?: {
+      recording_session_list?: RecordingSession[];
+    };
+  };
+  species?: { name: string };
+}
 
 const dataLoaded = ref(false);
-const dataReceived = ref([]);
-const datasetList = ref([]);
+const dataReceived = ref<DatasetType[]>([]);
+const datasetList = ref<DatasetType[]>([]);
 const next = ref<string | null>(null);
 const previous = ref<string | null>(null);
 const count = ref(0);
 const currentPage = ref(1);
 const perPage = ref(10);
-const strains = ref({});
-const profiles = ref({});
+const strains = ref<Record<string, unknown>>({});
+const profiles = ref<Record<string, unknown>>({});
 const showGraph = ref(false);
-const imageToShow = ref(null);
+const imageToShow = ref<string | null>(null);
 const altImage = ref('');
 
 const apiBaseUrl = useApiBaseUrl();
@@ -54,7 +94,6 @@ const activePanels = ref<Record<number, boolean>>({});
 // METHODS
 ////////////////////////////////
 
-
 const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetId: number) => {
   try {
     const response = await axios.patch(`${apiBaseUrl}/file/${fileId}/`, {
@@ -64,12 +103,13 @@ const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetI
     if (response.status === 200) {
       const updatedFile = response.data;
       // Update the downloads count in the local files array
-      const datasetIndex = datasetList.value.findIndex((dataset: any) => (dataset as any).id === datasetId);
-      const fileIndex = datasetList.value[datasetIndex]['files'].findIndex(
-        (file: any) => (file as any).id === fileId
-      );
+      const datasetIndex = datasetList.value.findIndex((dataset) => dataset.id === datasetId);
+      if (datasetIndex === -1) return;
+      const files = datasetList.value[datasetIndex].files;
+      if (!Array.isArray(files)) return;
+      const fileIndex = files.findIndex((file) => file.id === fileId);
       if (fileIndex !== -1) {
-        (datasetList.value[datasetIndex]['files'][fileIndex] as any).downloads = updatedFile.downloads;
+        files[fileIndex].downloads = updatedFile.downloads;
       }
     }
   } catch (error) {
@@ -92,40 +132,37 @@ const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.v
   dataLoaded.value = false;
   try {
     const response = await axios.get(url);
-    dataReceived.value = response.data.results;
+    dataReceived.value = response.data.results as DatasetType[];
     next.value = response.data.next;
     previous.value = response.data.previous;
     count.value = response.data.count;
-    currentPage.value = new URL(url).searchParams.get('page') || 1;
-    
+    currentPage.value = Number(new URL(url).searchParams.get('page') || 1);
+
+    datasetList.value = [];
+
     for (let datasetIndex in dataReceived.value) {
       const dataset = dataReceived.value[datasetIndex];
       datasetList.value[datasetIndex] = dataset;
-      
+
       const recordingSessionList = dataset.metadata?.dataset?.recording_session_list || [];
-      
-      for (let sessionIndex in recordingSessionList) {
-        const session = recordingSessionList[sessionIndex];
-        const firstFileName = session?.file_list?.[0]?.name;
-        
-        if (!firstFileName) continue;
-        
-        for (let fileIndex in dataset.files) {
-          const file = dataset.files[fileIndex];
-          
+
+      recordingSessionList.forEach((session) => {
+        const firstFileName = session.file_list?.[0]?.name;
+
+        if (!firstFileName) return;
+
+        dataset.files.forEach((file) => {
           if (file?.name === firstFileName) {
             file.metadata = session;
-            const animalProfiles = session?.animal_profiles;
+            const animalProfiles = session.animal_profiles;
             file.profiles = Array.isArray(animalProfiles)
               ? animalProfiles.filter(Boolean)
               : animalProfiles
                 ? [animalProfiles]
                 : [];
-            
-            break;
           }
-        }
-      }
+        });
+      });
     }
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -362,7 +399,7 @@ onMounted(() => fetchDatasets());
                   <v-row>
                     <v-col cols="11">
                       <v-chip class="ma-2" label color="red-lighten-1">
-                        {{ dataset.species.name }}
+                        {{ dataset.species?.name ?? 'Unknown' }}
                       </v-chip>
                     </v-col>
                   </v-row>
