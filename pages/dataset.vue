@@ -11,37 +11,77 @@ import { Database } from 'lucide-vue-next';
 // DATA
 ////////////////////////////////
 
-// interface FileType {
-//   id: number;
-//   name: string;
-//   doi?: string | null;
-//   link?: string | null;
-//   spectrogram_url?: string | null;
-//   plot_url?: string | null;
-// };
-//
-// interface DatasetType {
-//   id: number;
-//   name: string;
-//   doi?: string | null;
-//   link?: string | null;
-//   description?: string;
-//   created_at: string;
-//   files: FileType[];
-// };
+interface MetadataDataset {
+  recording_session_list: RecordingSession[];
+}
+
+interface Metadata {
+  dataset: MetadataDataset;
+}
+
+interface AnimalProfile {
+  name?: string;
+  strain?: {
+    name?: string;
+    background?: string;
+    species?: { name?: string };
+  };
+  sex?: string;
+  age?: string;
+  genotype?: string;
+  [key: string]: unknown;
+}
+
+interface RecordingSession {
+  name?: string;
+  file_list?: { name?: string }[];
+  animal_profiles?: AnimalProfile | AnimalProfile[];
+  protocol?: Record<string, unknown>;
+}
+
+interface FileType {
+  id: number;
+  name: string;
+  doi?: string | null;
+  link?: string | null;
+  spectrogram?: string | null;
+  plot?: string | null;
+  downloads?: number;
+  metadata?: Record<string, unknown>;
+  profiles?: AnimalProfile[];
+  species?: { name: string };
+  experiment?: Record<string, unknown>;
+  subject?: Record<string, unknown> | null;
+}
+
+interface DatasetType {
+  id: number;
+  name: string;
+  doi?: string | null;
+  link?: string | null;
+  description?: string;
+  created_at?: string;
+  files: FileType[];
+  metadata?: {
+    dataset?: {
+      recording_session_list?: RecordingSession[];
+    };
+  };
+  species?: { name: string };
+}
 
 const dataLoaded = ref(false);
-const dataReceived = ref([]);
-const datasetList = ref([]);
+const dataReceived = ref<DatasetType[]>([]);
+const datasetList = ref<DatasetType[]>([]);
 const next = ref<string | null>(null);
 const previous = ref<string | null>(null);
 const count = ref(0);
 const currentPage = ref(1);
 const perPage = ref(10);
-const strains = ref({});
-const profiles = ref({});
+const strains = ref<Record<string, unknown>>({});
+const profiles = ref<Record<string, unknown>>({});
 const showGraph = ref(false);
-const imageToShow = ref(null);
+const imageToShow = ref<string | null>(null);
 const altImage = ref('');
 
 const apiBaseUrl = useApiBaseUrl();
@@ -54,66 +94,6 @@ const activePanels = ref<Record<number, boolean>>({});
 // METHODS
 ////////////////////////////////
 
-// --- helpers for file types / icons / ordering ---
-function fileExt(name?: string) {
-  if (!name) return '';
-  const m = name.split('.').pop();
-  return (m || '').toLowerCase();
-}
-function isAudio(ext: string) {
-  return ['wav', 'mp3', 'flac', 'ogg', 'm4a', 'aac'].includes(ext);
-}
-function isImage(ext: string) {
-  return ['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'].includes(ext);
-}
-function isPdf(ext: string) {
-  return ext === 'pdf';
-}
-function isArchive(ext: string) {
-  return ['zip', 'rar', 'tar', 'gz', 'tgz', '7z'].includes(ext);
-}
-function fileIcon(name?: string) {
-  const ext = fileExt(name);
-  if (isAudio(ext)) return 'mdi-music';
-  if (isImage(ext)) return 'mdi-image';
-  if (isPdf(ext)) return 'mdi-file-pdf';
-  if (isArchive(ext)) return 'mdi-archive';
-  return 'mdi-file';
-}
-function datasetDownloadLink(dataset: object) {
-  if (dataset.link) return dataset.link;
-  return `${apiBaseUrl}/dataset/${dataset.id}/download/`;
-}
-// function sortFiles(files = []) {
-//   return [...files].sort((a, b) => {
-//     const aIsAudio = isAudio(fileExt(a.name));
-//     const bIsAudio = isAudio(fileExt(b.name));
-//     if (aIsAudio === bIsAudio) return a.name.localeCompare(b.name);
-//     return aIsAudio ? -1 : 1; // audio first
-//   });
-// }
-
-function getProfiles(dataset: object) {
-  let profiles_fun = ref({});
-  try {
-    for (let recording_session in dataset.metadata.dataset.recording_session_list) {
-      for (let profile in dataset.metadata.dataset.recording_session_list[recording_session]
-        .animal_profiles) {
-        profiles_fun.value[recording_session][profile] = ref({});
-        profiles_fun.value[recording_session][profile] =
-          dataset.metadata.dataset.recording_session_list[recording_session].animal_profiles[
-            profile
-          ];
-      }
-    }
-  } catch (error) {
-    console.error('error while getting profiles :', error);
-  } finally {
-    console.log('profiles_fun :', profiles_fun.value);
-    return profiles_fun;
-  }
-}
-
 const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetId: number) => {
   try {
     const response = await axios.patch(`${apiBaseUrl}/file/${fileId}/`, {
@@ -124,11 +104,12 @@ const incrementDownloadsFile = async (fileId: number, fileLink: string, datasetI
       const updatedFile = response.data;
       // Update the downloads count in the local files array
       const datasetIndex = datasetList.value.findIndex((dataset) => dataset.id === datasetId);
-      const fileIndex = datasetList.value[datasetIndex]['files'].findIndex(
-        (file: object) => file.id === fileId
-      );
+      if (datasetIndex === -1) return;
+      const files = datasetList.value[datasetIndex].files;
+      if (!Array.isArray(files)) return;
+      const fileIndex = files.findIndex((file) => file.id === fileId);
       if (fileIndex !== -1) {
-        datasetList.value[datasetIndex]['files'][fileIndex].downloads = updatedFile.downloads;
+        files[fileIndex].downloads = updatedFile.downloads;
       }
     }
   } catch (error) {
@@ -151,41 +132,47 @@ const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.v
   dataLoaded.value = false;
   try {
     const response = await axios.get(url);
-    dataReceived.value = response.data.results;
+    dataReceived.value = response.data.results as DatasetType[];
     next.value = response.data.next;
     previous.value = response.data.previous;
     count.value = response.data.count;
-    currentPage.value = new URL(url).searchParams.get('page') || 1;
-    for (let dataset in dataReceived.value) {
-      datasetList.value[dataset] = dataReceived.value[dataset];
-      for (let recording_session in datasetList.value[dataset].metadata.dataset
-        .recording_session_list) {
-        for (let file in datasetList.value[dataset]['files']) {
-          if (
-            datasetList.value[dataset]['files'][file]['name'] ==
-            datasetList.value[dataset]['metadata']['dataset']['recording_session_list'][
-              recording_session
-            ]['file_list'][0]['name']
-          ) {
-            datasetList.value[dataset]['files'][file]['metadata'] =
-              datasetList.value[dataset]['metadata']['dataset']['recording_session_list'][
-                recording_session
-              ];
-            datasetList.value[dataset]['files'][file]['profiles'] = ref([]);
-            for (let profile in datasetList.value[dataset]['metadata']['dataset'][
-              'recording_session_list'
-            ][recording_session]['animal_profiles']) {
-              datasetList.value[dataset]['files'][file]['profiles'].push(
-                datasetList.value[dataset]['metadata']['dataset']['recording_session_list'][
-                  recording_session
-                ]['animal_profiles'][profile]
-              );
-            }
+    currentPage.value = Number(new URL(url).searchParams.get('page') || 1);
 
-            break;
+    datasetList.value = [];
+
+    for (let datasetIndex in dataReceived.value) {
+      const dataset = dataReceived.value[datasetIndex];
+      datasetList.value[datasetIndex] = dataset;
+
+      const recordingSessionList = dataset.metadata?.dataset?.recording_session_list || [];
+
+      recordingSessionList.forEach((session) => {
+        const firstFileName = session.file_list?.[0]?.name;
+
+        if (!firstFileName) return;
+
+        dataset.files.forEach((file) => {
+          if (file?.name === firstFileName) {
+            file.metadata = session;
+            const animalProfiles = session.animal_profiles;
+            file.profiles = Array.isArray(animalProfiles)
+              ? animalProfiles.filter(Boolean)
+              : animalProfiles
+                ? [animalProfiles]
+                : [];
+            file.protocol = {};
+            for (let item in session.protocol) {
+              if (
+                item != 'name' &&
+                item != 'animals_housing' &&
+                item != 'context_number_of_animals'
+              ) {
+                file.protocol[item] = session.protocol[item];
+              }
+            }
           }
-        }
-      }
+        });
+      });
     }
   } catch (error) {
     // eslint-disable-next-line no-console
@@ -267,7 +254,7 @@ onMounted(() => fetchDatasets());
                   <v-expansion-panels multiple>
                     <v-expansion-panel
                       v-for="(file, index_file) in dataset.files"
-                      :key="file.id"
+                      :key="file.id ?? index_file"
                       class="mt-4"
                     >
                       <v-expansion-panel-title>
@@ -277,32 +264,28 @@ onMounted(() => fetchDatasets());
                           class="w-100"
                           v-if="file.metadata"
                         >
-                          <v-col cols="auto" class="align-center">
-                            <strong># {{ index_file + 1 }}</strong>
+                          <v-col cols="auto" class="d-flex align-center pl-0">
+                            <strong># {{ Number(index_file) + 1 }}</strong>
                           </v-col>
-                          <div v-for="(value, key) in file.metadata.protocol">
-                            <v-col
-                              cols="auto"
-                              class="d-flex align-center"
-                              v-if="
-                                key != 'name' &&
-                                key != 'animals_housing' &&
-                                key != 'context_number_of_animals'
-                              "
-                            >
-                              <v-chip label small color="#03DAC6" class="ma-0">{{ value }}</v-chip>
-                            </v-col>
-                          </div>
+                          <v-col
+                            cols="auto"
+                            class="d-flex align-center pl-0"
+                            v-for="(value, key) in file.protocol"
+                          >
+                            <v-chip label small color="#03DAC6" class="ma-0">
+                              {{ value }}
+                            </v-chip>
+                          </v-col>
 
                           <v-col class="d-flex align-center" cols="auto">
                             <v-chip
+                              v-for="(profile, index) in file.profiles"
+                              :key="index"
                               class="ma-0"
                               label
                               color="red-lighten-1"
-                              v-if="file.profiles"
-                              v-for="profile in file.profiles"
                             >
-                              {{ profile.strain.name }}
+                              {{ profile?.strain?.name || 'Unknown strain' }}
                             </v-chip>
                           </v-col>
 
@@ -422,7 +405,7 @@ onMounted(() => fetchDatasets());
                   <v-row>
                     <v-col cols="11">
                       <v-chip class="ma-2" label color="red-lighten-1">
-                        {{ dataset.species.name }}
+                        {{ dataset.species?.name ?? 'Unknown' }}
                       </v-chip>
                     </v-col>
                   </v-row>

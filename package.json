@@ -1,6 +1,6 @@
 {
   "name": "nuxt-app",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,7 +16,7 @@
     "@mdi/font": "^7.4.47",
     "axios": "^1.15.1",
     "lucide-vue-next": "^0.488.0",
-    "nuxt": "^3.21.6",
+    "nuxt": "^3.21.7",
     "sass": "^1.83.1",
     "vite-plugin-vuetify": "^2.1.1",
     "vue": "latest",
