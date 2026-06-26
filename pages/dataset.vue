@@ -160,6 +160,16 @@ const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.v
               : animalProfiles
                 ? [animalProfiles]
                 : [];
+            file.protocol = {};
+            for (let item in session.protocol) {
+              if (
+                item != 'name' &&
+                item != 'animals_housing' &&
+                item != 'context_number_of_animals'
+              ) {
+                file.protocol[item] = session.protocol[item];
+              }
+            }
           }
         });
       });
@@ -254,22 +264,18 @@ onMounted(() => fetchDatasets());
                           class="w-100"
                           v-if="file.metadata"
                         >
-                          <v-col cols="auto" class="align-center">
+                          <v-col cols="auto" class="d-flex align-center pl-0">
                             <strong># {{ Number(index_file) + 1 }}</strong>
                           </v-col>
-                          <div v-for="(value, key) in file.metadata.protocol">
-                            <v-col
-                              cols="auto"
-                              class="d-flex align-center"
-                              v-if="
-                                key != 'name' &&
-                                key != 'animals_housing' &&
-                                key != 'context_number_of_animals'
-                              "
-                            >
-                              <v-chip label small color="#03DAC6" class="ma-0">{{ value }}</v-chip>
-                            </v-col>
-                          </div>
+                          <v-col
+                            cols="auto"
+                            class="d-flex align-center pl-0"
+                            v-for="(value, key) in file.protocol"
+                          >
+                            <v-chip label small color="#03DAC6" class="ma-0">
+                              {{ value }}
+                            </v-chip>
+                          </v-col>
 
                           <v-col class="d-flex align-center" cols="auto">
                             <v-chip
