@@ -235,6 +235,16 @@ watch(
                         >interview</nuxt-link
                       >.
                     </v-list-item>
+                    <v-list-item prepend-icon="mdi-newspaper">
+                      A publication in The Biologist, the magazine from the Royal Society of Biology
+                      (RSB), presents the original framework of MouseTube and its perspectives. Read
+                      how mouseTube integrates into the scientific landscape
+                      <nuxt-link
+                        href="https://biologist.rsb.org.uk/can_you_squeak_up_please.html"
+                        target="_blank"
+                        >here</nuxt-link
+                      >.
+                    </v-list-item>
                   </v-list>
                 </v-card-text>
               </v-card>
