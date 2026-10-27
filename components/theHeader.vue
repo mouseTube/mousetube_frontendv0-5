@@ -8,7 +8,7 @@ Code under GPL v3.0 licence
 -->
 <script setup>
 // Header page
-import { Users, AudioLines, MonitorCog, Database } from 'lucide-vue-next';
+import { Users, AudioLines, MonitorCog, Database } from '@lucide/vue';
 import { ref, onMounted } from 'vue';
 import { useDisplay } from 'vuetify';
 

@@ -201,6 +201,17 @@ onMounted(() => {
               What’s new?
             </v-card-title>
             <v-card-text class="text-justify">
+              <strong>09/10/2026</strong><br />
+              A publication in The Biologist, the magazine from the Royal Society of Biology (RSB),
+              presents the original framework of MouseTube and its perspectives. Read how mouseTube
+              integrates into the scientific landscape
+              <nuxt-link
+                href="https://biologist.rsb.org.uk/can_you_squeak_up_please.html"
+                target="_blank"
+                >here</nuxt-link
+              >.
+            </v-card-text>
+            <v-card-text class="text-justify">
               <strong>10/06/2026</strong><br />
               Two datasets were added: one with mouse vocalisation recordings and one with rat
               vocalisation recordings. These recordings are manually annotated by two experts and

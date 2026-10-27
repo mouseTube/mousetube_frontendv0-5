@@ -9,7 +9,7 @@ Code under GPL v3.0 licence
 
 <script setup>
 // Team page
-import { Users } from 'lucide-vue-next';
+import { Users } from '@lucide/vue';
 import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -233,6 +233,16 @@ watch(
                         href="https://savoirs.unistra.fr/innovation/mousetube-la-base-de-donnees-des-vocalisations-de-souris"
                         target="_blank"
                         >interview</nuxt-link
+                      >.
+                    </v-list-item>
+                    <v-list-item prepend-icon="mdi-newspaper">
+                      A publication in The Biologist, the magazine from the Royal Society of Biology
+                      (RSB), presents the original framework of MouseTube and its perspectives. Read
+                      how mouseTube integrates into the scientific landscape
+                      <nuxt-link
+                        href="https://biologist.rsb.org.uk/can_you_squeak_up_please.html"
+                        target="_blank"
+                        >here</nuxt-link
                       >.
                     </v-list-item>
                   </v-list>

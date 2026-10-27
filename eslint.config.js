@@ -1,50 +1,19 @@
-import vue from 'eslint-plugin-vue';
-import nuxt from 'eslint-plugin-nuxt';
+import { createConfigForNuxt } from '@nuxt/eslint-config/flat';
 import prettier from 'eslint-plugin-prettier';
-import vueParser from 'vue-eslint-parser';
-import tsParser from '@typescript-eslint/parser';
-import globals from 'globals';
 
-export default [
-  {
-    ignores: ['node_modules', '.nuxt'],
+export default createConfigForNuxt({
+  features: { stylistic: false },
+}).append({
+  plugins: { prettier },
+  rules: {
+    'no-console': 'warn',
+    'no-undef': 'off', // composables are auto-imported by Nuxt
+    'vue/no-multiple-template-root': 'off',
+    'vue/no-v-html': 'off',
+    'vue/html-self-closing': 'off',
+    'vue/attributes-order': 'off',
+    'vue/v-slot-style': 'off',
+    'vue/v-bind-style': 'off',
+    'prettier/prettier': 'error',
   },
-  {
-    files: ['**/*.vue', '**/*.js'],
-    languageOptions: {
-      parser: vueParser,
-      parserOptions: {
-        parser: tsParser,
-        ecmaVersion: 2022,
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-      },
-    },
-    plugins: {
-      vue,
-      nuxt,
-      prettier,
-    },
-    rules: {
-      'no-console': 'warn',
-      'no-undef': 'off',
-
-      'vue/no-multiple-template-root': 'off',
-      'vue/no-v-html': 'off',
-
-      'nuxt/no-env-in-hooks': 'error',
-      'nuxt/no-globals-in-created': 'error',
-
-      'prettier/prettier': 'error',
-    },
-    settings: {
-      'vue/setup-compiler-macros': true,
-    },
-  },
-];
+});

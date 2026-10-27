@@ -6,7 +6,7 @@
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 import debounce from 'lodash/debounce.js';
-import { MonitorCog } from 'lucide-vue-next';
+import { MonitorCog } from '@lucide/vue';
 
 ////////////////////////////////
 // DATA
@@ -23,7 +23,6 @@ const perPage = ref(10);
 const showFilters = ref(false);
 const filters = ref(['all']);
 const apiBaseUrl = useApiBaseUrl();
-const softwareTypeFilter = ref('all');
 
 ////////////////////////////////
 // METHODS
