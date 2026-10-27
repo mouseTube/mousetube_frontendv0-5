@@ -1,23 +1,15 @@
-<script setup lang="ts" xmlns="http://www.w3.org/1999/html">
+<script setup lang="ts">
 ////////////////////////////////
 // IMPORT
 ////////////////////////////////
 
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
-import { Database } from 'lucide-vue-next';
+import { Database } from '@lucide/vue';
 
 ////////////////////////////////
 // DATA
 ////////////////////////////////
-
-interface MetadataDataset {
-  recording_session_list: RecordingSession[];
-}
-
-interface Metadata {
-  dataset: MetadataDataset;
-}
 
 interface AnimalProfile {
   name?: string;
@@ -78,17 +70,12 @@ const previous = ref<string | null>(null);
 const count = ref(0);
 const currentPage = ref(1);
 const perPage = ref(10);
-const strains = ref<Record<string, unknown>>({});
-const profiles = ref<Record<string, unknown>>({});
 const showGraph = ref(false);
 const imageToShow = ref<string | null>(null);
 const altImage = ref('');
 
 const apiBaseUrl = useApiBaseUrl();
 const imageFromAPI = apiBaseUrl.split('/api')[0];
-
-// --- panel states for each file (independent) ---
-const activePanels = ref<Record<number, boolean>>({});
 
 ////////////////////////////////
 // METHODS
@@ -140,7 +127,7 @@ const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.v
 
     datasetList.value = [];
 
-    for (let datasetIndex in dataReceived.value) {
+    for (const datasetIndex in dataReceived.value) {
       const dataset = dataReceived.value[datasetIndex];
       datasetList.value[datasetIndex] = dataset;
 
@@ -161,7 +148,7 @@ const fetchDatasets = async (url = `${apiBaseUrl}/dataset/?page_size=${perPage.v
                 ? [animalProfiles]
                 : [];
             file.protocol = {};
-            for (let item in session.protocol) {
+            for (const item in session.protocol) {
               if (
                 item != 'name' &&
                 item != 'animals_housing' &&
@@ -232,9 +219,9 @@ onMounted(() => fetchDatasets());
             </v-alert>
 
             <!-- LIST DATASETS -->
-            <v-container fluid v-else class="pa-0" v-if="dataLoaded">
+            <v-container fluid v-else class="pa-0">
               <v-card
-                v-for="(dataset, index) in datasetList"
+                v-for="dataset in datasetList"
                 :key="dataset.id"
                 class="mt-5 border-sm"
                 elevated
@@ -271,6 +258,7 @@ onMounted(() => fetchDatasets());
                             cols="auto"
                             class="d-flex align-center pl-0"
                             v-for="(value, key) in file.protocol"
+                            :key="key"
                           >
                             <v-chip label small color="#03DAC6" class="ma-0">
                               {{ value }}

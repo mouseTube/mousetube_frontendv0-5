@@ -15,7 +15,7 @@ Code under GPL v3.0 licence
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 import debounce from 'lodash/debounce.js';
-import { AudioLines } from 'lucide-vue-next';
+import { AudioLines } from '@lucide/vue';
 
 ////////////////////////////////
 // DATA
